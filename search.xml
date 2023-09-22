@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>layout</title>
-    <url>/2023/09/23/layout/</url>
-    <content><![CDATA[]]></content>
+    <title></title>
+    <url>/2023/09/23/%E5%8D%9A%E5%AE%A2%E7%AC%AC%E4%B8%80%E7%AF%87/</url>
+    <content><![CDATA[<p>#个人博客第1篇——注册GitHub</p>
+<p>注册GitHub详细步骤：</p>
+<p>打开官网: <a href="https://github.com/">https://github.com/</a></p>
+<p>1.如下图点击 sign up 注册</p>
+<p><img src="/%E5%8D%9A%E5%AE%A2%E7%AC%AC%E4%B8%80%E7%AF%87/1-1695419645443-2.jpg"></p>
+<p>注意：我点击sign up 之后，弹出如下页面，箭头所指提示 GitHub 不支持这个浏览器（我用的是搜狗），我看了一下，支持 Chrome，Firefox，就用了 Firefox</p>
+<p><img src="/%E5%8D%9A%E5%AE%A2%E7%AC%AC%E4%B8%80%E7%AF%87/v2-aa60d95764906967d86f1f2b37876812_r.jpg"></p>
+<p>2.用 Firefox 打开 GitHub 官网，进入注册页面：</p>
+<p><img src="/./%E5%8D%9A%E5%AE%A2%E7%AC%AC%E4%B8%80%E7%AF%87/v2-1ff6182b94270639bd6b30f7429f7b4a_r.jpg"></p>
+<p>填完上图中的昵称、邮箱地址（QQ&#x2F;163邮箱都行）、密码（确保至少有15个字符或至少包括数字和小写字母的8个字符），再验证一下，点击 Next: select a plan, 进入如下页面：</p>
+<p>3.如上图所示，在选择账户类型这里有一点需要我们注意，那就是：GitHub 的仓库分为两种，一种是public repositories公开免费版，一种是private repositories私有付费版。其中，免费版是完全公开的，而私有版一般是由企业或者不愿公开仓库的个人用户购买，在这里，我们选择免费版就可以，然后点击 Choose Free，进入如下界面：</p>
+<p>4.如上图所示，有一个问卷调查，填不填都无所谓，如果填完就点击 Complete setup, 如果不想填就点击 Skip this step 跳过，不管选择哪个都会进入如下页面：</p>
+<p>5.接下来就是验证邮箱地址了，GitHub会发送邮件到你刚才填的邮箱地址，例如我填的是QQ邮箱，登录QQ邮箱，打开收到的邮件，如下图：</p>
+<p>点击 Verify email address, 进入如下页面：</p>
+<p>填好信息点击 sign in 登录,会要求填写验证码，如下图:</p>
+<p>验证码已发送到你的邮箱，点击查看：</p>
+<p>输入验证码，进入如下页面：</p>
+<p>点击创建仓库，现在你就有一个名为hello的项目啦！</p>
+<p>到这里已经基本上完成了注册!</p>
+<p>写这篇文章的目的只是为了记录总结我的学习过程，如果能够给别人一些帮助那当然更好了。我正在黑暗中摸索着前行，唯有一盏烛火给我光亮，向哪走都是前方。</p>
+<h2 id="编辑于-2020-01-18-19-45typora-root-url-博客第一篇"><a href="#编辑于-2020-01-18-19-45typora-root-url-博客第一篇" class="headerlink" title="编辑于 2020-01-18 19:45typora-root-url: .&#x2F;博客第一篇"></a>编辑于 2020-01-18 19:45<br>typora-root-url: .&#x2F;博客第一篇</h2>]]></content>
   </entry>
 </search>

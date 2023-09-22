@@ -1169,7 +1169,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #d2ff71;
+  background: #957dff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2714,11 +2714,11 @@ body {
   background: url("/images/beijing-4096x2246.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: 65% 30%;
-  color: var(--text-color);
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 1em;
-  line-height: 2;
+  background-position: 50% 50%;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
 }
 .header-inner {
   opacity: 0.8;

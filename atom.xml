@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>欢迎来到剃蛙铽</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2023-09-22T16:04:25.671Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>魔皇地狱</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>layout</title>
+    <link href="http://example.com/2023/09/23/layout/"/>
+    <id>http://example.com/2023/09/23/layout/</id>
+    <published>2023-09-22T16:04:25.000Z</published>
+    <updated>2023-09-22T16:04:25.671Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://example.com/2023/09/22/hello-world/"/>
+    <id>http://example.com/2023/09/22/hello-world/</id>
+    <published>2023-09-22T12:33:18.092Z</published>
+    <updated>2023-09-22T16:09:13.452Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+</feed>

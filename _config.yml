@@ -74,6 +74,8 @@ theme_config:
     url: /images/halo-avatar.png
   social:
     GitHub: https://github.com/mhdy2233 || fab fa-github
+    Telegram: https://t.me/lajijichang || fa-brands fa-telegram
+    Home: https://mohuangdiyu.com || fa-solid fa-house
   menu:
     home: / || fa fa-home
     archives: /archives/ || fa fa-archive

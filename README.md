@@ -61,13 +61,17 @@ Content-Type: application/json
 ### 本地开发
 ```bash
 npm install
-npm run sync      # 从 Halo 拉文章（需设置 HALO_BASE_URL / HALO_PAT）
+npm run sync      # 从 Halo 拉文章与站点图片（需设置 HALO_BASE_URL，HALO_PAT 可选）
 node run-hexo.js clean   # 清缓存
 node run-hexo.js generate # 生成到 public/
 ```
 
 ## 说明
 
-- `sync-halo.js` 拉取 Halo 已发布文章（`publishPhase=published`），正文走 console API 的 `release-content` 接口（服务端合并快照链后直接返回 markdown 原文，`/apis/api.console.halo.run/v1alpha1/posts/{name}/release-content`），分类/标签按 `displayName` 映射
+- `tools/sync-halo.js` 拉取 Halo 已发布文章（`publishPhase=published`），正文走 console API 的 `release-content` 接口（服务端合并快照链后直接返回 markdown 原文，`/apis/api.console.halo.run/v1alpha1/posts/{name}/release-content`），分类/标签按 `displayName` 映射
+- 没配 `HALO_PAT` 时全程走 Halo 公开 API（正文取 `/apis/api.content.halo.run/v1alpha1/posts/{name}` 的 `content.raw`），功能不受影响
+- 首页摘要：优先用 Halo 文章自带摘要，没写就取正文前 120 字，写进 front-matter 的 `description`
+- 头像取 Halo 用户头像；背景图 Halo 没有对应设置项（属于各主题自己的配置），按「`HALO_BACKGROUND_URL` 环境变量 → 启用主题的配置 → Halo 首页内联样式」依次探测。两张图都会下载到 `source/images/`，不外链
 - 部署时 `rsync --delete` 以构建产物为准，并删除 master 上的 `2023/` 旧文章与 `index1.html` 旧首页，只保留 Halo 内容
+- 站点标题、副标题、菜单等站点级设置在 `_config.yml`，不随 Halo 同步（两边标题本来就不同）
 - 发布页（原手写 index.html）已废弃，站点根路径现在直接是博客首页

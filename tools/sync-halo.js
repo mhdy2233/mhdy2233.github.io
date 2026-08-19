@@ -5,7 +5,7 @@
  * 使用方式：
  *   HALO_BASE_URL=https://your-halo.example.com \
  *   HALO_PAT=<个人访问令牌> \
- *   node scripts/sync-halo.js
+ *   node tools/sync-halo.js
  *
  * 流程：
  *   1. 分页拉取 Halo 已发布文章列表（/apis/api.content.halo.run/v1alpha1/posts）
@@ -13,6 +13,7 @@
  *   3. 拉取分类/标签列表，把 metadata.name 映射为 displayName
  *   4. 生成 Hexo front-matter Markdown 写入 source/_posts/
  *   5. 删除本地存在但 Halo 已不存在的旧文章文件（增量同步）
+ *   6. 同步站点头像与背景图到 source/images/，并写入主题配置
  *
  * 注意：公开 API 的 /apis/api.content.halo.run/v1alpha1/snapshots 在 Halo 2.x 中不存在，
  * 正文必须走 console API：/apis/api.console.halo.run/v1alpha1/posts/{name}/release-content
@@ -22,6 +23,8 @@
  *   HALO_BASE_URL  必填，Halo 站点地址，如 https://blog.example.com
  *   HALO_PAT       必填，Halo 个人访问令牌（后台「个人资料 → 个人令牌」创建）
  *   HALO_SKIP_HTTPS_CHECK 可选，设为 1 时忽略 TLS 证书校验（自签名证书用）
+ *   HALO_AVATAR_URL     可选，直接指定头像地址，跳过自动探测
+ *   HALO_BACKGROUND_URL 可选，直接指定背景图地址，跳过自动探测
  */
 'use strict';
 
@@ -34,49 +37,68 @@ const { URL } = require('url');
 const BASE = (process.env.HALO_BASE_URL || '').replace(/\/+$/, '');
 const PAT = process.env.HALO_PAT || '';
 const SKIP_TLS = process.env.HALO_SKIP_HTTPS_CHECK === '1';
-const POSTS_DIR = path.join(__dirname, '..', 'source', '_posts');
+const ROOT = path.join(__dirname, '..');
+const POSTS_DIR = path.join(ROOT, 'source', '_posts');
+const IMAGES_DIR = path.join(ROOT, 'source', 'images');
+const DATA_DIR = path.join(ROOT, 'source', '_data');
+const CONFIG_FILE = path.join(ROOT, '_config.yml');
 
-if (!BASE || !PAT) {
-  console.error('错误：需要设置 HALO_BASE_URL 和 HALO_PAT 环境变量');
+if (!BASE) {
+  console.error('错误：需要设置 HALO_BASE_URL 环境变量');
   process.exit(1);
 }
+if (!PAT) {
+  console.log('[sync] 未提供 HALO_PAT，仅使用 Halo 公开 API（正文取公开接口的 content.raw）');
+}
 
-/** 请求 Halo API，自动分页，返回 items 数组 */
-async function request(pathname, page = 0, size = 50) {
-  const url = new URL(BASE + pathname);
-  url.searchParams.set('page', String(page));
-  url.searchParams.set('size', String(size));
-  url.searchParams.set('publishPhase', 'published');
-  const lib = url.protocol === 'https:' ? https : http;
-  const options = {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${PAT}`,
-      Accept: 'application/json',
-    },
-  };
-  if (SKIP_TLS && url.protocol === 'https:') {
-    options.rejectUnauthorized = false;
-  }
+/** 发起 GET 请求，返回 { status, body }；不跟随重定向 */
+function httpGet(url, { auth = true, accept = 'application/json' } = {}) {
+  const u = url instanceof URL ? url : new URL(url);
+  const lib = u.protocol === 'https:' ? https : http;
+  const headers = { Accept: accept };
+  if (auth && PAT) headers.Authorization = `Bearer ${PAT}`;
+  const options = { method: 'GET', headers };
+  if (SKIP_TLS && u.protocol === 'https:') options.rejectUnauthorized = false;
   return new Promise((resolve, reject) => {
-    const req = lib.request(url, options, (res) => {
+    const req = lib.request(u, options, (res) => {
       let body = '';
       res.on('data', (c) => (body += c));
-      res.on('end', () => {
-        if (res.statusCode >= 400) {
-          reject(new Error(`GET ${pathname} -> ${res.statusCode}: ${body.slice(0, 300)}`));
-          return;
-        }
-        try {
-          resolve(JSON.parse(body));
-        } catch (e) {
-          reject(new Error(`GET ${pathname} 返回非 JSON: ${body.slice(0, 200)}`));
-        }
-      });
+      res.on('end', () => resolve({ status: res.statusCode, body }));
     });
     req.on('error', reject);
     req.end();
   });
+}
+
+/** GET 并解析 JSON；非 2xx 抛错，错误对象带 status（3xx 通常是 Halo 未认证时重定向到登录页） */
+async function getJSON(url, opts) {
+  const { status, body } = await httpGet(url, opts);
+  if (status < 200 || status >= 300) {
+    const err = new Error(`GET ${url} -> ${status}: ${body.slice(0, 200)}`);
+    err.status = status;
+    throw err;
+  }
+  try {
+    return JSON.parse(body);
+  } catch (e) {
+    const err = new Error(`GET ${url} 返回非 JSON: ${body.slice(0, 200)}`);
+    err.status = status;
+    throw err;
+  }
+}
+
+/** 认证失败（未登录/无权限）：Halo 对未认证的 console 请求会 302 到登录页 */
+function isAuthFailure(err) {
+  return err.status === 401 || err.status === 403 || (err.status >= 300 && err.status < 400);
+}
+
+/** 请求 Halo 内容 API 的某一页 */
+function request(pathname, page = 0, size = 50) {
+  const url = new URL(BASE + pathname);
+  url.searchParams.set('page', String(page));
+  url.searchParams.set('size', String(size));
+  url.searchParams.set('publishPhase', 'published');
+  return getJSON(url);
 }
 
 /** 拉取全部页 */
@@ -94,29 +116,8 @@ async function fetchAll(pathname) {
 }
 
 /** 取单个资源（pathSuffix 拼在 pathname 后，用于拿 release-content 正文） */
-async function fetchOne(pathname, pathSuffix) {
-  const url = new URL(`${BASE}${pathname}/${pathSuffix}`);
-  const lib = url.protocol === 'https:' ? https : http;
-  const options = {
-    method: 'GET',
-    headers: { Authorization: `Bearer ${PAT}`, Accept: 'application/json' },
-  };
-  if (SKIP_TLS && url.protocol === 'https:') options.rejectUnauthorized = false;
-  return new Promise((resolve, reject) => {
-    const req = lib.request(url, options, (res) => {
-      let body = '';
-      res.on('data', (c) => (body += c));
-      res.on('end', () => {
-        if (res.statusCode >= 400) {
-          reject(new Error(`GET ${pathname}/${name} -> ${res.statusCode}: ${body.slice(0, 200)}`));
-          return;
-        }
-        try { resolve(JSON.parse(body)); } catch (e) { reject(e); }
-      });
-    });
-    req.on('error', reject);
-    req.end();
-  });
+function fetchOne(pathname, pathSuffix) {
+  return getJSON(new URL(`${BASE}${pathname}/${pathSuffix}`));
 }
 
 /** 把 Markdown 正文中 Halo 附件相对链接补全为绝对地址 */
@@ -206,14 +207,197 @@ async function resolveContent(postName) {
     );
     return (wrapper && wrapper.raw) || '';
   } catch (e) {
-    const status = Number((e.message.match(/(\d{3})/) || [])[1]);
-    if (status === 401 || status === 403) {
-      console.log(`[fallback] release-content 无权限(${status})，改用公开接口`);
+    if (isAuthFailure(e)) {
+      console.log(`[fallback] release-content 无权限(${e.status})，改用公开接口`);
       const vo = await fetchOne('/apis/api.content.halo.run/v1alpha1/posts', postName);
       return (vo && vo.content && vo.content.raw) || '';
     }
     throw e;
   }
+}
+
+/** 把可能是相对路径的资源地址补成绝对地址 */
+function absoluteUrl(src) {
+  if (!src) return '';
+  try {
+    return new URL(src, BASE + '/').href;
+  } catch (e) {
+    return '';
+  }
+}
+
+/**
+ * 头像地址：取 Halo 用户头像（文章列表里的 owner.avatar，公开可读）。
+ * 站点 Logo 语义上不是头像，因此只在用户没设头像时才退回用它。
+ */
+async function resolveAvatarUrl(posts) {
+  if (process.env.HALO_AVATAR_URL) return process.env.HALO_AVATAR_URL;
+  const owner = posts.map((p) => p.owner).find((o) => o && o.avatar);
+  if (owner) return absoluteUrl(owner.avatar);
+  try {
+    const info = await getJSON(`${BASE}/actuator/globalinfo`, { auth: false });
+    return absoluteUrl(info.favicon);
+  } catch (e) {
+    return '';
+  }
+}
+
+/**
+ * 背景图地址。Halo 本身没有「站点背景图」这个设置项，它属于各主题自己的配置，
+ * 所以按可靠性依次尝试：
+ *   1. HALO_BACKGROUND_URL 环境变量（最确定）
+ *   2. 当前启用主题的配置（console API，需 PAT）里键名含 bg/background/banner/cover 的图片地址
+ *   3. 抓 Halo 首页 HTML 内联样式里的 background-image（公开，主题换了也大多还在）
+ */
+async function resolveBackgroundUrl() {
+  if (process.env.HALO_BACKGROUND_URL) return process.env.HALO_BACKGROUND_URL;
+
+  const isImage = (v) => typeof v === 'string' && /\.(jpe?g|png|webp|gif|avif)(\?|$)/i.test(v);
+  try {
+    const active = await getJSON(`${BASE}/apis/api.console.halo.run/v1alpha1/themes/-/activation`);
+    const themeName = active && active.metadata && active.metadata.name;
+    if (themeName) {
+      const config = await getJSON(
+        `${BASE}/apis/api.console.halo.run/v1alpha1/themes/${encodeURIComponent(themeName)}/json-config`,
+      );
+      const hit = findByKey(config, /bg|background|banner|cover|header/i, isImage);
+      if (hit) {
+        console.log(`[site] 背景图取自主题「${themeName}」配置`);
+        return absoluteUrl(hit);
+      }
+    }
+  } catch (e) {
+    if (!isAuthFailure(e)) console.log(`[site] 读取主题配置失败（${e.message.slice(0, 80)}），改从首页探测`);
+  }
+
+  try {
+    const { status, body } = await httpGet(`${BASE}/`, { auth: false, accept: 'text/html' });
+    if (status >= 200 && status < 300) {
+      for (const m of body.matchAll(/background-image:\s*url\(\s*['"]?([^'")]+)['"]?\s*\)/gi)) {
+        if (isImage(m[1])) {
+          console.log('[site] 背景图从 Halo 首页样式探测得到');
+          return absoluteUrl(m[1]);
+        }
+      }
+    }
+  } catch (e) {
+    // 探测失败就保留仓库里现有的背景
+  }
+  return '';
+}
+
+/** 深度遍历对象，找出键名匹配 keyRe 且值满足 valueOk 的第一个值 */
+function findByKey(obj, keyRe, valueOk) {
+  if (!obj || typeof obj !== 'object') return null;
+  for (const [k, v] of Object.entries(obj)) {
+    if (keyRe.test(k) && valueOk(v)) return v;
+    if (v && typeof v === 'object') {
+      const hit = findByKey(v, keyRe, valueOk);
+      if (hit) return hit;
+    }
+  }
+  return null;
+}
+
+/** 下载资源到本地，返回站内相对路径（如 /images/halo-avatar.png） */
+async function download(url, baseName) {
+  const { status, body } = await new Promise((resolve, reject) => {
+    const u = new URL(url);
+    const lib = u.protocol === 'https:' ? https : http;
+    const options = { method: 'GET', headers: { Accept: 'image/*' } };
+    if (SKIP_TLS && u.protocol === 'https:') options.rejectUnauthorized = false;
+    const req = lib.request(u, options, (res) => {
+      // 图片 CDN 常带 301/302，跟随一次
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+        res.resume();
+        download(new URL(res.headers.location, u).href, baseName).then(
+          (p) => resolve({ status: 200, redirected: p }),
+          reject,
+        );
+        return;
+      }
+      const chunks = [];
+      res.on('data', (c) => chunks.push(c));
+      res.on('end', () => resolve({ status: res.statusCode, body: Buffer.concat(chunks) }));
+    });
+    req.on('error', reject);
+    req.end();
+  });
+  if (status < 200 || status >= 300) throw new Error(`下载 ${url} -> ${status}`);
+  if (!body) return null; // 已由重定向分支处理
+
+  const ext = (path.extname(new URL(url).pathname).toLowerCase().match(/^\.(jpe?g|png|webp|gif|avif|svg)$/) || [])[0]
+    || '.png';
+  fs.mkdirSync(IMAGES_DIR, { recursive: true });
+  const fileName = `${baseName}${ext}`;
+  fs.writeFileSync(path.join(IMAGES_DIR, fileName), body);
+  return `/images/${fileName}`;
+}
+
+/** 把 _config.yml 里 theme_config.avatar.url 换成新路径 */
+function patchAvatarConfig(localPath) {
+  const yml = fs.readFileSync(CONFIG_FILE, 'utf8');
+  const patched = yml.replace(
+    /(^\s{2}avatar:\n\s{4}url:\s*)(\S*)/m,
+    (m, prefix) => `${prefix}${localPath}`,
+  );
+  if (patched === yml) {
+    console.log('[site] 未在 _config.yml 找到 theme_config.avatar.url，跳过写入');
+    return;
+  }
+  fs.writeFileSync(CONFIG_FILE, patched, 'utf8');
+}
+
+/** 生成背景图样式（NexT 通过 custom_file_path.style 注入），沿用旧站的半透明观感 */
+function writeBackgroundStyle(localPath) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  const styl = localPath
+    ? `// 由 tools/sync-halo.js 从 Halo 同步生成，请勿手改
+body {
+  background: url(${localPath}) no-repeat fixed 50% 50%;
+  background-size: cover;
+}
+
+.header-inner, .sidebar { opacity: .8; }
+.content { opacity: .7; }
+`
+    : '// 未探测到 Halo 背景图\n';
+  fs.writeFileSync(path.join(DATA_DIR, 'styles.styl'), styl, 'utf8');
+}
+
+/** 同步站点头像与背景图 */
+async function syncSiteAssets(posts) {
+  const [avatarUrl, backgroundUrl] = await Promise.all([
+    resolveAvatarUrl(posts),
+    resolveBackgroundUrl(),
+  ]);
+
+  if (avatarUrl) {
+    try {
+      const local = await download(avatarUrl, 'halo-avatar');
+      if (local) {
+        patchAvatarConfig(local);
+        console.log(`[site] 头像 ${avatarUrl} -> ${local}`);
+      }
+    } catch (e) {
+      console.log(`[site] 头像下载失败，保留现有配置：${e.message}`);
+    }
+  } else {
+    console.log('[site] 未找到 Halo 头像，保留现有配置');
+  }
+
+  let backgroundLocal = '';
+  if (backgroundUrl) {
+    try {
+      backgroundLocal = (await download(backgroundUrl, 'halo-background')) || '';
+      if (backgroundLocal) console.log(`[site] 背景图 ${backgroundUrl} -> ${backgroundLocal}`);
+    } catch (e) {
+      console.log(`[site] 背景图下载失败：${e.message}`);
+    }
+  } else {
+    console.log('[site] 未探测到 Halo 背景图');
+  }
+  writeBackgroundStyle(backgroundLocal);
 }
 
 async function main() {
@@ -265,6 +449,9 @@ async function main() {
   }
 
   console.log(`[sync] 完成，共写入 ${written.size} 篇`);
+
+  // 5. 同步站点头像与背景图
+  await syncSiteAssets(posts);
 }
 
 main().catch((e) => {

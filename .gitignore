@@ -6,3 +6,6 @@ db.json
 npm-debug.log*
 # 文章由 tools/sync-halo.js 每次从 Halo 同步生成，不纳入版本管理
 source/_posts/
+# 头像/背景图与背景样式同样是同步产物
+source/images/halo-*
+source/_data/styles.styl

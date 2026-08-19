@@ -67,8 +67,11 @@ deploy:
 # NexT 主题关键配置（与现有产物一致）
 theme_config:
   scheme: Gemini
+  # 背景图样式由 tools/sync-halo.js 从 Halo 同步后生成
+  custom_file_path:
+    style: source/_data/styles.styl
   avatar:
-    url: /images/1.png
+    url: /images/halo-avatar.png
   social:
     GitHub: https://github.com/mhdy2233 || fab fa-github
   menu:

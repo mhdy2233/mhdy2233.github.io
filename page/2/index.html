@@ -178,12 +178,14 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
+          <a href="/tags/">
         <span class="site-state-item-count">17</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -264,22 +266,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 style="" id="piclist%E5%9B%BE%E5%BA%8A%E4%BD%BF%E7%94%A8">Piclist图床使用</h1><h2 style="" id="%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89piclist">为什么选Piclist</h2><p style="">Piclist相比Picgo自带Webdav可以配合Alist进行使用，虽然插件内有rclone但实际体验不佳</p><p style="">Piclist+Alist+onedrive可以实现免费大容量图床</p><h2 style="" id="piclist%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D">Piclist简单介绍</h2><p style=""><a rel="noopener noreferrer nofollow" href="https://piclist.cn" target="_blank">Piclist</a><span style="font-size: 16px; color: rgb(60, 60, 67)">是一款高效的云存储和图床平台管理工具，在PicGo的基础上经过深度的二次开发，不仅完整保留了PicGo的所有功能，还增添了许多新的feature。例如相册支持同步云端删除文件，内置图床额外添加了WebDav、本地图床和SFTP等。PicList同时增加了完整的云存储管理功能，包括云端目录查看、文件搜索、批量上传下载和删除文件，复制多种格式文件链接和图片/markdown/文本/视频预览等，另外还有更加强大的相册和多项功能新增或优化。</span></p><h2 style="" id="piclist%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8">Piclist基础使用</h2><p style="">没什么难度做自己摸索也能会用，不会去看文档去</p><p style=""><a rel="noopener noreferrer nofollow" href="https://piclist.cn" target="_blank">https://piclist.cn</a></p><h2 style="" id="piclist%2Balist%E4%BD%BF%E7%94%A8">Piclist+Alist使用</h2><p style="">虽然有Alist的插件但是目前没有自定义域名功能，本地部署的Alist是无法使用的</p><p style=""><a rel="noopener noreferrer nofollow" href="https://github.com/jinzhi0123/picgo-plugin-alist" target="_blank">picgo-plugin-alist</a></p><pre><code>图床配置名	#显示名称
-设定接口网址	#Alist链接或者ip（记得加dav） 示例：https://pan.mhdyapp.buzz/dav
-启用SSL	#看情况是否开启
-设定用户名	#Alist用户名
-设定密码	#Alist密码
-设定存储路径	#字面意思
-设定网址路径	#接口网址或自定义域名后的路径
-设定自定义域名	#直接引用Alist则设置Alist的域名（不带dav）如果想要引用onedrive则输入onedrive主页_layouts/15/onedrive.aspx?view=1前的链接部分然后加上/Documents	#示例https://XXX/personal/XXX/Documents
-设定认证方式	#设置为basic</code></pre><p style="">本地部署Alist并引用alist链接示例：</p><p style=""><img src="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-28-12-2024-01-13-14-28-12.png?sign=U9ueCQb_13Tguo52L51xzalyWQEmNZHb5vsvXvRlaMw=:0" width="248px" height="Infinitypx" style="display: inline-block"></p><p style="">自定义域名后可加<code>/d /p /q </code>有一个字母无法在相册内查看自己试下</p><h2 style="" id="piclist%2Balist%2Bom%E4%BD%BF%E7%94%A8">Piclist+Alist+OM使用</h2><p style="">虽然有插件但是om部署在Vercel的目前无法使用</p><p style=""><a rel="noopener noreferrer nofollow" href="https://github.com/laoxinH/picgo-plugin-onemanager" target="_blank">picgo-plugin-onemanager-uploader</a></p><p style="">本地部署Alist并引用om链接示例：</p><p style=""><img src="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-33-49-2024-01-13-14-33-49.png?sign=lIb4M4Hn34WJN_pSMyXs86O_G_OIkjoPxFE8u9ee-c8=:0" width="249px" height="Infinitypx" style="display: inline-block"></p><p style="">om无法再相册内查看需在链接最后添加?preview</p><p style="text-align: center"><span fontsize="" color="rgb(243, 244, 246)" style="color: rgb(243, 244, 246)"><mark data-color="#111827" style="background-color: #111827; color: inherit">！需注意一个缺点在相册内虽然可以看到缩略图但是没法点击放大</mark></span></p><h2 style="" id="piclist%2Bgithub">Piclist+Github</h2><p style="">官方文档很清楚了直接照着做就行，示例：</p><p style=""><img src="https://raw.githubusercontent.com/mhdy2233/tuchuang/img/yb/2024-01-13-14-37-03-2024-01-13-14-37-03.png" width="100%" height="100%" style="display: inline-block"></p><h2 style="" id="piclist%2Brclone">Piclist+Rclone</h2><p style="">不好用所以不推荐使用尤其是本地部署Alist</p><pre><code>图床配置名	#显示名称
-远端存储名	#Rclone配置名称
-桶名	#盘内文件夹名称
-桶下前缀Prefix	#桶内文件夹名称
-域名前缀	#网盘的前缀如果是onedrive则需要在最后添加/Documents/桶名
-上传路径	#桶内新建文件夹，为空则是文件名，如果开启了高级重命名则为高级重命名的名称。如果填写则不受影响高级重命名影响
-备份没什么讲究填进去就行</code></pre><p style=""><span fontsize="" color="rgb(243, 244, 246)" style="color: rgb(243, 244, 246)"><mark data-color="#111827" style="background-color: #111827; color: inherit">！需注意Rclone上传后文件会被重命名为哈希值，并且相册只能检测文件名称或者高级重命名后的名称因此在相册无法预览Rclone上传的图片，如果Alist部署在本地的话速度要比Rclone快。</mark></span></p>
-
+          <p>Piclist图床使用为什么选PiclistPiclist相比Picgo自带Webdav可以配合Alist进行使用，虽然插件内有rclone但实际体验不佳Piclist+Alist+onedrive可以实现免费大容量图床Piclist简单介…</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/01/08/1704737446299/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

@@ -142,6 +142,31 @@ function yamlQuote(s) {
   return str;
 }
 
+/** 从 markdown 正文提取纯文本（去标记），用于自动生成首页摘要 */
+function plainText(md) {
+  return String(md || '')
+    .replace(/<!--[\s\S]*?-->/g, '')          // HTML 注释
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')     // 图片
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')  // 链接保留文字
+    .replace(/^[>\-\*\+ ]+/gm, '')            // 引用/列表符号
+    .replace(/[#`_~|]+/g, '')                 // 标题/代码/强调标记
+    .replace(/<[^>]+>/g, '')                  // HTML 标签
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * 生成首页摘要：优先 Halo 文章的摘要（excerpt.raw），
+ * 否则取正文纯文本前 120 字。首页用 description 显示预览 + 阅读全文按钮。
+ */
+function buildExcerpt(post, raw) {
+  if (post.spec.excerpt && post.spec.excerpt.raw && !post.spec.excerpt.autoGenerate) {
+    return post.spec.excerpt.raw;
+  }
+  const text = plainText(raw);
+  return text.length > 120 ? text.slice(0, 120) + '…' : text;
+}
+
 /** 生成 YAML front-matter */
 function frontMatter(post, categories, tags, raw) {
   const date = post.spec.publishTime || post.metadata.creationTimestamp || '';
@@ -150,9 +175,8 @@ function frontMatter(post, categories, tags, raw) {
   lines.push(`title: ${yamlQuote(post.spec.title)}`);
   lines.push(`date: ${dateStr}`);
   lines.push(`updated: ${dateStr}`);
-  if (post.spec.excerpt && post.spec.excerpt.raw && !post.spec.excerpt.autoGenerate) {
-    lines.push(`excerpt: ${yamlQuote(post.spec.excerpt.raw)}`);
-  }
+  const excerpt = buildExcerpt(post, raw);
+  if (excerpt) lines.push(`description: ${yamlQuote(excerpt)}`);
   const cats = (post.spec.categories || []).map((c) => categories[c]).filter(Boolean);
   if (cats.length) lines.push(`categories:\n${cats.map((c) => `  - ${yamlQuote(c)}`).join('\n')}`);
   const tgs = (post.spec.tags || []).map((t) => tags[t]).filter(Boolean);

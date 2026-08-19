@@ -17,8 +17,8 @@ hexo generate ──► public/ (静态站点)
 GitHub Actions ──► push 到 master ──► GitHub Pages (https://mhdy2233.github.io)
 ```
 
-- 老文章（2023 年 10 篇）已逆向为 Markdown 放在 `source/_posts/`，URL 与原站完全一致（`/2023/09/23/<标题>/`）
-- 老文章的图片资源（`2023/` 目录）保留在 master 分支，部署时由 workflow 增量保留
+- 内容完全由 Halo 同步而来：`source/_posts/` 由 `sync-halo.js` 每次运行时生成/覆盖，本地不手动维护文章
+- 部署时 `rsync --delete` 以构建产物为准，并删除 master 上的 `2023/` 旧文章与 `index1.html` 旧首页，只保留 Halo 内容
 
 ## 首次部署
 
@@ -68,6 +68,6 @@ node run-hexo.js generate # 生成到 public/
 
 ## 说明
 
-- `sync-halo.js` 拉取 Halo 已发布文章（`publishPhase=published`），正文从 Snapshot 获取（`releaseSnapshot` → `rawPatch`），分类/标签按 `displayName` 映射
-- 部署时 `rsync --exclude=2023/ --exclude=index1.html` 保留老文章图片与旧首页留档，其余以新构建为准
+- `sync-halo.js` 拉取 Halo 已发布文章（`publishPhase=published`），正文走 console API 的 `release-content` 接口（服务端合并快照链后直接返回 markdown 原文，`/apis/api.console.halo.run/v1alpha1/posts/{name}/release-content`），分类/标签按 `displayName` 映射
+- 部署时 `rsync --delete` 以构建产物为准，并删除 master 上的 `2023/` 旧文章与 `index1.html` 旧首页，只保留 Halo 内容
 - 发布页（原手写 index.html）已废弃，站点根路径现在直接是博客首页

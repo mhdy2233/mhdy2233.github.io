@@ -62,8 +62,10 @@ jobs:
             git rm -rf --cached . 2>/dev/null || true
             git clean -fdx -e node_modules -e public 2>/dev/null || true
           fi
-          # 增量同步构建产物：删除产物中不存在的 hexo 管理文件，但保留旧文章/历史文件
-          rsync -a --delete --exclude='2023/' --exclude='index1.html' --exclude='.git/' /tmp/public/ ./
+          # 增量同步构建产物：删除产物中不存在的 hexo 管理文件
+          rsync -a --delete --exclude='.git/' /tmp/public/ ./
+          # 清理旧博客残留（2023/ 老文章、index1.html 旧首页），只保留 Halo 同步的内容
+          rm -rf 2023 index1.html
           # 强制使用构建产物里的 index.html（博客首页）
           cp -f /tmp/public/index.html index.html
           touch .nojekyll

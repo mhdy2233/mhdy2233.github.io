@@ -9,10 +9,14 @@
  *
  * 流程：
  *   1. 分页拉取 Halo 已发布文章列表（/apis/api.content.halo.run/v1alpha1/posts）
- *   2. 根据 Post.spec.releaseSnapshot 拉取对应 Snapshot 拿正文（rawType=markdown 时 rawPatch 即正文）
+ *   2. 逐篇调用 console API 的 release-content 接口拿已发布正文（markdown 原文）
  *   3. 拉取分类/标签列表，把 metadata.name 映射为 displayName
  *   4. 生成 Hexo front-matter Markdown 写入 source/_posts/
  *   5. 删除本地存在但 Halo 已不存在的旧文章文件（增量同步）
+ *
+ * 注意：公开 API 的 /apis/api.content.halo.run/v1alpha1/snapshots 在 Halo 2.x 中不存在，
+ * 正文必须走 console API：/apis/api.console.halo.run/v1alpha1/posts/{name}/release-content
+ * （需要 PAT 认证，Halo 后台「个人资料 → 个人令牌」创建，带 api 或 console 权限）。
  *
  * 环境变量：
  *   HALO_BASE_URL  必填，Halo 站点地址，如 https://blog.example.com
@@ -159,21 +163,16 @@ function frontMatter(post, categories, tags, raw) {
   return lines.join('\n') + '\n\n' + raw.trim() + '\n';
 }
 
-/** 从快照链还原正文（base snapshot 的 rawPatch 即全文；若为增量则沿 parent 拼接） */
-async function resolveContent(releaseSnapshotName, seen = new Set()) {
-  if (!releaseSnapshotName || seen.has(releaseSnapshotName)) return '';
-  seen.add(releaseSnapshotName);
-  const snap = await fetchOne('/apis/api.content.halo.run/v1alpha1/snapshots', releaseSnapshotName);
-  const spec = snap.spec || {};
-  let raw = spec.rawPatch || '';
-  if (spec.parentSnapshotName) {
-    const parentRaw = await resolveContent(spec.parentSnapshotName, seen);
-    // 新版本 Halo 中 rawPatch 已是全文；这里兜底：若父快照存在且当前是 diff，则父+当前
-    if (parentRaw && !raw.includes(parentRaw.slice(0, 50))) {
-      raw = parentRaw + raw;
-    }
-  }
-  return raw;
+/**
+ * 取已发布正文（markdown 原文）。
+ *
+ * 走 console API 的 release-content 接口：Halo 服务端已按 releaseSnapshot +
+ * baseSnapshot 把快照链合并成完整内容，无需我们手动拼接快照。
+ * 返回体 ContentWrapper：{ snapshotName, raw, content, rawType }，raw 即 markdown 原文。
+ */
+async function resolveContent(postName) {
+  const wrapper = await fetchOne('/apis/api.console.halo.run/v1alpha1/posts', `${postName}/release-content`);
+  return wrapper.raw || '';
 }
 
 async function main() {
@@ -200,12 +199,7 @@ async function main() {
   const written = new Set();
   for (const post of posts) {
     const name = post.metadata.name;
-    const releaseSnapshot = post.spec.releaseSnapshot;
-    if (!releaseSnapshot) {
-      console.log(`[skip] ${post.spec.title} 无已发布快照，跳过`);
-      continue;
-    }
-    const raw = await resolveContent(releaseSnapshot);
+    const raw = await resolveContent(name);
     if (!raw.trim()) {
       console.log(`[skip] ${post.spec.title} 正文为空，跳过`);
       continue;

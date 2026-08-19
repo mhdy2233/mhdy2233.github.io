@@ -1,0 +1,238 @@
+#!/usr/bin/env node
+/**
+ * sync-halo.js — 把 Halo 2.x 已发布文章同步为 Hexo 博客的 Markdown 源文件
+ *
+ * 使用方式：
+ *   HALO_BASE_URL=https://your-halo.example.com \
+ *   HALO_PAT=<个人访问令牌> \
+ *   node scripts/sync-halo.js
+ *
+ * 流程：
+ *   1. 分页拉取 Halo 已发布文章列表（/apis/api.content.halo.run/v1alpha1/posts）
+ *   2. 根据 Post.spec.releaseSnapshot 拉取对应 Snapshot 拿正文（rawType=markdown 时 rawPatch 即正文）
+ *   3. 拉取分类/标签列表，把 metadata.name 映射为 displayName
+ *   4. 生成 Hexo front-matter Markdown 写入 source/_posts/
+ *   5. 删除本地存在但 Halo 已不存在的旧文章文件（增量同步）
+ *
+ * 环境变量：
+ *   HALO_BASE_URL  必填，Halo 站点地址，如 https://blog.example.com
+ *   HALO_PAT       必填，Halo 个人访问令牌（后台「个人资料 → 个人令牌」创建）
+ *   HALO_SKIP_HTTPS_CHECK 可选，设为 1 时忽略 TLS 证书校验（自签名证书用）
+ */
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
+const http = require('http');
+const { URL } = require('url');
+
+const BASE = (process.env.HALO_BASE_URL || '').replace(/\/+$/, '');
+const PAT = process.env.HALO_PAT || '';
+const SKIP_TLS = process.env.HALO_SKIP_HTTPS_CHECK === '1';
+const POSTS_DIR = path.join(__dirname, '..', 'source', '_posts');
+
+if (!BASE || !PAT) {
+  console.error('错误：需要设置 HALO_BASE_URL 和 HALO_PAT 环境变量');
+  process.exit(1);
+}
+
+/** 请求 Halo API，自动分页，返回 items 数组 */
+async function request(pathname, page = 0, size = 50) {
+  const url = new URL(BASE + pathname);
+  url.searchParams.set('page', String(page));
+  url.searchParams.set('size', String(size));
+  url.searchParams.set('publishPhase', 'published');
+  const lib = url.protocol === 'https:' ? https : http;
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${PAT}`,
+      Accept: 'application/json',
+    },
+  };
+  if (SKIP_TLS && url.protocol === 'https:') {
+    options.rejectUnauthorized = false;
+  }
+  return new Promise((resolve, reject) => {
+    const req = lib.request(url, options, (res) => {
+      let body = '';
+      res.on('data', (c) => (body += c));
+      res.on('end', () => {
+        if (res.statusCode >= 400) {
+          reject(new Error(`GET ${pathname} -> ${res.statusCode}: ${body.slice(0, 300)}`));
+          return;
+        }
+        try {
+          resolve(JSON.parse(body));
+        } catch (e) {
+          reject(new Error(`GET ${pathname} 返回非 JSON: ${body.slice(0, 200)}`));
+        }
+      });
+    });
+    req.on('error', reject);
+    req.end();
+  });
+}
+
+/** 拉取全部页 */
+async function fetchAll(pathname) {
+  const items = [];
+  let page = 0;
+  for (;;) {
+    const data = await request(pathname, page, 50);
+    const list = data.items || [];
+    items.push(...list);
+    if (list.length < 50) break;
+    page += 1;
+  }
+  return items;
+}
+
+/** 取单个资源（metadata.name -> 详情），用于拿 Snapshot 正文 */
+async function fetchOne(pathname, name) {
+  const url = new URL(`${BASE}${pathname}/${encodeURIComponent(name)}`);
+  const lib = url.protocol === 'https:' ? https : http;
+  const options = {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${PAT}`, Accept: 'application/json' },
+  };
+  if (SKIP_TLS && url.protocol === 'https:') options.rejectUnauthorized = false;
+  return new Promise((resolve, reject) => {
+    const req = lib.request(url, options, (res) => {
+      let body = '';
+      res.on('data', (c) => (body += c));
+      res.on('end', () => {
+        if (res.statusCode >= 400) {
+          reject(new Error(`GET ${pathname}/${name} -> ${res.statusCode}: ${body.slice(0, 200)}`));
+          return;
+        }
+        try { resolve(JSON.parse(body)); } catch (e) { reject(e); }
+      });
+    });
+    req.on('error', reject);
+    req.end();
+  });
+}
+
+/** 把 Markdown 正文中 Halo 附件相对链接补全为绝对地址 */
+function rewriteMedia(md, postPermalink) {
+  if (!md) return md;
+  // 附件引用形如 attachments/mhdy2233/xxxx.png（相对当前文章路径）
+  const base = new URL(BASE);
+  return md.replace(/!\[([^\]]*)\]\((attachments\/[^)\s]+)\)/g, (m, alt, rel) => {
+    const abs = new URL(`/upload/${rel.replace(/^attachments\//, '')}`, base);
+    return `![${alt}](${abs.href})`;
+  }).replace(/(src|href)=["'](\/upload\/[^"']+)["']/g, (m, attr, rel) => {
+    const abs = new URL(rel, base);
+    return `${attr}="${abs.href}"`;
+  });
+}
+
+function yamlQuote(s) {
+  if (s == null) return '""';
+  const str = String(s);
+  if (/[:#\[\]{}&*!|>'"%@`\n]/.test(str) || /^\s|\s$/.test(str)) {
+    return JSON.stringify(str);
+  }
+  return str;
+}
+
+/** 生成 YAML front-matter */
+function frontMatter(post, categories, tags, raw) {
+  const date = post.spec.publishTime || post.metadata.creationTimestamp || '';
+  const dateStr = date ? date.replace(/\.\d+Z$/, 'Z').replace('Z', '+08:00').replace('T', ' ') : '';
+  const lines = ['---'];
+  lines.push(`title: ${yamlQuote(post.spec.title)}`);
+  lines.push(`date: ${dateStr}`);
+  lines.push(`updated: ${dateStr}`);
+  if (post.spec.excerpt && post.spec.excerpt.raw && !post.spec.excerpt.autoGenerate) {
+    lines.push(`excerpt: ${yamlQuote(post.spec.excerpt.raw)}`);
+  }
+  const cats = (post.spec.categories || []).map((c) => categories[c]).filter(Boolean);
+  if (cats.length) lines.push(`categories:\n${cats.map((c) => `  - ${yamlQuote(c)}`).join('\n')}`);
+  const tgs = (post.spec.tags || []).map((t) => tags[t]).filter(Boolean);
+  if (tgs.length) lines.push(`tags:\n${tgs.map((t) => `  - ${yamlQuote(t)}`).join('\n')}`);
+  // Halo 源信息（用于溯源与去重）
+  lines.push(`halo_post_name: ${post.metadata.name}`);
+  lines.push('---');
+  return lines.join('\n') + '\n\n' + raw.trim() + '\n';
+}
+
+/** 从快照链还原正文（base snapshot 的 rawPatch 即全文；若为增量则沿 parent 拼接） */
+async function resolveContent(releaseSnapshotName, seen = new Set()) {
+  if (!releaseSnapshotName || seen.has(releaseSnapshotName)) return '';
+  seen.add(releaseSnapshotName);
+  const snap = await fetchOne('/apis/api.content.halo.run/v1alpha1/snapshots', releaseSnapshotName);
+  const spec = snap.spec || {};
+  let raw = spec.rawPatch || '';
+  if (spec.parentSnapshotName) {
+    const parentRaw = await resolveContent(spec.parentSnapshotName, seen);
+    // 新版本 Halo 中 rawPatch 已是全文；这里兜底：若父快照存在且当前是 diff，则父+当前
+    if (parentRaw && !raw.includes(parentRaw.slice(0, 50))) {
+      raw = parentRaw + raw;
+    }
+  }
+  return raw;
+}
+
+async function main() {
+  console.log(`[sync] 从 ${BASE} 同步已发布文章...`);
+
+  // 1. 分类 / 标签 name -> displayName 映射
+  const [catList, tagList] = await Promise.all([
+    fetchAll('/apis/api.content.halo.run/v1alpha1/categories'),
+    fetchAll('/apis/api.content.halo.run/v1alpha1/tags'),
+  ]);
+  const categories = {};
+  for (const c of catList) categories[c.metadata.name] = c.spec.displayName;
+  const tags = {};
+  for (const t of tagList) tags[t.metadata.name] = t.spec.displayName;
+  console.log(`[sync] 分类 ${Object.keys(categories).length} 个，标签 ${Object.keys(tags).length} 个`);
+
+  // 2. 拉取全部已发布文章
+  const posts = await fetchAll('/apis/api.content.halo.run/v1alpha1/posts');
+  console.log(`[sync] 已发布文章 ${posts.length} 篇`);
+
+  fs.mkdirSync(POSTS_DIR, { recursive: true });
+
+  // 3. 逐篇拉正文 + 生成 Markdown
+  const written = new Set();
+  for (const post of posts) {
+    const name = post.metadata.name;
+    const releaseSnapshot = post.spec.releaseSnapshot;
+    if (!releaseSnapshot) {
+      console.log(`[skip] ${post.spec.title} 无已发布快照，跳过`);
+      continue;
+    }
+    const raw = await resolveContent(releaseSnapshot);
+    if (!raw.trim()) {
+      console.log(`[skip] ${post.spec.title} 正文为空，跳过`);
+      continue;
+    }
+    const md = frontMatter(post, categories, tags, raw);
+    const slug = post.spec.slug || name;
+    // 文件名 = 纯标题（Hexo 用文件名作 slug，生成 /YYYY/MM/DD/<标题>/ 与旧站 URL 一致）
+    const safeTitle = slug.replace(/[\\/:*?"<>|\s]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || name;
+    const file = path.join(POSTS_DIR, `${safeTitle}.md`);
+    fs.writeFileSync(file, md, 'utf8');
+    written.add(file);
+    console.log(`[ok] ${post.spec.title} -> ${path.basename(file)}`);
+  }
+
+  // 4. 清理本地多余文件（Halo 已删除/未发布的文章）
+  for (const f of fs.readdirSync(POSTS_DIR)) {
+    const full = path.join(POSTS_DIR, f);
+    if (f.endsWith('.md') && !written.has(full)) {
+      fs.unlinkSync(full);
+      console.log(`[del] ${f}`);
+    }
+  }
+
+  console.log(`[sync] 完成，共写入 ${written.size} 篇`);
+}
+
+main().catch((e) => {
+  console.error('[sync] 失败:', e.message);
+  process.exit(1);
+});

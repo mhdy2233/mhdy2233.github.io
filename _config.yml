@@ -1,0 +1,113 @@
+# Hexo 博客源码工程（source 分支）
+# 本仓库 master 分支为 GitHub Pages 产物（由 CI 自动生成推送，勿手改）
+# source 分支为 Hexo 源码 + Halo 同步工具
+
+# 站点配置
+title: 欢迎来到剃蛙铽
+subtitle: 感觉不如O神
+description: 感觉不如O神
+keywords:
+author: 魔皇地狱
+language: zh-CN
+timezone: Asia/Shanghai
+
+# 站点地址（GitHub Pages 默认域名）
+url: https://mhdy2233.github.io
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+# 文章默认属性
+new_post_name: :title.md
+default_layout: post
+auto_spacing: true
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: false
+syntax_highlighter: highlight.js
+highlight:
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  preprocess: true
+  line_number: true
+  tab_replace: ''
+
+# 目录
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render: []
+
+# 分页
+per_page: 10
+pagination_dir: page
+
+# 扩展
+theme: next
+
+# 部署（CI 不经过 hexo deploy，直接用 git push public 到 master）
+deploy:
+  type: ''
+
+# NexT 主题关键配置（与现有产物一致）
+theme_config:
+  scheme: Gemini
+  avatar:
+    url: /images/1.png
+  social:
+    GitHub: https://github.com/mhdy2233 || fab fa-github
+  menu:
+    home: / || fa fa-home
+    archives: /archives/ || fa fa-archive
+    categories: /categories/ || fa fa-th
+    about: /about/ || fa fa-user
+  sidebar:
+    position: left
+    display: hide
+    offset: 12
+    onmobile: false
+  back2top:
+    enable: true
+    sidebar: false
+    scrollpercent: false
+  bookmark:
+    enable: false
+  fancybox: true
+  motion:
+    enable: true
+  local_search:
+    enable: true
+    trigger: auto
+    top_n_per_article: 1
+    unescape: false
+    preload: false
+
+# 文章写作相关（保持与老文章 front-matter 兼容）
+post_asset_img: false
+
+# 生成器
+feed:
+  enable: true
+  type: atom
+  path: atom.xml
+  limit: 20
+
+search:
+  path: search.json
+  field: post
+  content: true

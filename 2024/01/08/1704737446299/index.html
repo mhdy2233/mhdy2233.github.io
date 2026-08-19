@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Piclist图床使用为什么选PiclistPiclist相比Picgo自带Webdav可以配合Alist进行使用，虽然插件内有rclone但实际体验不佳Piclist+Alist+onedrive可以实现免费大容量图床Piclist简单介绍Piclist是一款高效的云存储和图床平台管理工具，在PicGo的基础上经过深度的二次开发，不仅完整保留了PicGo的所有功能，还增添了许多新的feature">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Piclist图床使用">
+<meta property="og:url" content="https://mhdy2233.github.io/2024/01/08/1704737446299/index.html">
+<meta property="og:site_name" content="欢迎来到剃蛙铽">
+<meta property="og:description" content="Piclist图床使用为什么选PiclistPiclist相比Picgo自带Webdav可以配合Alist进行使用，虽然插件内有rclone但实际体验不佳Piclist+Alist+onedrive可以实现免费大容量图床Piclist简单介绍Piclist是一款高效的云存储和图床平台管理工具，在PicGo的基础上经过深度的二次开发，不仅完整保留了PicGo的所有功能，还增添了许多新的feature">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-28-12-2024-01-13-14-28-12.png?sign=U9ueCQb_13Tguo52L51xzalyWQEmNZHb5vsvXvRlaMw=:0">
+<meta property="og:image" content="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-33-49-2024-01-13-14-33-49.png?sign=lIb4M4Hn34WJN_pSMyXs86O_G_OIkjoPxFE8u9ee-c8=:0">
+<meta property="og:image" content="https://raw.githubusercontent.com/mhdy2233/tuchuang/img/yb/2024-01-13-14-37-03-2024-01-13-14-37-03.png">
+<meta property="article:published_time" content="2024-01-08T03:02:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T03:02:00.000Z">
+<meta property="article:author" content="魔皇地狱">
+<meta property="article:tag" content="图床">
+<meta property="article:tag" content="picgo">
+<meta property="article:tag" content="Piclist">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-28-12-2024-01-13-14-28-12.png?sign=U9ueCQb_13Tguo52L51xzalyWQEmNZHb5vsvXvRlaMw=:0">
+
+
+<link rel="canonical" href="https://mhdy2233.github.io/2024/01/08/1704737446299/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://mhdy2233.github.io/2024/01/08/1704737446299/","path":"2024/01/08/1704737446299/","title":"Piclist图床使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Piclist图床使用 | 欢迎来到剃蛙铽</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="欢迎来到剃蛙铽" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">欢迎来到剃蛙铽</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">感觉不如O神</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#piclist%E5%9B%BE%E5%BA%8A%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Piclist图床使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89piclist"><span class="nav-number">1.1.</span> <span class="nav-text">为什么选Piclist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#piclist%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.</span> <span class="nav-text">Piclist简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#piclist%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">Piclist基础使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#piclist+alist%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">Piclist+Alist使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#piclist+alist+om%E4%BD%BF%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">Piclist+Alist+OM使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#piclist+github"><span class="nav-number">1.6.</span> <span class="nav-text">Piclist+Github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#piclist+rclone"><span class="nav-number">1.7.</span> <span class="nav-text">Piclist+Rclone</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="魔皇地狱"
+      src="/images/1.png">
+  <p class="site-author-name" itemprop="name">魔皇地狱</p>
+  <div class="site-description" itemprop="description">感觉不如O神</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mhdy2233" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mhdy2233" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mhdy2233.github.io/2024/01/08/1704737446299/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.png">
+      <meta itemprop="name" content="魔皇地狱">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="欢迎来到剃蛙铽">
+      <meta itemprop="description" content="感觉不如O神">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Piclist图床使用 | 欢迎来到剃蛙铽">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Piclist图床使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-08 11:02:00" itemprop="dateCreated datePublished" datetime="2024-01-08T11:02:00+08:00">2024-01-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AE%9E%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">实用</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 style="" id="piclist%E5%9B%BE%E5%BA%8A%E4%BD%BF%E7%94%A8">Piclist图床使用</h1><h2 style="" id="%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89piclist">为什么选Piclist</h2><p style="">Piclist相比Picgo自带Webdav可以配合Alist进行使用，虽然插件内有rclone但实际体验不佳</p><p style="">Piclist+Alist+onedrive可以实现免费大容量图床</p><h2 style="" id="piclist%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D">Piclist简单介绍</h2><p style=""><a rel="noopener noreferrer nofollow" href="https://piclist.cn" target="_blank">Piclist</a><span style="font-size: 16px; color: rgb(60, 60, 67)">是一款高效的云存储和图床平台管理工具，在PicGo的基础上经过深度的二次开发，不仅完整保留了PicGo的所有功能，还增添了许多新的feature。例如相册支持同步云端删除文件，内置图床额外添加了WebDav、本地图床和SFTP等。PicList同时增加了完整的云存储管理功能，包括云端目录查看、文件搜索、批量上传下载和删除文件，复制多种格式文件链接和图片/markdown/文本/视频预览等，另外还有更加强大的相册和多项功能新增或优化。</span></p><h2 style="" id="piclist%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8">Piclist基础使用</h2><p style="">没什么难度做自己摸索也能会用，不会去看文档去</p><p style=""><a rel="noopener noreferrer nofollow" href="https://piclist.cn" target="_blank">https://piclist.cn</a></p><h2 style="" id="piclist%2Balist%E4%BD%BF%E7%94%A8">Piclist+Alist使用</h2><p style="">虽然有Alist的插件但是目前没有自定义域名功能，本地部署的Alist是无法使用的</p><p style=""><a rel="noopener noreferrer nofollow" href="https://github.com/jinzhi0123/picgo-plugin-alist" target="_blank">picgo-plugin-alist</a></p><pre><code>图床配置名	#显示名称
+设定接口网址	#Alist链接或者ip（记得加dav） 示例：https://pan.mhdyapp.buzz/dav
+启用SSL	#看情况是否开启
+设定用户名	#Alist用户名
+设定密码	#Alist密码
+设定存储路径	#字面意思
+设定网址路径	#接口网址或自定义域名后的路径
+设定自定义域名	#直接引用Alist则设置Alist的域名（不带dav）如果想要引用onedrive则输入onedrive主页_layouts/15/onedrive.aspx?view=1前的链接部分然后加上/Documents	#示例https://XXX/personal/XXX/Documents
+设定认证方式	#设置为basic</code></pre><p style="">本地部署Alist并引用alist链接示例：</p><p style=""><img src="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-28-12-2024-01-13-14-28-12.png?sign=U9ueCQb_13Tguo52L51xzalyWQEmNZHb5vsvXvRlaMw=:0" width="248px" height="Infinitypx" style="display: inline-block"></p><p style="">自定义域名后可加<code>/d /p /q </code>有一个字母无法在相册内查看自己试下</p><h2 style="" id="piclist%2Balist%2Bom%E4%BD%BF%E7%94%A8">Piclist+Alist+OM使用</h2><p style="">虽然有插件但是om部署在Vercel的目前无法使用</p><p style=""><a rel="noopener noreferrer nofollow" href="https://github.com/laoxinH/picgo-plugin-onemanager" target="_blank">picgo-plugin-onemanager-uploader</a></p><p style="">本地部署Alist并引用om链接示例：</p><p style=""><img src="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-33-49-2024-01-13-14-33-49.png?sign=lIb4M4Hn34WJN_pSMyXs86O_G_OIkjoPxFE8u9ee-c8=:0" width="249px" height="Infinitypx" style="display: inline-block"></p><p style="">om无法再相册内查看需在链接最后添加?preview</p><p style="text-align: center"><span fontsize="" color="rgb(243, 244, 246)" style="color: rgb(243, 244, 246)"><mark data-color="#111827" style="background-color: #111827; color: inherit">！需注意一个缺点在相册内虽然可以看到缩略图但是没法点击放大</mark></span></p><h2 style="" id="piclist%2Bgithub">Piclist+Github</h2><p style="">官方文档很清楚了直接照着做就行，示例：</p><p style=""><img src="https://raw.githubusercontent.com/mhdy2233/tuchuang/img/yb/2024-01-13-14-37-03-2024-01-13-14-37-03.png" width="100%" height="100%" style="display: inline-block"></p><h2 style="" id="piclist%2Brclone">Piclist+Rclone</h2><p style="">不好用所以不推荐使用尤其是本地部署Alist</p><pre><code>图床配置名	#显示名称
+远端存储名	#Rclone配置名称
+桶名	#盘内文件夹名称
+桶下前缀Prefix	#桶内文件夹名称
+域名前缀	#网盘的前缀如果是onedrive则需要在最后添加/Documents/桶名
+上传路径	#桶内新建文件夹，为空则是文件名，如果开启了高级重命名则为高级重命名的名称。如果填写则不受影响高级重命名影响
+备份没什么讲究填进去就行</code></pre><p style=""><span fontsize="" color="rgb(243, 244, 246)" style="color: rgb(243, 244, 246)"><mark data-color="#111827" style="background-color: #111827; color: inherit">！需注意Rclone上传后文件会被重命名为哈希值，并且相册只能检测文件名称或者高级重命名后的名称因此在相册无法预览Rclone上传的图片，如果Alist部署在本地的话速度要比Rclone快。</mark></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag"># 图床</a>
+              <a href="/tags/picgo/" rel="tag"># picgo</a>
+              <a href="/tags/Piclist/" rel="tag"># Piclist</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/01/08/1704807037943/" rel="next" title="我看过觉得还可以的番">
+                  我看过觉得还可以的番 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">魔皇地狱</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

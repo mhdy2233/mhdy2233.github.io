@@ -8,7 +8,7 @@
 Halo 2.x (你的博客后台)
    │  文章 (REST API + PAT)
    ▼
-scripts/sync-halo.js ──► source/_posts/*.md (Hexo 源文件)
+tools/sync-halo.js ──► source/_posts/*.md (Hexo 源文件)
    │
    ▼
 hexo generate ──► public/ (静态站点)

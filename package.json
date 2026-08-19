@@ -4,7 +4,7 @@
   "private": true,
   "description": "Hexo 源码 + Halo 同步工具（GitHub Pages 部署）",
   "scripts": {
-    "sync": "node scripts/sync-halo.js",
+    "sync": "node tools/sync-halo.js",
     "clean": "hexo clean",
     "generate": "hexo generate",
     "server": "hexo server"

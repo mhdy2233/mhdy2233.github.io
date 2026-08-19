@@ -166,13 +166,30 @@ function frontMatter(post, categories, tags, raw) {
 /**
  * 取已发布正文（markdown 原文）。
  *
- * 走 console API 的 release-content 接口：Halo 服务端已按 releaseSnapshot +
- * baseSnapshot 把快照链合并成完整内容，无需我们手动拼接快照。
- * 返回体 ContentWrapper：{ snapshotName, raw, content, rawType }，raw 即 markdown 原文。
+ * 首选 console API 的 release-content 接口：服务端按 releaseSnapshot + baseSnapshot
+ * 合并快照链后直接返回完整内容。返回体 ContentWrapper：{ raw, content, rawType }，
+ * raw 即 markdown 原文。
+ *
+ * 若 console API 因权限返回 401/403，回退到公开只读接口
+ * /apis/api.content.halo.run/v1alpha1/posts/{name}（匿名可读，返回 PostVo，
+ * 其 content.raw 同样为 markdown 原文）。
  */
 async function resolveContent(postName) {
-  const wrapper = await fetchOne('/apis/api.console.halo.run/v1alpha1/posts', `${postName}/release-content`);
-  return wrapper.raw || '';
+  try {
+    const wrapper = await fetchOne(
+      '/apis/api.console.halo.run/v1alpha1/posts',
+      `${postName}/release-content`,
+    );
+    return (wrapper && wrapper.raw) || '';
+  } catch (e) {
+    const status = Number((e.message.match(/(\d{3})/) || [])[1]);
+    if (status === 401 || status === 403) {
+      console.log(`[fallback] release-content 无权限(${status})，改用公开接口`);
+      const vo = await fetchOne('/apis/api.content.halo.run/v1alpha1/posts', postName);
+      return (vo && vo.content && vo.content.raw) || '';
+    }
+    throw e;
+  }
 }
 
 async function main() {

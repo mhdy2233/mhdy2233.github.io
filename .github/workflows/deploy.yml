@@ -3,7 +3,10 @@ name: Build & Deploy to GitHub Pages (master)
 on:
   # 手动触发：Actions 页面点 Run workflow
   workflow_dispatch:
-  # Halo 发布文章后，在 Halo 后台配置 Webhook 调用本仓库的 actions/dispatch（见 README）
+  # 定时轮询 Halo（每 30 分钟；避开整点，整点是 Actions 高峰、排队更久）
+  schedule:
+    - cron: '17,47 * * * *'
+  # 需要「发布即上线」时，可让外部服务调用本仓库的 dispatches 接口触发（见 README）
   repository_dispatch:
     types: [halo-publish]
 
@@ -74,6 +77,11 @@ jobs:
           cp -f /tmp/public/index.html index.html
           touch .nojekyll
           git add -A
+          # 定时轮询大多数时候没有新内容，产物一致就不要留空提交
+          if git rev-parse --verify HEAD >/dev/null 2>&1 && git diff --cached --quiet; then
+            echo "站点产物无变化，跳过提交与推送"
+            exit 0
+          fi
           git -c user.name="GitHub Actions" -c user.email="actions@github.com" \
-            commit -m "Deploy from source branch: ${SRC_SHA}" --allow-empty
+            commit -m "Deploy from source branch: ${SRC_SHA}"
           git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git master

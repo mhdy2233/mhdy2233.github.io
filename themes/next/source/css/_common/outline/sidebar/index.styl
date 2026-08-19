@@ -60,7 +60,8 @@
       }
 
       &::before {
-        background: rgb(random-color(0, 255) - 50%, random-color(0, 255) - 50%, random-color(0, 255) - 50%);
+        // 主题原本用 random-color() 取随机色，导致每次构建 main.css 都不一样
+        background: var(--brand-color);
         display: inline-block;
         margin-right: 3px;
         transform: translateY(-2px);

@@ -93,9 +93,9 @@ async function fetchAll(pathname) {
   return items;
 }
 
-/** 取单个资源（metadata.name -> 详情），用于拿 Snapshot 正文 */
-async function fetchOne(pathname, name) {
-  const url = new URL(`${BASE}${pathname}/${encodeURIComponent(name)}`);
+/** 取单个资源（pathSuffix 拼在 pathname 后，用于拿 release-content 正文） */
+async function fetchOne(pathname, pathSuffix) {
+  const url = new URL(`${BASE}${pathname}/${pathSuffix}`);
   const lib = url.protocol === 'https:' ? https : http;
   const options = {
     method: 'GET',

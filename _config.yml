@@ -101,6 +101,7 @@ theme_config:
     top_n_per_article: 1
     unescape: false
     preload: false
+  google_site_verification: oUfgPS8Q5O3eMf28wAV7Lrm2-tIlmTAF1DHbvEIYtHE
 
 # 文章写作相关（保持与老文章 front-matter 兼容）
 post_asset_img: false
@@ -116,3 +117,9 @@ search:
   path: search.json
   field: post
   content: true
+
+sitemap:
+  path: sitemap.xml
+  rel: false
+  tags: true
+  categories: true

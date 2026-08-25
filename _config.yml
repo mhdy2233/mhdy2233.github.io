@@ -5,7 +5,7 @@
 # 站点配置
 title: 魔皇地狱的博客
 subtitle: 我是废物
-description: 这里是魔皇地狱的博客
+description: 这里是halo博客的镜像
 keywords:
 author: 魔皇地狱
 language: zh-CN
@@ -14,7 +14,7 @@ timezone: Asia/Shanghai
 # 站点地址（GitHub Pages 默认域名）
 url: https://mhdy2233.github.io
 root: /
-permalink: :year/:month/:day/:title/
+permalink: archives/:title/
 permalink_defaults:
 
 # 文章默认属性
@@ -73,9 +73,9 @@ theme_config:
   avatar:
     url: /images/halo-avatar.png
   social:
-    GitHub: https://github.com/mhdy2233 || fab fa-github
     Telegram: https://t.me/lajijichang || fa-brands fa-telegram
     Home: https://mohuangdiyu.com || fa-solid fa-house
+    小店: https://shop.mhdy.net || fa-solid fa-shop
   menu:
     home: / || fa fa-home
     archives: /archives/ || fa fa-archive

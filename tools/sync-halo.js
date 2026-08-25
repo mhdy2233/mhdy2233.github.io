@@ -431,7 +431,7 @@ async function main() {
     }
     const md = frontMatter(post, categories, tags, raw);
     const slug = post.spec.slug || name;
-    // 文件名 = 纯标题（Hexo 用文件名作 slug，生成 /YYYY/MM/DD/<标题>/ 与旧站 URL 一致）
+    // 文件名 = slug（Hexo 用文件名作 slug，生成 /archives/<slug>/ 与 Halo URL 一致）
     const safeTitle = slug.replace(/[\\/:*?"<>|\s]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || name;
     const file = path.join(POSTS_DIR, `${safeTitle}.md`);
     fs.writeFileSync(file, md, 'utf8');

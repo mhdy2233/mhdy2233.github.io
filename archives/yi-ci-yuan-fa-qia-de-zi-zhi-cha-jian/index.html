@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="oUfgPS8Q5O3eMf28wAV7Lrm2-tIlmTAF1DHbvEIYtHE">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="原项目地址 https:&#x2F;&#x2F;github.com&#x2F;lizhipay&#x2F;acg-faka本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的通过修改kernel&#x2F;Plugin&#x2F;Hook.php 和app&#x2F;Controller&#x2F;Ad…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异次元发卡的本地插件">
+<meta property="og:url" content="https://mhdy2233.github.io/archives/yi-ci-yuan-fa-qia-de-zi-zhi-cha-jian/index.html">
+<meta property="og:site_name" content="魔皇地狱的博客">
+<meta property="og:description" content="原项目地址 https:&#x2F;&#x2F;github.com&#x2F;lizhipay&#x2F;acg-faka本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的通过修改kernel&#x2F;Plugin&#x2F;Hook.php 和app&#x2F;Controller&#x2F;Ad…">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-30T09:20:07.000Z">
+<meta property="article:modified_time" content="2026-08-30T09:20:07.000Z">
+<meta property="article:author" content="魔皇地狱">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mhdy2233.github.io/archives/yi-ci-yuan-fa-qia-de-zi-zhi-cha-jian/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://mhdy2233.github.io/archives/yi-ci-yuan-fa-qia-de-zi-zhi-cha-jian/","path":"archives/yi-ci-yuan-fa-qia-de-zi-zhi-cha-jian/","title":"异次元发卡的本地插件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>异次元发卡的本地插件 | 魔皇地狱的博客</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="魔皇地狱的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">魔皇地狱的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我是废物</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%BB%A5%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">修改文件以支持本地插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%99%E9%87%8C%E6%98%AF%E4%BF%AE%E6%94%B9%E5%AF%B9%E6%AF%94"><span class="nav-number">1.1.</span> <span class="nav-text">这里是修改对比</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="魔皇地狱"
+      src="/images/halo-avatar.png">
+  <p class="site-author-name" itemprop="name">魔皇地狱</p>
+  <div class="site-description" itemprop="description">这里是halo博客的镜像</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://t.me/lajijichang" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;lajijichang" rel="noopener me" target="_blank"><i class="fa-brands fa-telegram fa-fw"></i>Telegram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://mohuangdiyu.com/" title="Home → https:&#x2F;&#x2F;mohuangdiyu.com" rel="noopener me" target="_blank"><i class="fa-solid fa-house fa-fw"></i>Home</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://shop.mhdy.net/" title="小店 → https:&#x2F;&#x2F;shop.mhdy.net" rel="noopener me" target="_blank"><i class="fa-solid fa-shop fa-fw"></i>小店</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mhdy2233.github.io/archives/yi-ci-yuan-fa-qia-de-zi-zhi-cha-jian/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/halo-avatar.png">
+      <meta itemprop="name" content="魔皇地狱">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魔皇地狱的博客">
+      <meta itemprop="description" content="这里是halo博客的镜像">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="异次元发卡的本地插件 | 魔皇地狱的博客">
+      <meta itemprop="description" content="原项目地址 https:&#x2F;&#x2F;github.com&#x2F;lizhipay&#x2F;acg-faka本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的通过修改kernel&#x2F;Plugin&#x2F;Hook.php 和app&#x2F;Controller&#x2F;Ad…">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          异次元发卡的本地插件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-08-30 17:20:07" itemprop="dateCreated datePublished" datetime="2026-08-30T17:20:07+08:00">2026-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AE%9E%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">实用</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">原项目地址 https://github.com/lizhipay/acg-faka本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的通过修改kernel/Plugin/Hook.php 和app/Controller/Ad…</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p style="">原项目地址 https://github.com/lizhipay/acg-faka</p><p style="">本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的</p><p style="">通过修改<code>kernel/Plugin/Hook.php</code> 和<code>app/Controller/Admin/Api/Plugin.php</code> 允许使用本地插件</p><p style="">注意版本，原项目每次更新都可能会导致修改或插件不可用</p><p style="">我的小店:</p><hyperlink-card target="_blank" href="https://shop.mhdy.net" theme="regular" style="margin-top: 0.75em; margin-bottom: 0;"><a href="https://shop.mhdy.net" target="_blank">https://shop.mhdy.net</a></hyperlink-card><h3 style="" id="%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%BB%A5%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6">修改文件以支持本地插件</h3><p style="">如果你也是3.5.6的版本那么直接覆盖即可，不是的话看下面的修改对比</p><p style=""><code>app/Controller/Admin/Api/Plugin.php</code> :</p><pre><code class="language-php">&lt;?php
+declare(strict_types=1);
+<p>namespace App\Controller\Admin;</p>
+<p>use App\Controller\Base\View\Manage;<br>
+use App\Interceptor\ManageSession;<br>
+use App\Service\App;<br>
+use App\Util\File;<br>
+use Kernel\Annotation\Interceptor;<br>
+use Kernel\Exception\JSONException;<br>
+use Kernel\Exception\NotFoundException;<br>
+use Kernel\Exception\ViewException;</p>
+<p>#[Interceptor(ManageSession::class)]<br>
+class Plugin extends Manage<br>
+&#123;</p>
+<pre><code>protected string $terms = &amp;lt;&amp;lt;&amp;lt;HTML
+</code></pre>
+<p><strong>重要声明：</strong></p>
+<p>在使用本插件（��下简称“插件”）之前，请仔细阅读本免责声明。安装、使用或继续使用本插件即表示您（以下简称“用户”）已经阅读、理解并同意遵守本免责声明的所有条款。若不同意，请勿安装或使用本插件。</p>
+<p><strong>1. 插件开发者的责任</strong></p>
+<p>开发者对本插件的功能、适用性及其带来的后果不做任何形式的保证。本插件按“现状”提供，开发者对其准确性、完整性、可靠性或任何其他方面不作任何明示或暗示的担保。开发者不保证本插件适用于用户的特定需求，也不保证本插件在所有情况下都能正常运行。</p>
+<p><strong>2. 使用风险自负</strong></p>
+<p>用户明确同意，使用本插件的风险由用户自行承担。开发者不对任何由于使用或无法使用本插件所导致的直接、间接、偶然、特殊或后果性损害（包括但不限于数据丢失、利润损失、业务中断或其他经济损失）承担责任，无论此类损害是否基于合同、侵权、疏忽、严格责任或其他法律理论，即使开发者已被告知可能存在此类损害。用户应自行评估并承担使用本插件的所有风险，包括但不限于可能的系统故障、数据丢失或其他不可预见的后果。</p>
+<p><strong>3. 合法使用</strong></p>
+<p>用户承诺不会利用本插件进行任何违反法律、法规或公共道德的行为。用户对使用本插件的行为及其结果负全部责任。若用户使用本插件从事违法活动，用户应自行承担一切法律责任，开发者对此不承担任何责任。用户应确保在其所在司法管辖区内使用本插件的行为是合法的，并遵守所有适用的法律法规。</p>
+<p><strong>4. 用户数据</strong></p>
+<p>开发者不会对用户通过本插件上传、存储或传输的数据进行任何形式的监控或审查。用户对其数据的合法性、准确性和完整性负全部责任。开发者不对用户数据的丢失、篡改或泄露承担任何责任。用户应自行备份其数据，并采取适当的安全措施保护其数据的安全性和保密性。</p>
+<p><strong>5. 知识产权</strong></p>
+<p>本插件及其所有相关的著作权、商标、专利、商业秘密及其他知识产权归开发者所有。用户不得以任何方式侵犯这些权利。未经开发者书面许可，用户不得复制、修改、分发、销售或出租本插件或其部分内容。用户不得逆向工程、反编译或试图以其他方式获取本插件的源代码或底层技术。</p>
+<p><strong>6. 第三方服务</strong></p>
+<p>本插件可能会与第三方服务进行集成或链接。用户使用第三方服务时，应遵守相应的服务条款和隐私政策。开发者对第三方服务的内容、功能或安全性不承担任何责任。用户应自行评估并承担使用第三方服务的所有风险。</p>
+<p><strong>7. 免责条款修改</strong></p>
+<p>开发者保留随时修改本免责声明的权利。修改后的免责声明一经发布即生效，并取代先前的免责声明。用户继续使用本插件即表示接受修改后的免责声明。用户应定期查看本免责声明，以确保了解最新的条款和条件。</p>
+<p><strong>8. 终止条款</strong></p>
+<p>开发者有权在任何时候、无需事先通知的情况下终止用户使用本插件的权利。用户在终止后应立即停止使用本插件，并删除所有相关副本。用户在终止使用本插件后，仍需承担使用本插件期间产生的所有责任和义务。</p>
+<p><strong>9. 不可抗力</strong></p>
+<p>在不可抗力事件发生期间，开发者对因不可抗力导致的本插件无法正常使用或用户因此受到的损失不承担任何责任。不可抗力事件包括但不限于自然灾害、战争、恐怖袭击、政府行为、互联网中断或其他超出开发者合理控制范围的事件。</p>
+<p><strong>10. 其他</strong></p>
+<p>本免责声明的解释权归开发者所有。本免责声明适用<code>中国大陆</code>法律。<br>
+HTML;</p>
+<pre><code>/**
+ * @return string
+ * @throws JSONException
+ * @throws ViewException
+ */
+public function index(): string
+&#123;
+    return $this-&amp;gt;render(&quot;通用插件&quot;, &quot;Config/Plugin.html&quot;);
+&#125;
+
+
+/**
+ * @param string $plugin
+ * @return string
+ * @throws JSONException
+ * @throws NotFoundException
+ * @throws ViewException
+ */
+public function wiki(string $plugin): string
+&#123;
+    if (!preg_match('/^[A-Za-z0-9_]+$/', $plugin)) &#123;
+        throw new NotFoundException(&quot;错误的插件&quot;);
+    &#125;
+
+    $appStore = (array)json_decode((string)file_get_contents(BASE_PATH . &quot;/runtime/plugin/store.cache&quot;), true);
+    $plg = \Kernel\Util\Plugin::getPlugin($plugin);
+
+    if (!$plg) &#123;
+        throw new NotFoundException(&quot;未找到该插件&quot;);
+    &#125;
+
+    $wiki = realpath(BASE_PATH . &quot;/app/Plugin/&#123;$plugin&#125;/Wiki/&quot;);
+
+    $staticBasePath = &quot;/app/Plugin/&#123;$plugin&#125;/Wiki/&quot;;
+
+    if (!is_dir($wiki)) &#123;
+        throw new NotFoundException(&quot;此插件没有文档&quot;);
+    &#125;
+
+    $readme = ['README.md', 'Readme.md']; //主页
+    $sidebar = ['SIDEBAR.md', 'Sidebar.md']; //菜单
+    $terms = ['TERMS.md', 'Terms.md']; //免责声明
+
+    $readmePath = '';
+    $sidebarPath = '';
+    $termsPath = '';
+
+    foreach ($readme as $r) &#123;
+        if (File::exists($wiki . &quot;/&quot; . $r)) &#123;
+            $readmePath = $r;
+            break;
+        &#125;
+    &#125;
+
+    foreach ($sidebar as $r) &#123;
+        if (File::exists($wiki . &quot;/&quot; . $r)) &#123;
+            $sidebarPath = $r;
+            break;
+        &#125;
+    &#125;
+
+    foreach ($terms as $r) &#123;
+        if (File::exists($wiki . &quot;/&quot; . $r)) &#123;
+            $termsPath = $r;
+            break;
+        &#125;
+    &#125;
+
+    if ($termsPath === '') &#123;
+        $termsPath = &quot;Terms.md&quot;;
+        file_put_contents($wiki . &quot;/&#123;$termsPath&#125;&quot;, $this-&amp;gt;terms);
+    &#125;
+
+    if ($sidebarPath === '') &#123;
+        $sidebarPath = &quot;Sidebar.md&quot;;
+        file_put_contents($wiki . &quot;/&#123;$sidebarPath&#125;&quot;, &quot;* [使用说明](&#123;$readmePath&#125;)\n* [免责声明](&#123;$termsPath&#125;)&quot;);
+    &#125;
+
+
+    $iconPath = $appStore[$plugin]['icon'] ?? null;
+    if (!is_string($iconPath) || !preg_match('#^/[A-Za-z0-9._~%/-]+$#D', $iconPath)) &#123;
+        $icon = &quot;/favicon.ico&quot;;
+    &#125; else &#123;
+        $icon = App::APP_URL . $iconPath;
+    &#125;
+
+    $pluginName = strip_tags((string)$plg['NAME']);
+    $pluginNameHtml = htmlspecialchars($pluginName, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $jsonFlags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP
+        | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE;
+
+    return $this-&amp;gt;render(&quot;通用插件&quot;, &quot;Config/Wiki.html&quot;, [
+        'pluginName' =&amp;gt; $pluginNameHtml,
+        'pluginKeyJson' =&amp;gt; json_encode($plugin, $jsonFlags),
+        // docsify 会把 name 拼进 HTML；这里传入实体编码后的文本，避免插件元数据形成标签或属性。
+        'pluginNameHtmlJson' =&amp;gt; json_encode($pluginNameHtml, $jsonFlags),
+        'basePathJson' =&amp;gt; json_encode($staticBasePath, $jsonFlags),
+        'iconJson' =&amp;gt; json_encode($icon, $jsonFlags),
+        'homepageJson' =&amp;gt; json_encode($readmePath, $jsonFlags),
+        'sidebarJson' =&amp;gt; json_encode($sidebarPath, $jsonFlags),
+    ]);
+&#125;
+
+/**
+ * 提供 Wiki 目录下的 .md 文档内容 —— 走 PHP 路由(index.php),不依赖 nginx 对
+ * /app/Plugin/**\/Wiki/*.md 的静态文件读取。宝塔等安全规则会把 README.md / CHANGELOG.md
+ * 之类的文件名直接 `return 404`,导致 docsify 拉不到首页而整体报 404;本路由 URL 形如
+ * /admin/plugin/wikiRes?plugin=X&amp;amp;file=README.md,路径部分不以 README.md 结尾,不被该规则命中,
+ * 任意服务器都能正常加载文档。
+ * @param string $plugin
+ * @param string $file
+ * @throws NotFoundException
+ */
+public function wikiRes(string $plugin, string $file): void
+&#123;
+    if (!preg_match('/^[A-Za-z0-9_]+$/', $plugin)) &#123;
+        throw new NotFoundException(&quot;错误的插件&quot;);
+    &#125;
+
+    $wiki = realpath(BASE_PATH . &quot;/app/Plugin/&#123;$plugin&#125;/Wiki&quot;);
+    if ($wiki === false || !is_dir($wiki)) &#123;
+        throw new NotFoundException(&quot;此插件没有文档&quot;);
+    &#125;
+
+    //规范化相对路径:去查询/井号、统一分隔符、禁止目录穿越
+    $file = (string)preg_replace('/[?#].*$/', '', str_replace('\\', '/', $file));
+    $file = ltrim($file, '/');
+    if ($file === '' || strpos($file, '..') !== false) &#123;
+        throw new NotFoundException(&quot;非法文件&quot;);
+    &#125;
+
+    //定位:先精确,再同目录大小写不敏感兜底(兼容 Linux 大小写敏感 + 插件用 readme.md 等命名)
+    $target = realpath($wiki . '/' . $file);
+    if ($target === false) &#123;
+        $dir = realpath($wiki . '/' . dirname($file));
+        if ($dir !== false &amp;amp;&amp;amp; is_dir($dir) &amp;amp;&amp;amp; str_starts_with($dir . '/', $wiki . '/')) &#123;
+            $base = basename($file);
+            foreach ((array)scandir($dir) as $entry) &#123;
+                if (strcasecmp($entry, $base) === 0) &#123;
+                    $target = realpath($dir . '/' . $entry);
+                    break;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+
+    //必须落在 Wiki 目录内、是真实文件、且是 .md(只放行文档,杜绝读取源码/配置)
+    if ($target === false || !is_file($target)
+        || !str_starts_with($target, $wiki . DIRECTORY_SEPARATOR)
+        || strtolower((string)pathinfo($target, PATHINFO_EXTENSION)) !== 'md') &#123;
+        throw new NotFoundException(&quot;文档不存在&quot;);
+    &#125;
+
+    header('Content-Type: text/plain; charset=utf-8');
+    echo (string)file_get_contents($target);
+    exit;
+&#125;
+</code></pre>
+<p>}<br>
+</code></pre><p style=""><code>kernel/Plugin/Hook.php</code> :</p><pre><code class="language-php">&lt;?php<br>
+declare (strict_types=1);</p>
+<p>namespace Kernel\Plugin;</p>
+<p>use App\Util\Client;<br>
+use Kernel\Component\Singleton;<br>
+use Kernel\Consts\Base;<br>
+use Kernel\Util\Binary;<br>
+use Kernel\Util\Context;<br>
+use Kernel\Util\File;<br>
+use Kernel\Util\Plugin;</p>
+<p>class Hook<br>
+&#123;</p>
+<pre><code>use Singleton;
+
+public const CACHE_FILE = BASE_PATH . &quot;/runtime/plugin/hook&quot;;
+
+
+/**
+ * @return void
+ * @throws \SmartyException
+ */
+public function load(): void
+&#123;
+    $path = BASE_PATH . &quot;/runtime/plugin/&quot;;
+    if (!is_dir($path)) &#123;
+        mkdir($path, 0777, true);
+    &#125;
+
+    if (defined('_APP_STORE_LOAD_STATE') &amp;amp;&amp;amp; \_APP_STORE_LOAD_STATE === true &amp;amp;&amp;amp; is_writable(Hook::CACHE_FILE)) &#123;
+        $hooks = File::read(Hook::CACHE_FILE, function (string $contents) &#123;
+            return Binary::inst()-&amp;gt;unpack($contents, _plugin_get_hwid());
+        &#125;) ?: [];
+
+        foreach ($hooks as $points) &#123;
+            foreach ($points as $a =&amp;gt; $point) &#123;
+                foreach ($point as $plugin) &#123;
+                    Plugin::$container['hook'][$a][] = [&quot;namespace&quot; =&amp;gt; $plugin['namespace'], &quot;method&quot; =&amp;gt; $plugin['method'], &quot;pluginName&quot; =&amp;gt; $plugin['pluginName']];
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+
+    $this-&amp;gt;loadLocalPlugins();
+
+    $route = explode(&quot;/&quot;, trim(Context::get(Base::ROUTE), &quot;/&quot;));
+    if (strtolower($route[0] ?? '') == &quot;plugin&quot;) &#123;
+        $pluginName = ucfirst($route[1] ?? '');
+        $pluginCfg = Plugin::getPlugin($pluginName);
+        if (($pluginCfg['PLUGIN_CONFIG']['STATUS'] ?? 0) != 1) &#123;
+            Client::redirect(&quot;/&quot;, &quot;当前插件未启用&quot;);
+        &#125;
+    &#125;
+&#125;
+
+private function loadLocalPlugins(): void
+&#123;
+    // ponytail: scan local hooks per request; add a cache only if profiling shows this matters.
+    $storeFile = BASE_PATH . &quot;/runtime/plugin/store.cache&quot;;
+    $store = is_file($storeFile) ? (array)json_decode((string)file_get_contents($storeFile), true) : [];
+
+    foreach (Plugin::getPlugins() as $plugin) &#123;
+        $name = (string)$plugin[\App\Consts\Plugin::PLUGIN_NAME];
+        if (isset($store[$name]) || (int)($plugin[\App\Consts\Plugin::PLUGIN_CONFIG]['STATUS'] ?? 0) !== 1) &#123;
+            continue;
+        &#125;
+
+        $hookPath = BASE_PATH . &quot;/app/Plugin/&#123;$name&#125;/Hook/&quot;;
+        if (!is_dir($hookPath)) &#123;
+            continue;
+        &#125;
+
+        foreach (File::scan($hookPath, true) as $file) &#123;
+            if (pathinfo($file, PATHINFO_EXTENSION) !== 'php') &#123;
+                continue;
+            &#125;
+
+            $class = &quot;\\App\\Plugin\\&#123;$name&#125;\\Hook\\&quot; . pathinfo($file, PATHINFO_FILENAME);
+            if (!class_exists($class)) &#123;
+                continue;
+            &#125;
+
+            foreach ((new \ReflectionClass($class))-&amp;gt;getMethods(\ReflectionMethod::IS_PUBLIC) as $method) &#123;
+                foreach ($method-&amp;gt;getAttributes(\Kernel\Annotation\Hook::class) as $attribute) &#123;
+                    $arguments = $attribute-&amp;gt;getArguments();
+                    $point = (int)($arguments['point'] ?? $arguments[0] ?? 0);
+                    if ($point &amp;gt; 0) &#123;
+                        Plugin::$container['hook'][$point][] = [
+                            'namespace' =&amp;gt; $class,
+                            'method' =&amp;gt; $method-&amp;gt;getName(),
+                            'pluginName' =&amp;gt; $name,
+                        ];
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+/**
+ * @param string $name
+ * @return void
+ */
+public function del(string $name): void
+&#123;
+    _plugin_hook_del($name);
+&#125;
+
+
+/**
+ * @param string $name
+ * @return void
+ */
+public function add(string $name): void
+&#123;
+    _plugin_hook_add($name);
+&#125;
+
+
+/**
+ * @param string $name
+ * @param int $point
+ * @param string $namespace
+ * @param string $method
+ * @return bool
+ */
+public function exist(string $name, int $point, string $namespace, string $method): bool
+&#123;
+    return _plugin_hook_exist($name, $point, $namespace, $method);
+&#125;
+</code></pre>
+<p>}<br>
+</code></pre><h4 style="" id="%E8%BF%99%E9%87%8C%E6%98%AF%E4%BF%AE%E6%94%B9%E5%AF%B9%E6%AF%94">这里是修改对比</h4><p style=""><code>app/Controller/Admin/Api/Plugin.php</code> :</p><p style="">108-124</p><pre><code class="language-php">        if (isset($map[‘STATUS’])) &#123;<br>
+$storeFile = BASE_PATH . “/runtime/plugin/store.cache”;<br>
+$appStore = is_file($storeFile) ? (array)json_decode((string)file_get_contents($storeFile), true) : [];<br>
+$status = (int)$map[‘STATUS’];</p>
+<pre><code>        if (!isset($appStore[$id]) &amp;amp;&amp;amp; in_array($status, [0, 1], true)) &#123;
+            $config['STATUS'] = (string)$status;
+            setConfig($config, BASE_PATH . '/app/Plugin/' . $id . '/Config/Config.php');
+            \Kernel\Util\Plugin::runHookState(
+                $id,
+                $status === 1 ? \Kernel\Annotation\Plugin::START : \Kernel\Annotation\Plugin::STOP
+            );
+            ManageLog::log($this-&amp;gt;getManage(), ($status === 1 ? &quot;启动了&quot; : &quot;停止了&quot;) . &quot;本地插件(&#123;$id&#125;)&quot;);
+            return $this-&amp;gt;json(200, $status === 1 ? &quot;插件已启动&quot; : &quot;插件已停止&quot;);
+        &#125;
+
+        if ((int)$config['STATUS'] == 0 &amp;amp;&amp;amp; $map['STATUS'] == 1) &#123;&lt;/code&gt;&lt;/pre&gt;&lt;p style=&quot;&quot;&gt;&lt;code&gt;kernel/Plugin/Hook.php&lt;/code&gt; :&lt;/p&gt;&lt;p style=&quot;&quot;&gt;原26-61&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;    public function load(): void
+&#123;
+    if (!defined('_APP_STORE_LOAD_STATE') || \_APP_STORE_LOAD_STATE !== true) &#123;
+        return;
+    &#125;
+
+    $path = BASE_PATH . &quot;/runtime/plugin/&quot;;
+    if (!is_dir($path)) &#123;
+        mkdir($path, 0777, true);
+    &#125;
+
+    if (!is_writable(Hook::CACHE_FILE)) &#123;
+        return;
+    &#125;
+
+    $hooks = File::read(Hook::CACHE_FILE, function (string $contents) &#123;
+        return Binary::inst()-&amp;gt;unpack($contents, _plugin_get_hwid());
+    &#125;) ?: [];
+
+    foreach ($hooks as $points) &#123;
+        foreach ($points as $a =&amp;gt; $point) &#123;
+            foreach ($point as $plugin) &#123;
+                Plugin::$container['hook'][$a][] = [&quot;namespace&quot; =&amp;gt; $plugin['namespace'], &quot;method&quot; =&amp;gt; $plugin['method'], &quot;pluginName&quot; =&amp;gt; $plugin['pluginName']];
+            &#125;
+        &#125;
+    &#125;
+
+    $route = explode(&quot;/&quot;, trim(Context::get(Base::ROUTE), &quot;/&quot;));
+    if (strtolower($route[0]) == &quot;plugin&quot;) &#123;
+        $pluginName = ucfirst($route[1]);
+        $pluginCfg = Plugin::getPlugin($pluginName);
+        if ($pluginCfg['PLUGIN_CONFIG']['STATUS'] != 1) &#123;
+            Client::redirect(&quot;/&quot;, &quot;当前插件未启用&quot;);
+        &#125;
+    &#125;
+&#125;&lt;/code&gt;&lt;/pre&gt;&lt;p style=&quot;&quot;&gt;修改后26-100&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot;&gt;    public function load(): void
+&#123;
+    $path = BASE_PATH . &quot;/runtime/plugin/&quot;;
+    if (!is_dir($path)) &#123;
+        mkdir($path, 0777, true);
+    &#125;
+
+    if (defined('_APP_STORE_LOAD_STATE') &amp;amp;&amp;amp; \_APP_STORE_LOAD_STATE === true &amp;amp;&amp;amp; is_writable(Hook::CACHE_FILE)) &#123;
+        $hooks = File::read(Hook::CACHE_FILE, function (string $contents) &#123;
+            return Binary::inst()-&amp;gt;unpack($contents, _plugin_get_hwid());
+        &#125;) ?: [];
+
+        foreach ($hooks as $points) &#123;
+            foreach ($points as $a =&amp;gt; $point) &#123;
+                foreach ($point as $plugin) &#123;
+                    Plugin::$container['hook'][$a][] = [&quot;namespace&quot; =&amp;gt; $plugin['namespace'], &quot;method&quot; =&amp;gt; $plugin['method'], &quot;pluginName&quot; =&amp;gt; $plugin['pluginName']];
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+
+    $this-&amp;gt;loadLocalPlugins();
+
+    $route = explode(&quot;/&quot;, trim(Context::get(Base::ROUTE), &quot;/&quot;));
+    if (strtolower($route[0] ?? '') == &quot;plugin&quot;) &#123;
+        $pluginName = ucfirst($route[1] ?? '');
+        $pluginCfg = Plugin::getPlugin($pluginName);
+        if (($pluginCfg['PLUGIN_CONFIG']['STATUS'] ?? 0) != 1) &#123;
+            Client::redirect(&quot;/&quot;, &quot;当前插件未启用&quot;);
+        &#125;
+    &#125;
+&#125;
+
+private function loadLocalPlugins(): void
+&#123;
+    $storeFile = BASE_PATH . &quot;/runtime/plugin/store.cache&quot;;
+    $store = is_file($storeFile) ? (array)json_decode((string)file_get_contents($storeFile), true) : [];
+
+    foreach (Plugin::getPlugins() as $plugin) &#123;
+        $name = (string)$plugin[\App\Consts\Plugin::PLUGIN_NAME];
+        if (isset($store[$name]) || (int)($plugin[\App\Consts\Plugin::PLUGIN_CONFIG]['STATUS'] ?? 0) !== 1) &#123;
+            continue;
+        &#125;
+
+        $hookPath = BASE_PATH . &quot;/app/Plugin/&#123;$name&#125;/Hook/&quot;;
+        if (!is_dir($hookPath)) &#123;
+            continue;
+        &#125;
+
+        foreach (File::scan($hookPath, true) as $file) &#123;
+            if (pathinfo($file, PATHINFO_EXTENSION) !== 'php') &#123;
+                continue;
+            &#125;
+
+            $class = &quot;\\App\\Plugin\\&#123;$name&#125;\\Hook\\&quot; . pathinfo($file, PATHINFO_FILENAME);
+            if (!class_exists($class)) &#123;
+                continue;
+            &#125;
+
+            foreach ((new \ReflectionClass($class))-&amp;gt;getMethods(\ReflectionMethod::IS_PUBLIC) as $method) &#123;
+                foreach ($method-&amp;gt;getAttributes(\Kernel\Annotation\Hook::class) as $attribute) &#123;
+                    $arguments = $attribute-&amp;gt;getArguments();
+                    $point = (int)($arguments['point'] ?? $arguments[0] ?? 0);
+                    if ($point &amp;gt; 0) &#123;
+                        Plugin::$container['hook'][$point][] = [
+                            'namespace' =&amp;gt; $class,
+                            'method' =&amp;gt; $method-&amp;gt;getName(),
+                            'pluginName' =&amp;gt; $name,
+                        ];
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;&lt;/code&gt;&lt;/pre&gt;&lt;h3 style=&quot;&quot; id=&quot;%E6%88%91%E5%88%B6%E4%BD%9C%E7%9A%84%E6%8F%92%E4%BB%B6&quot;&gt;我制作的插件&lt;/h3&gt;&lt;h4 style=&quot;&quot; id=&quot;telegram-bot-%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6&quot;&gt;telegram bot 通知插件&lt;/h4&gt;&lt;p style=&quot;&quot;&gt;&lt;a href=&quot;https://image.mhdy.net/fujian/bk/TelegramNotification-jexr.zip&quot;&gt;TelegramNotification-jexr.zip&lt;/a&gt;&lt;/p&gt;&lt;p style=&quot;&quot;&gt;购买后通过tg bot来进行��知，一个简单的插件&lt;/p&gt;
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/archives/e-hentai-exhentaishi-yong-shou-ce/" rel="prev" title="e-hentai&#x2F;exhentai使用手册">
+                  <i class="fa fa-angle-left"></i> e-hentai/exhentai使用手册
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">魔皇地狱</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

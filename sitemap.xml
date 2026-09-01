@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://mhdy2233.github.io/tags/index.html</loc>
+    <loc>https://mhdy2233.github.io/categories/index.html</loc>
     
     <lastmod>2026-09-01</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://mhdy2233.github.io/categories/index.html</loc>
+    <loc>https://mhdy2233.github.io/tags/index.html</loc>
     
     <lastmod>2026-09-01</lastmod>
     
@@ -174,13 +174,6 @@
   </url>
   
   <url>
-    <loc>https://mhdy2233.github.io/tags/VPN/</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://mhdy2233.github.io/tags/%E5%8A%A0%E9%80%9F%E5%99%A8/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -188,21 +181,7 @@
   </url>
   
   <url>
-    <loc>https://mhdy2233.github.io/tags/%E6%9C%BA%E5%9C%BA/</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://mhdy2233.github.io/tags/e-hentai/</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://mhdy2233.github.io/tags/exhentai/</loc>
+    <loc>https://mhdy2233.github.io/tags/VPN/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -210,6 +189,13 @@
   
   <url>
     <loc>https://mhdy2233.github.io/tags/%E7%95%AA%E5%89%A7/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://mhdy2233.github.io/tags/%E6%9C%BA%E5%9C%BA/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -238,6 +224,20 @@
   
   <url>
     <loc>https://mhdy2233.github.io/tags/openclash/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://mhdy2233.github.io/tags/e-hentai/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://mhdy2233.github.io/tags/exhentai/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

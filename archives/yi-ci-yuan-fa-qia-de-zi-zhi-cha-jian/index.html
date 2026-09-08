@@ -410,7 +410,7 @@ public function wiki(string $plugin): string
     return $this-&amp;gt;render(&quot;通用插件&quot;, &quot;Config/Wiki.html&quot;, [
         'pluginName' =&amp;gt; $pluginNameHtml,
         'pluginKeyJson' =&amp;gt; json_encode($plugin, $jsonFlags),
-        // docsify 会把 name 拼进 HTML；这里传入实体编码后的文本，避免插件元数据形成标签或属性。
+        // docsify 会把 name 拼进 HTML；这里传入实体编码后的文本，避免插件元���据形成标签或属性。
         'pluginNameHtmlJson' =&amp;gt; json_encode($pluginNameHtml, $jsonFlags),
         'basePathJson' =&amp;gt; json_encode($staticBasePath, $jsonFlags),
         'iconJson' =&amp;gt; json_encode($icon, $jsonFlags),

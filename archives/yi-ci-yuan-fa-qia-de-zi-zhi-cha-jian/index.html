@@ -177,7 +177,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -277,7 +277,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p style="">原项目地址 https://github.com/lizhipay/acg-faka</p><p style="">本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的</p><p style="">通过修改<code>kernel/Plugin/Hook.php</code> 和<code>app/Controller/Admin/Api/Plugin.php</code> 允许使用本地插件</p><p style="">注意版本，原项目每次更新都可能会导致修改或插件不可用</p><p style="">我的小店:</p><hyperlink-card target="_blank" href="https://shop.mhdy.net" theme="regular" style="margin-top: 0.75em; margin-bottom: 0;"><a href="https://shop.mhdy.net" target="_blank">https://shop.mhdy.net</a></hyperlink-card><h3 style="" id="%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%BB%A5%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6">修改文件以支持本地插件</h3><p style="">如果你也是3.5.6的版本那么直接覆盖即可，不是的话看下面的修改对比</p><p style=""><code>app/Controller/Admin/Api/Plugin.php</code> :</p><pre><code class="language-php">&lt;?php
+    <div class="post-body" itemprop="articleBody"><p style="">原项目地址 https://github.com/lizhipay/acg-faka</p><p style="">本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的</p><p style="">通过修改<code>kernel/Plugin/Hook.php</code> 和<code>app/Controller/Admin/Api/Plugin.php</code> 允许使用本地插件</p><p style="">注意版本，原项目每次更新都可能会导致修改或插件不可用</p><p style="">完整插件文档位于 <a href="https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6" target="_blank" rel="">https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6</a></p><p style="">我的小店:</p><hyperlink-card target="_blank" href="https://shop.mhdy.net" theme="regular" style="margin-top: 0.75em; margin-bottom: 0;"><a href="https://shop.mhdy.net" target="_blank">https://shop.mhdy.net</a></hyperlink-card><h3 style="" id="%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%BB%A5%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6">修改文件以支持本地插件</h3><p style="">如果你也是3.5.6的版本那么直接覆盖即可，不是的话看下面的修改对比</p><p style=""><code>app/Controller/Admin/Api/Plugin.php</code> :</p><pre><code class="language-php">&lt;?php
 declare(strict_types=1);
 <p>namespace App\Controller\Admin;</p>
 <p>use App\Controller\Base\View\Manage;<br>
@@ -424,7 +424,7 @@ public function wiki(string $plugin): string
  * /app/Plugin/**\/Wiki/*.md 的静态文件读取。宝塔等安全规则会把 README.md / CHANGELOG.md
  * 之类的文件名直接 `return 404`,导致 docsify 拉不到首页而整体报 404;本路由 URL 形如
  * /admin/plugin/wikiRes?plugin=X&amp;amp;file=README.md,路径部分不以 README.md 结尾,不被该规则命中,
- * 任意服务器都能正常加载文档。
+ * 任意服务器都能正常加载文��。
  * @param string $plugin
  * @param string $file
  * @throws NotFoundException
@@ -730,7 +730,7 @@ private function loadLocalPlugins(): void
             &#125;
         &#125;
     &#125;
-&#125;&lt;/code&gt;&lt;/pre&gt;&lt;h3 style=&quot;&quot; id=&quot;%E6%88%91%E5%88%B6%E4%BD%9C%E7%9A%84%E6%8F%92%E4%BB%B6&quot;&gt;我制作的插件&lt;/h3&gt;&lt;h4 style=&quot;&quot; id=&quot;telegram-bot-%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6&quot;&gt;telegram bot 通知插件&lt;/h4&gt;&lt;p style=&quot;&quot;&gt;&lt;a href=&quot;https://image.mhdy.net/fujian/bk/TelegramNotification-jexr.zip&quot;&gt;TelegramNotification-jexr.zip&lt;/a&gt;&lt;/p&gt;&lt;p style=&quot;&quot;&gt;购买后通过tg bot来进行通知，一个简单的插件&lt;/p&gt;
+&#125;&lt;/code&gt;&lt;/pre&gt;&lt;p style=&quot;&quot;&gt;&lt;/p&gt;&lt;h3 style=&quot;&quot; id=&quot;%E6%88%91%E5%88%B6%E4%BD%9C%E7%9A%84%E6%8F%92%E4%BB%B6&quot;&gt;我制作的插件&lt;/h3&gt;&lt;h4 style=&quot;&quot; id=&quot;telegram-bot-%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6&quot;&gt;telegram bot 通知插件&lt;/h4&gt;&lt;p style=&quot;&quot;&gt;&lt;a href=&quot;https://image.mhdy.net/fujian/bk/TelegramNotification-jexr.zip&quot;&gt;TelegramNotification-jexr.zip&lt;/a&gt;&lt;/p&gt;&lt;p style=&quot;&quot;&gt;购买后通过tg bot来进行通知，一个简单的插件&lt;/p&gt;
 </code></pre>
 
     </div>
@@ -750,6 +750,9 @@ private function loadLocalPlugins(): void
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/archives/mo-shi-ocr-cheng-jing-shi-fan-yi-man-hua-zhi-ji/" rel="next" title="墨识-OCR+成精时翻译+漫画织机">
+                  墨识-OCR+成精时翻译+漫画织机 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>

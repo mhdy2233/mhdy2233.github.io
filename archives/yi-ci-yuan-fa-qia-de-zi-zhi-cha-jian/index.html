@@ -424,7 +424,7 @@ public function wiki(string $plugin): string
  * /app/Plugin/**\/Wiki/*.md 的静态文件读取。宝塔等安全规则会把 README.md / CHANGELOG.md
  * 之类的文件名直接 `return 404`,导致 docsify 拉不到首页而整体报 404;本路由 URL 形如
  * /admin/plugin/wikiRes?plugin=X&amp;amp;file=README.md,路径部分不以 README.md 结尾,不被该规则命中,
- * 任意服务器都能正常加载文��。
+ * 任意服务器都能正常加载文档。
  * @param string $plugin
  * @param string $file
  * @throws NotFoundException

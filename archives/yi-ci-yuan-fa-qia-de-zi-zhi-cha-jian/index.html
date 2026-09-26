@@ -312,7 +312,7 @@ class Plugin extends Manage<br>
 <p><strong>8. 终止条款</strong></p>
 <p>开发者有权在任何时候、无需事先通知的情况下终止用户使用本插件的权利。用户在终止后应立即停止使用本插件，并删除所有相关副本。用户在终止使用本插件后，仍需承担使用本插件期间产生的所有责任和义务。</p>
 <p><strong>9. 不可抗力</strong></p>
-<p>在不可抗力事件发生期间，开发者对因不可抗力导致的本插件无法正常使用或用户因此受到的损失不承担任何责任。不可抗力事件包括但不限于自然灾害、战争、恐怖袭击、政府行为、互联网中断或其他超出开发者合理控制范围的事件���</p>
+<p>在不可抗力事件发生期间，开发者对因不可抗力导致的本插件无法正常使用或用户因此受到的损失不承担任何责任。不可抗力事件包括但不限于自然灾害、战争、恐怖袭击、政府行为、互联网中断或其他超出开发者合理控制范围的事件。</p>
 <p><strong>10. 其他</strong></p>
 <p>本免责声明的解释权归开发者所有。本免责声明适用<code>中国大陆</code>法律。<br>
 HTML;</p>
@@ -424,7 +424,7 @@ public function wiki(string $plugin): string
  * /app/Plugin/**\/Wiki/*.md 的静态文件读取。宝塔等安全规则会把 README.md / CHANGELOG.md
  * 之类的文件名直接 `return 404`,导致 docsify 拉不到首页而整体报 404;本路由 URL 形如
  * /admin/plugin/wikiRes?plugin=X&amp;amp;file=README.md,路径部分不以 README.md 结尾,不被该规则命中,
- * 任意服务器都能正常加载���档。
+ * 任意服务器都能正常加载文档。
  * @param string $plugin
  * @param string $file
  * @throws NotFoundException

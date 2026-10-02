@@ -31,6 +31,7 @@ const path = require('path');
 const https = require('https');
 const http = require('http');
 const { URL } = require('url');
+const cheerio = require('cheerio');
 const { selectContent, renderContent, postPath } = require('./halo-content');
 
 const BASE = (process.env.HALO_BASE_URL || '').replace(/\/+$/, '');
@@ -135,19 +136,6 @@ function yamlQuote(s) {
   return JSON.stringify(String(s ?? ''));
 }
 
-/** 从 markdown 正文提取纯文本（去标记），用于自动生成首页摘要 */
-function plainText(md) {
-  return String(md || '')
-    .replace(/<!--[\s\S]*?-->/g, '')          // HTML 注释
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')     // 图片
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')  // 链接保留文字
-    .replace(/^[>\-\*\+ ]+/gm, '')            // 引用/列表符号
-    .replace(/[#`_~|]+/g, '')                 // 标题/代码/强调标记
-    .replace(/<[^>]+>/g, '')                  // HTML 标签
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
 /**
  * 生成首页摘要：优先 Halo 文章的摘要（excerpt.raw），
  * 否则取正文纯文本前 120 字。首页用 description 显示预览 + 阅读全文按钮。
@@ -156,8 +144,10 @@ function buildExcerpt(post, raw) {
   if (post.spec.excerpt && post.spec.excerpt.raw && !post.spec.excerpt.autoGenerate) {
     return post.spec.excerpt.raw;
   }
-  const text = plainText(raw);
-  return text.length > 120 ? text.slice(0, 120) + '…' : text;
+  const text = cheerio.load(String(raw || ''), {}, false).text().replace(/\s+/g, ' ').trim();
+  const excerpt = text.length > 120 ? text.slice(0, 120) + '…' : text;
+  // NexT inserts descriptions as HTML; decoded code examples must remain text.
+  return cheerio.load('<p></p>', {}, false)('p').text(excerpt).html();
 }
 
 /** 生成 YAML front-matter */

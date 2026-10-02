@@ -9,11 +9,12 @@ const http = require('node:http');
 const { execFile } = require('node:child_process');
 const { promisify } = require('node:util');
 const Hexo = require('hexo');
+const cheerio = require('cheerio');
 const { frontMatter } = require('../tools/sync-halo');
-const { renderContent, normalizePostPath } = require('../tools/halo-content');
+const { selectContent, renderContent, normalizePostPath } = require('../tools/halo-content');
 const run = promisify(execFile);
 
-test('real Hexo HTML rendering preserves literal template syntax and rich content', async t => {
+test('real Hexo HTML rendering preserves template syntax, code fences and heading anchors', async t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'halo-hexo-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const hexo = new Hexo(root, { silent: true });
@@ -21,7 +22,9 @@ test('real Hexo HTML rendering preserves literal template syntax and rich conten
   hexo.extend.filter.register('post_permalink', normalizePostPath, 20);
   assert.equal(hexo.execFilterSync('post_permalink', { __permalink: 'archives/hello/' }, { context: hexo }), 'archives/hello/');
   t.after(() => hexo.exit());
-  const content = renderContent('<h2 id="heading">Heading</h2><p>{{ user }} {% unknown %}</p><pre><code>&lt;tag&gt; {{ code }}</code></pre>', {
+  const code = 'Example:\n```html\n<tag> {{ code }}\n```\n~~~\ntext\n~~~';
+  const html = selectContent({ raw: '## Heading\n\n````markdown\n' + code + '\n````', rawType: 'markdown' });
+  const content = renderContent(html + '<p>{{ user }} {% unknown %}</p><a href="https://example.com/~user">link</a>', {
     baseUrl: 'https://example.com', permalink: '/archives/a'
   });
   const result = await hexo.post.render(path.join(root, 'a.html'), {
@@ -29,14 +32,25 @@ test('real Hexo HTML rendering preserves literal template syntax and rich conten
   });
   assert.match(result.content, /\{\{ user \}\} \{% unknown %\}/);
   assert.match(result.content, /&lt;tag&gt; \{\{ code \}\}/);
-  assert.match(result.content, /<h2 id="heading">/);
+  assert.match(result.content, /<h2 id="Heading">/);
   assert.doesNotMatch(result.content, /&lt;h2/);
+  const $ = cheerio.load(result.content);
+  assert.equal($('pre code').text().trim(), code);
+  assert.equal($('pre figure').length, 0);
+  assert.equal($('a').attr('href'), 'https://example.com/~user');
+  const toc = cheerio.load(hexo.extend.helper.get('toc')(result.content));
+  assert.equal(toc('a').attr('href'), '#Heading');
 });
 
 test('CLI stages every body before replacement and migrates old Markdown only after success', async t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'halo-sync-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
-  fs.cpSync(path.join(__dirname, '../tools'), path.join(root, 'tools'), { recursive: true });
+  const toolsDir = path.join(root, 'tools');
+  fs.mkdirSync(toolsDir);
+  // Avoid Node 24's native Windows cpSync crash on mounted source volumes.
+  for (const name of ['sync-halo.js', 'halo-content.js']) {
+    fs.writeFileSync(path.join(toolsDir, name), fs.readFileSync(path.join(__dirname, '../tools', name)));
+  }
   const postsDir = path.join(root, 'source/_posts');
   fs.mkdirSync(postsDir, { recursive: true });
   fs.writeFileSync(path.join(root, '_config.yml'), 'title: test\n');

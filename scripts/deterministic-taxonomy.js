@@ -23,3 +23,16 @@ hexo.model('Post').schema.paths.tags.get(function () {
 hexo.model('Post').schema.paths.categories.get(function () {
   return sortedByName(this, 'PostCategory', 'category_id', 'Category');
 });
+
+// Stabilize taxonomy URLs and equal-updated post/page ties without changing
+// the sitemap plugin's filtering, templates or lastmod dates.
+const generateSitemap = hexo.extend.generator.get('sitemap');
+hexo.extend.generator.register('sitemap', function (locals) {
+  return generateSitemap.call(this, {
+    ...locals,
+    posts: locals.posts.sort('permalink'),
+    pages: locals.pages.sort('permalink'),
+    tags: locals.tags.sort('permalink'),
+    categories: locals.categories.sort('permalink')
+  });
+});

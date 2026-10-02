@@ -4,7 +4,10 @@ const cheerio = require('cheerio');
 const sanitizeHtml = require('sanitize-html');
 const MarkdownIt = require('markdown-it');
 const parseSrcset = require('parse-srcset');
-const markdown = new MarkdownIt({ html: true, linkify: true });
+const markdown = new MarkdownIt({ html: true, linkify: true }).use(
+  require('hexo-renderer-markdown-it/lib/anchors'),
+  { level: 1, collisionSuffix: '', case: 0, separator: '-' }
+);
 
 /** Prefer Halo's published rendering, not editor-specific raw data. */
 function selectContent(wrapper) {
@@ -72,8 +75,8 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
       if (node.attr(attr)) node.attr(attr, url(node.attr(attr), attr === 'href'));
     }
     if (el.name === 'img') {
-      if (!node.attr('src') && node.attr('data-src')) node.attr('src', url(node.attr('data-src')));
-      const srcset = node.attr('srcset') || node.attr('data-srcset');
+      if (node.attr('data-src')) node.attr('src', url(node.attr('data-src')));
+      const srcset = node.attr('data-srcset') || node.attr('srcset');
       if (srcset) {
         node.attr('srcset', parseSrcset(srcset).map(candidate => {
           const descriptor = candidate.w ? ` ${candidate.w}w` : candidate.d ? ` ${candidate.d}x` : '';
@@ -133,7 +136,8 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
       input: (_tag, attrs) => ({ tagName: 'input', attribs: { type: 'checkbox', disabled: '', ...(Object.hasOwn(attrs, 'checked') ? { checked: '' } : {}) } })
     }
   });
-  return `<div class="halo-content">\n${clean}\n</div>`;
+  // Hexo runs its Markdown fence filter even on HTML; entities keep the text literal.
+  return `<div class="halo-content">\n${clean.replaceAll('`', '&#96;').replaceAll('~', '&#126;')}\n</div>`;
 }
 
 // Hexo 6 adds "/" to explicit permalinks, but generators concatenate root+path.

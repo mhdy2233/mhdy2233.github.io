@@ -18,7 +18,7 @@ test('published HTML wins over editor JSON and Markdown raw', () => {
 });
 test('Markdown fallback renders headings, tables, code and strikethrough', () => {
   const html = selectContent({ raw: '# Heading\n\n~~old~~\n\n|a|b|\n|-|-|\n|1|2|\n\n```js\nconst x = 1;\n```', rawType: 'markdown' });
-  assert.match(html, /<h1>Heading/);
+  assert.match(html, /<h1 id="Heading">Heading/);
   assert.match(html, /<table>/);
   assert.match(html, /<s>old/);
   assert.match(html, /language-js/);
@@ -26,6 +26,15 @@ test('Markdown fallback renders headings, tables, code and strikethrough', () =>
 test('HTML fallback is not wrapped in Markdown code', () => {
   assert.equal(selectContent({ raw: '<p>正文</p>', rawType: 'html' }), '<p>正文</p>');
   assert.equal(selectContent({ raw: '<p>正文</p>' }), '<p>正文</p>');
+});
+
+test('Markdown headings use the existing Hexo anchor rules and reset for each post', () => {
+  const raw = '## 中文标题\n\n## 中文标题\n\n[text](#中文标题)';
+  for (let i = 0; i < 2; i++) {
+    const $ = render(selectContent({ raw, rawType: 'markdown' }));
+    assert.deepEqual($('h2').map((_, el) => $(el).attr('id')).get(), ['中文标题', '中文标题-2']);
+    assert.equal(decodeURIComponent($('a').attr('href').slice(1)), $('h2').first().attr('id'));
+  }
 });
 test('missing, empty and unknown raw types fail closed', () => {
   for (const wrapper of [undefined, {}, { raw: '' }, { raw: '{}', rawType: 'json' }]) {
@@ -87,7 +96,7 @@ test('cards become native links with custom titles and no nested anchors', () =>
   assert.match($('.halo-inline-card').attr('rel'), /noopener/);
 });
 test('media, relative links, srcset and lazy images are normalized', () => {
-  const $ = render('<img data-src="/upload/a.png" data-srcset="/upload/a.png 1x, //cdn.example.com/b.png 2x"><video src="../v.mp4" poster="/p.png" autoplay></video><audio src="/a.mp3"></audio><a href="#local">local</a><a href="/docs/topic">docs</a>');
+  const $ = render('<img src="/placeholder.gif" srcset="/placeholder.gif 1x" data-src="/upload/a.png" data-srcset="/upload/a.png 1x, //cdn.example.com/b.png 2x"><video src="../v.mp4" poster="/p.png" autoplay></video><audio src="/a.mp3"></audio><a href="#local">local</a><a href="/docs/topic">docs</a>');
   assert.equal($('img').attr('src'), 'https://blog.example.com/upload/a.png');
   assert.equal($('img').attr('srcset'), 'https://blog.example.com/upload/a.png 1x, https://cdn.example.com/b.png 2x');
   assert.equal($('video').attr('src'), 'https://blog.example.com/v.mp4');
@@ -121,6 +130,9 @@ test('permalink and YAML strings preserve slugs, numeric titles and timestamps',
   assert.match(fm, /date: 2026-01-01T00:00:00.000Z/);
   assert.match(fm, /updated: 2026-02-01T00:00:00.000Z/);
   assert.match(fm, /disableNunjucks: true/);
+  const text = 'Use `code` and ~/dir &amp; &lt;img src=x onerror=alert(1)&gt;';
+  const html = renderContent('<p>Use `code` and ~/dir &amp; &lt;img src=x onerror=alert(1)&gt;</p>', opts);
+  assert.ok(frontMatter(post, {}, {}, html).includes(`description: ${JSON.stringify(text)}`));
 });
 test('UTF-8 survives a response split inside a Chinese character', async t => {
   const body = Buffer.from('原神');

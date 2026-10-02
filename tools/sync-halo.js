@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * sync-halo.js — 把 Halo 2.x 已发布文章同步为 Hexo 博客的 Markdown 源文件
+ * sync-halo.js — 把 Halo 2.x 已发布文章同步为 Hexo HTML 文章源文件
  *
  * 使用方式：
  *   HALO_BASE_URL=https://your-halo.example.com \
@@ -9,19 +9,17 @@
  *
  * 流程：
  *   1. 分页拉取 Halo 已发布文章列表（/apis/api.content.halo.run/v1alpha1/posts）
- *   2. 逐篇调用 console API 的 release-content 接口拿已发布正文（markdown 原文）
+ *   2. 取公开详情正文；有 PAT 时优先取 console release-content
  *   3. 拉取分类/标签列表，把 metadata.name 映射为 displayName
- *   4. 生成 Hexo front-matter Markdown 写入 source/_posts/
+ *   4. 适配富文本并生成 Hexo front-matter HTML 写入 source/_posts/
  *   5. 删除本地存在但 Halo 已不存在的旧文章文件（增量同步）
  *   6. 同步站点头像与背景图到 source/images/，并写入主题配置
  *
- * 注意：公开 API 的 /apis/api.content.halo.run/v1alpha1/snapshots 在 Halo 2.x 中不存在，
- * 正文必须走 console API：/apis/api.console.halo.run/v1alpha1/posts/{name}/release-content
- * （需要 PAT 认证，Halo 后台「个人资料 → 个人令牌」创建，带 api 或 console 权限）。
+ * 不读取草稿快照，不将 PAT 写入静态产物。任何正文读取失败都在写文件前中止。
  *
  * 环境变量：
  *   HALO_BASE_URL  必填，Halo 站点地址，如 https://blog.example.com
- *   HALO_PAT       必填，Halo 个人访问令牌（后台「个人资料 → 个人令牌」创建）
+ *   HALO_PAT       可选，Halo 个人访问令牌
  *   HALO_SKIP_HTTPS_CHECK 可选，设为 1 时忽略 TLS 证书校验（自签名证书用）
  *   HALO_AVATAR_URL     可选，直接指定头像地址，跳过自动探测
  *   HALO_BACKGROUND_URL 可选，直接指定背景图地址，跳过自动探测
@@ -33,6 +31,7 @@ const path = require('path');
 const https = require('https');
 const http = require('http');
 const { URL } = require('url');
+const { selectContent, renderContent, postPath } = require('./halo-content');
 
 const BASE = (process.env.HALO_BASE_URL || '').replace(/\/+$/, '');
 const PAT = process.env.HALO_PAT || '';
@@ -43,12 +42,12 @@ const IMAGES_DIR = path.join(ROOT, 'source', 'images');
 const DATA_DIR = path.join(ROOT, 'source', '_data');
 const CONFIG_FILE = path.join(ROOT, '_config.yml');
 
-if (!BASE) {
+if (require.main === module && !BASE) {
   console.error('错误：需要设置 HALO_BASE_URL 环境变量');
   process.exit(1);
 }
-if (!PAT) {
-  console.log('[sync] 未提供 HALO_PAT，仅使用 Halo 公开 API（正文取公开接口的 content.raw）');
+if (require.main === module && !PAT) {
+  console.log('[sync] 未提供 HALO_PAT，仅使用 Halo 公开 API 的已发布正文');
 }
 
 /** 发起 GET 请求，返回 { status, body }；不跟随重定向 */
@@ -56,16 +55,20 @@ function httpGet(url, { auth = true, accept = 'application/json' } = {}) {
   const u = url instanceof URL ? url : new URL(url);
   const lib = u.protocol === 'https:' ? https : http;
   const headers = { Accept: accept };
-  if (auth && PAT) headers.Authorization = `Bearer ${PAT}`;
+  if (auth && PAT && u.origin === new URL(BASE).origin) headers.Authorization = `Bearer ${PAT}`;
   const options = { method: 'GET', headers };
   if (SKIP_TLS && u.protocol === 'https:') options.rejectUnauthorized = false;
   return new Promise((resolve, reject) => {
     const req = lib.request(u, options, (res) => {
+      // Decode across chunk boundaries; Buffer -> string per chunk corrupts CJK.
+      res.setEncoding('utf8');
       let body = '';
+      res.on('error', reject);
       res.on('data', (c) => (body += c));
       res.on('end', () => resolve({ status: res.statusCode, body }));
     });
     req.on('error', reject);
+    req.setTimeout(30000, () => req.destroy(new Error(`GET ${u.href} 超时`)));
     req.end();
   });
 }
@@ -93,54 +96,43 @@ function isAuthFailure(err) {
 }
 
 /** 请求 Halo 内容 API 的某一页 */
-function request(pathname, page = 0, size = 50) {
+function request(pathname, page = 1, size = 50) {
   const url = new URL(BASE + pathname);
   url.searchParams.set('page', String(page));
   url.searchParams.set('size', String(size));
   url.searchParams.set('publishPhase', 'published');
-  return getJSON(url);
+  return getJSON(url, { auth: false });
 }
 
 /** 拉取全部页 */
-async function fetchAll(pathname) {
+async function fetchAll(pathname, requestPage = request) {
   const items = [];
-  let page = 0;
+  const seen = new Set();
+  let page = 1;
   for (;;) {
-    const data = await request(pathname, page, 50);
-    const list = data.items || [];
+    const data = await requestPage(pathname, page, 50);
+    if (!Array.isArray(data.items)) throw new Error(`${pathname} 返回无效列表`);
+    const list = data.items;
+    for (const item of list) {
+      if (!item.metadata?.name || seen.has(item.metadata.name)) throw new Error(`${pathname} 返回重复或无效资源`);
+      seen.add(item.metadata.name);
+    }
     items.push(...list);
-    if (list.length < 50) break;
+    if (data.hasNext === false || data.last === true) break;
+    if (data.hasNext !== true && (Number.isFinite(data.total) ? items.length >= data.total : list.length < 50)) break;
+    if (!list.length || page >= 10000) throw new Error(`${pathname} 分页未结束`);
     page += 1;
   }
   return items;
 }
 
 /** 取单个资源（pathSuffix 拼在 pathname 后，用于拿 release-content 正文） */
-function fetchOne(pathname, pathSuffix) {
-  return getJSON(new URL(`${BASE}${pathname}/${pathSuffix}`));
-}
-
-/** 把 Markdown 正文中 Halo 附件相对链接补全为绝对地址 */
-function rewriteMedia(md, postPermalink) {
-  if (!md) return md;
-  // 附件引用形如 attachments/mhdy2233/xxxx.png（相对当前文章路径）
-  const base = new URL(BASE);
-  return md.replace(/!\[([^\]]*)\]\((attachments\/[^)\s]+)\)/g, (m, alt, rel) => {
-    const abs = new URL(`/upload/${rel.replace(/^attachments\//, '')}`, base);
-    return `![${alt}](${abs.href})`;
-  }).replace(/(src|href)=["'](\/upload\/[^"']+)["']/g, (m, attr, rel) => {
-    const abs = new URL(rel, base);
-    return `${attr}="${abs.href}"`;
-  });
+function fetchOne(pathname, pathSuffix, opts) {
+  return getJSON(new URL(`${BASE}${pathname}/${pathSuffix}`), opts);
 }
 
 function yamlQuote(s) {
-  if (s == null) return '""';
-  const str = String(s);
-  if (/[:#\[\]{}&*!|>'"%@`\n]/.test(str) || /^\s|\s$/.test(str)) {
-    return JSON.stringify(str);
-  }
-  return str;
+  return JSON.stringify(String(s ?? ''));
 }
 
 /** 从 markdown 正文提取纯文本（去标记），用于自动生成首页摘要 */
@@ -171,11 +163,15 @@ function buildExcerpt(post, raw) {
 /** 生成 YAML front-matter */
 function frontMatter(post, categories, tags, raw) {
   const date = post.spec.publishTime || post.metadata.creationTimestamp || '';
-  const dateStr = date ? date.replace(/\.\d+Z$/, 'Z').replace('Z', '+08:00').replace('T', ' ') : '';
+  const dateStr = date ? new Date(date).toISOString() : '';
+  const updated = post.status?.lastModifyTime || date;
   const lines = ['---'];
   lines.push(`title: ${yamlQuote(post.spec.title)}`);
   lines.push(`date: ${dateStr}`);
-  lines.push(`updated: ${dateStr}`);
+  lines.push(`updated: ${updated ? new Date(updated).toISOString() : dateStr}`);
+  lines.push('layout: post');
+  lines.push('disableNunjucks: true');
+  lines.push(`permalink: ${yamlQuote(postPath(post).slice(1))}`);
   const excerpt = buildExcerpt(post, raw);
   if (excerpt) lines.push(`description: ${yamlQuote(excerpt)}`);
   const cats = (post.spec.categories || []).map((c) => categories[c]).filter(Boolean);
@@ -183,34 +179,32 @@ function frontMatter(post, categories, tags, raw) {
   const tgs = (post.spec.tags || []).map((t) => tags[t]).filter(Boolean);
   if (tgs.length) lines.push(`tags:\n${tgs.map((t) => `  - ${yamlQuote(t)}`).join('\n')}`);
   // Halo 源信息（用于溯源与去重）
-  lines.push(`halo_post_name: ${post.metadata.name}`);
+  lines.push(`halo_post_name: ${yamlQuote(post.metadata.name)}`);
   lines.push('---');
   return lines.join('\n') + '\n\n' + raw.trim() + '\n';
 }
 
 /**
- * 取已发布正文（markdown 原文）。
- *
- * 首选 console API 的 release-content 接口：服务端按 releaseSnapshot + baseSnapshot
- * 合并快照链后直接返回完整内容。返回体 ContentWrapper：{ raw, content, rawType }，
- * raw 即 markdown 原文。
- *
- * 若 console API 因权限返回 401/403，回退到公开只读接口
- * /apis/api.content.halo.run/v1alpha1/posts/{name}（匿名可读，返回 PostVo，
- * 其 content.raw 同样为 markdown 原文）。
+ * 取已发布 HTML；仅无渲染结果时才按 rawType 处理原文。
+ * 无 PAT 直接公开请求；console 认证失败则匿名回退。其他错误中止同步。
  */
-async function resolveContent(postName) {
+async function resolveContent(postName, { token = PAT, fetch = fetchOne } = {}) {
+  const name = encodeURIComponent(postName);
+  if (!token) {
+    const vo = await fetch('/apis/api.content.halo.run/v1alpha1/posts', name, { auth: false });
+    return selectContent(vo?.content);
+  }
   try {
-    const wrapper = await fetchOne(
+    const wrapper = await fetch(
       '/apis/api.console.halo.run/v1alpha1/posts',
-      `${postName}/release-content`,
+      `${name}/release-content`,
     );
-    return (wrapper && wrapper.raw) || '';
+    return selectContent(wrapper);
   } catch (e) {
     if (isAuthFailure(e)) {
       console.log(`[fallback] release-content 无权限(${e.status})，改用公开接口`);
-      const vo = await fetchOne('/apis/api.content.halo.run/v1alpha1/posts', postName);
-      return (vo && vo.content && vo.content.raw) || '';
+      const vo = await fetch('/apis/api.content.halo.run/v1alpha1/posts', name, { auth: false });
+      return selectContent(vo?.content);
     }
     throw e;
   }
@@ -415,34 +409,43 @@ async function main() {
   console.log(`[sync] 分类 ${Object.keys(categories).length} 个，标签 ${Object.keys(tags).length} 个`);
 
   // 2. 拉取全部已发布文章
-  const posts = await fetchAll('/apis/api.content.halo.run/v1alpha1/posts');
+  const posts = (await fetchAll('/apis/api.content.halo.run/v1alpha1/posts'))
+    .filter(post => post.spec?.publish !== false && !post.spec?.deleted &&
+      (!post.spec?.visible || post.spec.visible === 'PUBLIC'));
   console.log(`[sync] 已发布文章 ${posts.length} 篇`);
 
   fs.mkdirSync(POSTS_DIR, { recursive: true });
 
-  // 3. 逐篇拉正文 + 生成 Markdown
+  // 3. Resolve every body before touching existing posts. Any failed/empty
+  // response aborts the build instead of publishing or deleting partial content.
   const written = new Set();
+  const pending = new Map();
+  const postLinks = new Map(posts.map(post => [postPath(post).replace(/\/+$/, ''), postPath(post)]));
+  if (postLinks.size !== posts.length) throw new Error('文章 permalink 冲突，停止同步');
   for (const post of posts) {
     const name = post.metadata.name;
-    const raw = await resolveContent(name);
-    if (!raw.trim()) {
-      console.log(`[skip] ${post.spec.title} 正文为空，跳过`);
-      continue;
-    }
-    const md = frontMatter(post, categories, tags, raw);
-    const slug = post.spec.slug || name;
-    // 文件名 = slug（Hexo 用文件名作 slug，生成 /archives/<slug>/ 与 Halo URL 一致）
-    const safeTitle = slug.replace(/[\\/:*?"<>|\s]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || name;
-    const file = path.join(POSTS_DIR, `${safeTitle}.md`);
-    fs.writeFileSync(file, md, 'utf8');
+    const html = await resolveContent(name);
+    const content = renderContent(html, {
+      baseUrl: BASE,
+      permalink: post.status?.permalink || postPath(post),
+      postLinks
+    });
+    const document = frontMatter(post, categories, tags, content);
+    // A resource ID is stable across title/slug changes and cannot escape _posts.
+    const file = path.join(POSTS_DIR, `${encodeURIComponent(name)}.html`);
+    pending.set(file, document);
     written.add(file);
     console.log(`[ok] ${post.spec.title} -> ${path.basename(file)}`);
+  }
+  for (const [file, document] of pending) {
+    fs.writeFileSync(file + '.tmp', document, 'utf8');
+    fs.renameSync(file + '.tmp', file);
   }
 
   // 4. 清理本地多余文件（Halo 已删除/未发布的文章）
   for (const f of fs.readdirSync(POSTS_DIR)) {
     const full = path.join(POSTS_DIR, f);
-    if (f.endsWith('.md') && !written.has(full)) {
+    if (/\.(md|html)$/.test(f) && !written.has(full)) {
       fs.unlinkSync(full);
       console.log(`[del] ${f}`);
     }
@@ -454,7 +457,9 @@ async function main() {
   await syncSiteAssets(posts);
 }
 
-main().catch((e) => {
+if (require.main === module) main().catch((e) => {
   console.error('[sync] 失败:', e.message);
   process.exit(1);
 });
+
+module.exports = { fetchAll, resolveContent, frontMatter, httpGet, main };

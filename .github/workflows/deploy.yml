@@ -30,16 +30,19 @@ jobs:
       - name: 安装依赖
         run: npm ci --no-audit --no-fund
 
+      - name: 同步回归测试
+        run: npm test
+
       - name: 同步 Halo 文章
         env:
           HALO_BASE_URL: ${{ secrets.HALO_BASE_URL }}
           HALO_PAT: ${{ secrets.HALO_PAT }}
         run: |
-          if [ -z "$HALO_BASE_URL" ] || [ -z "$HALO_PAT" ]; then
-            echo "⚠️ 未配置 HALO_BASE_URL / HALO_PAT，跳过同步（使用仓库内已有 _posts）"
-          else
-            node tools/sync-halo.js
+          if [ -z "$HALO_BASE_URL" ]; then
+            echo "::error::未配置 HALO_BASE_URL，停止部署以免发布空站"
+            exit 1
           fi
+          node tools/sync-halo.js
 
       - name: 构建 Hexo
         run: |

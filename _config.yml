@@ -94,7 +94,8 @@ theme_config:
     enable: false
   fancybox: true
   motion:
-    enable: true
+    # 正文首屏不依赖动画/第三方脚本完成，慢网或脚本失败时仍可阅读。
+    enable: false
   local_search:
     enable: true
     trigger: auto

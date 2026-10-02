@@ -4,12 +4,17 @@
   "private": true,
   "description": "Hexo 源码 + Halo 同步工具（GitHub Pages 部署）",
   "scripts": {
+    "test": "node --test test/*.test.js",
     "sync": "node tools/sync-halo.js",
     "clean": "hexo clean",
     "generate": "hexo generate",
     "server": "hexo server"
   },
   "dependencies": {
+    "cheerio": "1.0.0",
+    "markdown-it": "^14.3.2",
+    "parse-srcset": "^1.0.2",
+    "sanitize-html": "^2.18.0",
     "hexo": "^6.3.0",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",

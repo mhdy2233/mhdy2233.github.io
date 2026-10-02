@@ -1,0 +1,37 @@
+/* Static equivalents of Halo editor elements, scoped away from NexT UI. */
+.halo-content { overflow-wrap: anywhere; }
+.halo-content .halo-link-card {
+  display: block;
+  padding: .9em 1.1em;
+  margin: 1em 0;
+  border: 1px solid #9996;
+  border-radius: 6px;
+  background: #8881;
+  text-decoration: none;
+}
+.halo-content .halo-inline-card { border-bottom: 1px dashed currentColor; }
+.halo-content a:focus-visible, .halo-content summary:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.halo-content img { max-width: 100%; height: auto; }
+.halo-content video, .halo-content iframe { max-width: 100%; }
+.halo-content audio { width: 100%; }
+.halo-content iframe { width: 100%; min-height: 260px; border: 0; }
+.halo-content .halo-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.halo-content table { min-width: 36rem; width: 100%; }
+.halo-content th, .halo-content td { min-width: 6em; overflow-wrap: normal; }
+.halo-content pre {
+  overflow-x: auto;
+  padding: 1em;
+  background: #8881;
+  line-height: 1.6;
+  white-space: pre;
+}
+.halo-content pre code { padding: 0; background: transparent; }
+.halo-content details { border: 1px solid #9996; padding: .7em 1em; margin: 1em 0; }
+.halo-content summary { cursor: pointer; }
+.halo-content input[type="checkbox"] { margin-right: .5em; }

@@ -1,0 +1,74 @@
+'use strict';
+
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const http = require('node:http');
+const { execFile } = require('node:child_process');
+const { promisify } = require('node:util');
+const Hexo = require('hexo');
+const { frontMatter } = require('../tools/sync-halo');
+const { renderContent, normalizePostPath } = require('../tools/halo-content');
+const run = promisify(execFile);
+
+test('real Hexo HTML rendering preserves literal template syntax and rich content', async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'halo-hexo-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const hexo = new Hexo(root, { silent: true });
+  await hexo.init();
+  hexo.extend.filter.register('post_permalink', normalizePostPath, 20);
+  assert.equal(hexo.execFilterSync('post_permalink', { __permalink: 'archives/hello/' }, { context: hexo }), 'archives/hello/');
+  t.after(() => hexo.exit());
+  const content = renderContent('<h2 id="heading">Heading</h2><p>{{ user }} {% unknown %}</p><pre><code>&lt;tag&gt; {{ code }}</code></pre>', {
+    baseUrl: 'https://example.com', permalink: '/archives/a'
+  });
+  const result = await hexo.post.render(path.join(root, 'a.html'), {
+    content, disableNunjucks: true
+  });
+  assert.match(result.content, /\{\{ user \}\} \{% unknown %\}/);
+  assert.match(result.content, /&lt;tag&gt; \{\{ code \}\}/);
+  assert.match(result.content, /<h2 id="heading">/);
+  assert.doesNotMatch(result.content, /&lt;h2/);
+});
+
+test('CLI stages every body before replacement and migrates old Markdown only after success', async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'halo-sync-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  fs.cpSync(path.join(__dirname, '../tools'), path.join(root, 'tools'), { recursive: true });
+  const postsDir = path.join(root, 'source/_posts');
+  fs.mkdirSync(postsDir, { recursive: true });
+  fs.writeFileSync(path.join(root, '_config.yml'), 'title: test\n');
+  fs.writeFileSync(path.join(postsDir, 'old.md'), 'existing article');
+  const post = id => ({
+    metadata: { name: id },
+    spec: { title: id, slug: id, publish: true, visible: 'PUBLIC', publishTime: '2026-01-01T00:00:00Z' },
+    status: { permalink: `/archives/${id}` }
+  });
+  let fail = true;
+  const server = http.createServer((req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    const pathname = new URL(req.url, 'http://localhost').pathname;
+    if (/\/posts$/.test(pathname)) return res.end(JSON.stringify({ items: [post('one'), post('two')], hasNext: false }));
+    if (/\/(tags|categories)$/.test(pathname)) return res.end(JSON.stringify({ items: [], hasNext: false }));
+    if (/\/posts\/one$/.test(pathname)) return res.end(JSON.stringify({ content: { content: '<p>one</p>' } }));
+    if (/\/posts\/two$/.test(pathname)) return res.end(JSON.stringify({ content: { content: fail ? '' : '<p>two</p>' } }));
+    res.statusCode = 404;
+    res.end('{}');
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => server.close());
+  const options = {
+    env: { ...process.env, NODE_PATH: path.join(__dirname, '../node_modules'), HALO_BASE_URL: `http://127.0.0.1:${server.address().port}`, HALO_PAT: '' }
+  };
+  await assert.rejects(run(process.execPath, [path.join(root, 'tools/sync-halo.js')], options));
+  assert.deepEqual(fs.readdirSync(postsDir), ['old.md']);
+  assert.equal(fs.readFileSync(path.join(postsDir, 'old.md'), 'utf8'), 'existing article');
+  fail = false;
+  await run(process.execPath, [path.join(root, 'tools/sync-halo.js')], options);
+  assert.deepEqual(fs.readdirSync(postsDir), ['one.html', 'two.html']);
+  assert.equal(fs.readFileSync(path.join(postsDir, 'one.html'), 'utf8'), frontMatter(post('one'), {}, {}, renderContent('<p>one</p>', {
+    baseUrl: options.env.HALO_BASE_URL, permalink: '/archives/one'
+  })));
+});

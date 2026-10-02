@@ -50,7 +50,11 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
     try {
       const resolved = new URL(value, articleUrl);
       if (isLink && resolved.origin === source.origin) {
-        const local = postLinks.get(resolved.pathname.replace(/\/+$/, ''));
+        const pathname = resolved.pathname.replace(/%[\da-f]{2}/gi, part => part.toUpperCase()).replace(/\/+$/, '');
+        const docSlug = resolved.searchParams.get('docSlug');
+        const isDocQuery = docSlug && pathname.startsWith('/docs/view/');
+        const local = postLinks.get(isDocQuery ? `${pathname}?docSlug=${encodeURIComponent(docSlug)}` : pathname);
+        if (local && isDocQuery) resolved.searchParams.delete('docSlug');
         if (local) return local + resolved.search + resolved.hash;
       }
       return resolved.href;
@@ -100,7 +104,7 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
     const summary = $('<summary></summary>')
       .append($('<span class="halo-code-language"></span>').text(label))
       .append($('<span class="halo-code-meta"></span>').text(`${result && !declared ? '自动 · ' : ''}${lines} 行`))
-      .append('<span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span>');
+      .append('<span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span>');
     const figure = $('<figure class="highlight"></figure>').addClass(language);
     const highlighted = $('<code class="hljs"></code>').addClass(`language-${language}`);
     if (code.attr('id')) highlighted.attr('id', code.attr('id'));
@@ -109,7 +113,7 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
     const body = $('<div class="halo-code-body"></div>')
       .append($('<div class="gutter" aria-hidden="true"></div>').append($('<pre></pre>').text(Array.from({ length: lines }, (_, i) => i + 1).join('\n'))))
       .append($('<div class="code"></div>').append($('<pre tabindex="0" aria-label="代码，可横向滚动"></pre>').append(highlighted)));
-    figure.append('<div class="halo-code-toolbar"></div>').append(body);
+    figure.append(body);
     details.append(summary, figure);
     pre.replaceWith(details);
   });
@@ -191,6 +195,7 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
 // Summaries and search should contain the code, not its display controls or line numbers.
 function stripCodeTools(html) {
   const $ = cheerio.load(String(html || ''), {}, false);
+  $('.halo-docs-directory, .halo-docs-breadcrumb, .halo-docs-adjacent').remove();
   $('.halo-code-details').each((_, el) => {
     const code = $(el).find('.code code').first();
     if (code.length) $(el).replaceWith($('<pre></pre>').append(code));

@@ -87,6 +87,7 @@ theme_config:
     home: / || fa fa-home
     archives: /archives/ || fa fa-archive
     categories: /categories/ || fa fa-th
+    文档: /docs/ || fa fa-book
     about: /about/ || fa fa-user
   sidebar:
     position: left
@@ -123,7 +124,7 @@ feed:
 
 search:
   path: search.json
-  field: post
+  field: all
   content: true
 
 sitemap:

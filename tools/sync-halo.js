@@ -33,12 +33,14 @@ const http = require('http');
 const { URL } = require('url');
 const cheerio = require('cheerio');
 const { selectContent, renderContent, postPath, stripCodeTools } = require('./halo-content');
+const { loadDocs, docRoutes, renderDocPages } = require('./halo-docs');
 
 const BASE = (process.env.HALO_BASE_URL || '').replace(/\/+$/, '');
 const PAT = process.env.HALO_PAT || '';
 const SKIP_TLS = process.env.HALO_SKIP_HTTPS_CHECK === '1';
 const ROOT = path.join(__dirname, '..');
 const POSTS_DIR = path.join(ROOT, 'source', '_posts');
+const DOCS_DIR = path.join(ROOT, 'source', 'docs');
 const IMAGES_DIR = path.join(ROOT, 'source', 'images');
 const DATA_DIR = path.join(ROOT, 'source', '_data');
 const CONFIG_FILE = path.join(ROOT, '_config.yml');
@@ -388,10 +390,12 @@ async function main() {
   console.log(`[sync] 从 ${BASE} 同步已发布文章...`);
 
   // 1. 分类 / 标签 name -> displayName 映射
-  const [catList, tagList] = await Promise.all([
+  const [catList, tagList, docs] = await Promise.all([
     fetchAll('/apis/api.content.halo.run/v1alpha1/categories'),
     fetchAll('/apis/api.content.halo.run/v1alpha1/tags'),
+    loadDocs(fetchAll),
   ]);
+  if (!docs.available) throw new Error('MiniDocs 公开接口不可用，停止同步以免发布缺失文档的站点');
   const categories = {};
   for (const c of catList) categories[c.metadata.name] = c.spec.displayName;
   const tags = {};
@@ -412,6 +416,10 @@ async function main() {
   const pending = new Map();
   const postLinks = new Map(posts.map(post => [postPath(post).replace(/\/+$/, ''), postPath(post)]));
   if (postLinks.size !== posts.length) throw new Error('文章 permalink 冲突，停止同步');
+  for (const [source, target] of docRoutes(docs.books)) {
+    if (postLinks.has(source)) throw new Error(`文档路径冲突: ${source}`);
+    postLinks.set(source, target);
+  }
   for (const post of posts) {
     const name = post.metadata.name;
     const html = await resolveContent(name);
@@ -427,7 +435,14 @@ async function main() {
     written.add(file);
     console.log(`[ok] ${post.spec.title} -> ${path.basename(file)}`);
   }
+  const writtenDocs = new Set();
+  for (const [name, document] of renderDocPages(docs.books, { baseUrl: BASE, postLinks })) {
+    const file = path.join(DOCS_DIR, name);
+    pending.set(file, document);
+    writtenDocs.add(file);
+  }
   for (const [file, document] of pending) {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
     fs.writeFileSync(file + '.tmp', document, 'utf8');
     fs.renameSync(file + '.tmp', file);
   }
@@ -440,8 +455,15 @@ async function main() {
       console.log(`[del] ${f}`);
     }
   }
+  for (const f of fs.readdirSync(DOCS_DIR)) {
+    const full = path.join(DOCS_DIR, f);
+    if (/^(index|kb-.+|doc-.+)\.html$/.test(f) && !writtenDocs.has(full)) {
+      fs.unlinkSync(full);
+      console.log(`[del] docs/${f}`);
+    }
+  }
 
-  console.log(`[sync] 完成，共写入 ${written.size} 篇`);
+  console.log(`[sync] 完成，共写入 ${written.size} 篇文章、${docs.books.length} 个知识库、${docs.books.reduce((sum, book) => sum + book.documents.length, 0)} 篇文档`);
 
   // 5. 同步站点头像与背景图
   await syncSiteAssets(posts);

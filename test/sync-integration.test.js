@@ -48,22 +48,30 @@ test('CLI stages every body before replacement and migrates old Markdown only af
   const toolsDir = path.join(root, 'tools');
   fs.mkdirSync(toolsDir);
   // Avoid Node 24's native Windows cpSync crash on mounted source volumes.
-  for (const name of ['sync-halo.js', 'halo-content.js']) {
+  for (const name of ['sync-halo.js', 'halo-content.js', 'halo-docs.js']) {
     fs.writeFileSync(path.join(toolsDir, name), fs.readFileSync(path.join(__dirname, '../tools', name)));
   }
   const postsDir = path.join(root, 'source/_posts');
   fs.mkdirSync(postsDir, { recursive: true });
   fs.writeFileSync(path.join(root, '_config.yml'), 'title: test\n');
   fs.writeFileSync(path.join(postsDir, 'old.md'), 'existing article');
+  const docsDir = path.join(root, 'source/docs');
+  fs.mkdirSync(docsDir);
+  fs.writeFileSync(path.join(docsDir, 'doc-old.html'), 'existing document');
   const post = id => ({
     metadata: { name: id },
     spec: { title: id, slug: id, publish: true, visible: 'PUBLIC', publishTime: '2026-01-01T00:00:00Z' },
     status: { permalink: `/archives/${id}` }
   });
   let fail = true;
+  let docsStatus = 200;
   const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'application/json');
     const pathname = new URL(req.url, 'http://localhost').pathname;
+    if (/\/knowledgebases$/.test(pathname)) {
+      res.statusCode = docsStatus;
+      return res.end(JSON.stringify(docsStatus === 200 ? { items: [], hasNext: false } : {}));
+    }
     if (/\/posts$/.test(pathname)) return res.end(JSON.stringify({ items: [post('one'), post('two')], hasNext: false }));
     if (/\/(tags|categories)$/.test(pathname)) return res.end(JSON.stringify({ items: [], hasNext: false }));
     if (/\/posts\/one$/.test(pathname)) return res.end(JSON.stringify({ content: { content: '<p>one</p>' } }));
@@ -79,9 +87,18 @@ test('CLI stages every body before replacement and migrates old Markdown only af
   await assert.rejects(run(process.execPath, [path.join(root, 'tools/sync-halo.js')], options));
   assert.deepEqual(fs.readdirSync(postsDir), ['old.md']);
   assert.equal(fs.readFileSync(path.join(postsDir, 'old.md'), 'utf8'), 'existing article');
+  assert.equal(fs.readFileSync(path.join(docsDir, 'doc-old.html'), 'utf8'), 'existing document');
   fail = false;
+  for (const status of [404, 500]) {
+    docsStatus = status;
+    await assert.rejects(run(process.execPath, [path.join(root, 'tools/sync-halo.js')], options));
+    assert.deepEqual(fs.readdirSync(postsDir), ['old.md']);
+    assert.equal(fs.readFileSync(path.join(docsDir, 'doc-old.html'), 'utf8'), 'existing document');
+  }
+  docsStatus = 200;
   await run(process.execPath, [path.join(root, 'tools/sync-halo.js')], options);
   assert.deepEqual(fs.readdirSync(postsDir), ['one.html', 'two.html']);
+  assert.deepEqual(fs.readdirSync(docsDir), ['index.html']);
   assert.equal(fs.readFileSync(path.join(postsDir, 'one.html'), 'utf8'), frontMatter(post('one'), {}, {}, renderContent('<p>one</p>', {
     baseUrl: options.env.HALO_BASE_URL, permalink: '/archives/one'
   })));

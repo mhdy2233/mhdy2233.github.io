@@ -59,9 +59,9 @@ jobs:
           # 保存本次构建产物与当前源码 commit（切分支后 HEAD 会变）
           cp -r public /tmp/public
           SRC_SHA=$(git rev-parse --short HEAD)
-          # 同步生成的 source/_posts 未纳入版本管理，切分支前一并清掉，避免残留
+          # 同步生成的文章与 Docs 未纳入版本管理，切分支前一并清掉
           git checkout -- . 2>/dev/null || true
-          git clean -fdx source/_posts 2>/dev/null || true
+          git clean -fdx source/_posts source/docs 2>/dev/null || true
           # 切到 master 分支
           git fetch origin master || true
           if git rev-parse --verify origin/master >/dev/null 2>&1; then

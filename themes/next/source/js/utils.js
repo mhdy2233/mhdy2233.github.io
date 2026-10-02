@@ -52,7 +52,10 @@ NexT.utils = {
     target.insertAdjacentHTML('beforeend', '<button type="button" class="copy-btn"><i class="fa fa-copy fa-fw" aria-hidden="true"></i> <span class="copy-btn-label" role="status" aria-live="polite">复制</span></button>');
     const button = target.querySelector('.copy-btn');
     const label = button.querySelector('.copy-btn-label');
-    button.addEventListener('click', async () => {
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      event.stopPropagation();
+      button.title = '复制代码';
       label.textContent = '复制中…';
       try {
         let content = code;
@@ -65,15 +68,17 @@ NexT.utils = {
         label.textContent = '已复制';
       } catch {
         button.querySelector('i').className = 'fa fa-times-circle fa-fw';
-        label.textContent = '复制失败，请手动选择';
+        label.textContent = '复制失败';
+        button.title = '复制失败，请手动选择代码';
       }
     });
     // If copycode.style is not mac, element is larger than target
     // So we need to accept both of them as parameters
-    element.addEventListener('mouseleave', () => {
+    (element.closest('.halo-code-details') || element).addEventListener('mouseleave', () => {
       setTimeout(() => {
         button.querySelector('i').className = 'fa fa-copy fa-fw';
         label.textContent = '复制';
+        button.title = '复制代码';
       }, 300);
     });
   },
@@ -90,7 +95,7 @@ NexT.utils = {
       if (element.closest('.halo-code-details')) {
         const figure = element.closest('figure.highlight');
         if (figure && CONFIG.codeblock.copy_button.enable) {
-          this.registerCopyButton(figure.querySelector('.halo-code-toolbar'), figure);
+          this.registerCopyButton(figure.closest('.halo-code-details').querySelector('.halo-code-toolbar'), figure);
         }
         return;
       }

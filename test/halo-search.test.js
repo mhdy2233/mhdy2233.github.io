@@ -23,7 +23,7 @@ test('search removes code tools without changing posts, metadata, order or conte
   const generate = hexo.extend.generator.get('json');
   const code = '  const x = "<tag>";\n\tconsole.log(x);\n\n';
   const escaped = cheerio.load('<code></code>', {}, false)('code').text(code).html();
-  const html = `<p>文章内容</p><details class="halo-code-details"><summary>JS 自动 3 行</summary><figure class="highlight javascript"><div class="halo-code-toolbar">复制</div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1\n2\n3</pre></div><div class="code"><pre><code>${escaped}</code></pre></div></div></figure></details>`;
+  const html = `<nav class="halo-docs-breadcrumb">其它文档标题</nav><details class="halo-docs-directory"><summary>目录</summary>其它文档标题</details><nav class="halo-docs-adjacent">上一篇标题</nav><p>文章内容</p><details class="halo-code-details"><summary>JS 自动 3 行</summary><figure class="highlight javascript"><div class="halo-code-toolbar">复制</div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1\n2\n3</pre></div><div class="code"><pre><code>${escaped}</code></pre></div></div></figure></details>`;
   const posts = [1, 2].map(day => ({
     title: `Post ${day}`, path: `archives/post-${day}/`, date: new Date(`2026-01-0${day}`),
     _content: html, tags: [{ name: 'tag' }], categories: [{ name: 'category' }]
@@ -41,9 +41,24 @@ test('search removes code tools without changing posts, metadata, order or conte
     assert.equal($('code').text(), code);
     assert.equal($('p').text(), '文章内容');
     assert.equal($('details, summary, .gutter, .halo-code-toolbar').length, 0);
+    assert.doesNotMatch($.root().text(), /其它文档标题|上一篇标题/);
   }
   assert.ok(posts.every(post => post._content === html));
   hexo.config.search.content = false;
   assert.deepEqual(await generate.call(hexo, locals), await original.call(hexo, locals));
   assert.ok(JSON.parse((await generate.call(hexo, locals)).data).every(entry => !Object.hasOwn(entry, 'content')));
+  hexo.config.search = { ...hexo.config.search, field: 'all', content: true };
+  locals.pages = new (hexo.model('Page').Query)([
+    { title: 'Document', path: 'docs/book/page/index.html', permalink: 'https://example.com/docs/book/page/', _content: html },
+    { title: 'Earlier', path: 'docs/book/earlier/index.html', permalink: 'https://example.com/docs/book/earlier/', _content: html },
+    { title: 'Styles', path: 'css/halo-content.css', permalink: 'https://example.com/css/halo-content.css', _content: '.halo-docs-directory {}' },
+    { title: 'Script', path: 'js/halo-docs.js', permalink: 'https://example.com/js/halo-docs.js', _content: 'const x = 1;' }
+  ]);
+  const indexed = await generate.call(hexo, locals);
+  const all = JSON.parse(indexed.data);
+  assert.deepEqual(all.map(entry => entry.title), ['Post 2', 'Post 1', 'Earlier', 'Document']);
+  assert.doesNotMatch(all[2].content, /halo-docs-directory/);
+  assert.equal(locals.pages.first().title, 'Document');
+  locals.pages = new (hexo.model('Page').Query)(locals.pages.toArray().reverse());
+  assert.deepEqual(await generate.call(hexo, locals), indexed);
 });

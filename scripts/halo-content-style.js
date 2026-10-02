@@ -5,13 +5,16 @@ hexo.extend.filter.register('post_permalink', normalizePostPath, 20);
 
 hexo.extend.injector.register('head_end', () =>
   `<link rel="stylesheet" href="${hexo.config.root}css/halo-content.css">`, 'default');
+hexo.extend.injector.register('body_end', () =>
+  `<script src="${hexo.config.root}js/halo-docs.js" defer></script>`, 'default');
 
 // Search indexes code, not its generated toolbar, language label or line numbers.
 const generateSearch = hexo.extend.generator.get('json');
 if (generateSearch) {
   hexo.extend.generator.register('json', async function (locals) {
-    const result = await generateSearch.call(this, locals);
-    const entries = JSON.parse(result.data);
+    const result = await generateSearch.call(this, { ...locals, pages: locals.pages?.sort('permalink') });
+    // Hexo also models renderable CSS/JS as Pages; index readable HTML routes only.
+    const entries = JSON.parse(result.data).filter(entry => typeof entry.url === 'string' && /(?:\/|\.html?)$/.test(entry.url));
     for (const entry of entries) {
       if (typeof entry.content === 'string') entry.content = stripCodeTools(entry.content);
     }

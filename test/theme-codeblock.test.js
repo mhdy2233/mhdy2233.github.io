@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const cheerio = require('cheerio');
+const { renderContent } = require('../tools/halo-content');
 
 const source = fs.readFileSync(path.join(__dirname, '../themes/next/source/js/utils.js'), 'utf8');
 
@@ -62,28 +63,45 @@ function page(html, clipboard, hljswrap = true) {
   return { $, utils: context.NexT.utils, dom: selector => dom($(selector)[0]) };
 }
 
-test('Halo code registers one native copy button and preserves exact text, including empty code', async () => {
+async function click(button) {
+  let prevented = false;
+  let stopped = false;
+  await button.listeners.click[0]({
+    preventDefault() { prevented = true; },
+    stopPropagation() { stopped = true; }
+  });
+  assert.equal(prevented, true);
+  assert.equal(stopped, true);
+}
+
+test('closed Halo code copies from one summary button without toggling or changing its text', async () => {
   for (const hljswrap of [true, false]) {
     for (const code of ['  <tag> 中文\t\n\n', '']) {
       const copied = [];
-      const p = page('<article><details class="halo-code-details"><summary>语言与行数</summary><figure class="highlight html"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter"><pre>1\n2\n3</pre></div><div class="code"><pre><code><span class="hljs-keyword"></span></code></pre></div></div></figure></details></article>', { writeText: async text => copied.push(text) }, hljswrap);
-      p.$('code span').text(code);
+      const input = cheerio.load('<pre collapsed="true"><code class="language-html"></code></pre>', {}, false);
+      input('code').text(code);
+      const html = renderContent(input.html(), { baseUrl: 'https://example.com', permalink: '/archives/code' });
+      const p = page('<article>' + html + '</article>', { writeText: async text => copied.push(text) }, hljswrap);
+      const classes = p.$('code span').map((_, el) => p.$(el).attr('class')).get();
+      assert.equal(p.$('summary .halo-code-actions > span.halo-code-toolbar:empty').length, 1);
+      assert.equal(p.$('figure .halo-code-toolbar, button').length, 0);
       p.utils.registerCodeblock();
       p.utils.registerCodeblock();
       p.utils.registerCodeblock(p.dom('article'));
-      assert.equal(p.$('.halo-code-toolbar > button[type="button"].copy-btn').length, 1);
+      assert.equal(p.$('summary .halo-code-actions > .halo-code-toolbar > button[type="button"].copy-btn').length, 1);
       assert.equal(p.$('.copy-btn-label[role="status"][aria-live="polite"]').length, 1);
       assert.equal(p.$('button i[aria-hidden="true"]').length, 1);
       assert.equal(p.$('.code-container, .code-lang, .fold-cover, .expand-btn').length, 0);
-      assert.equal(p.$('code span').attr('class'), 'hljs-keyword');
+      assert.deepEqual(p.$('code span').map((_, el) => p.$(el).attr('class')).get(), classes);
       const button = p.dom('.copy-btn');
       assert.equal(button.listeners.click.length, 1);
-      assert.equal(p.dom('figure').listeners.mouseleave.length, 1);
+      assert.equal(p.dom('details').listeners.mouseleave.length, 1);
       // Enter and Space invoke the native button click; no custom key handler is needed.
       assert.equal(button.listeners.keydown, undefined);
-      await button.listeners.click[0]();
+      await click(button);
       assert.deepEqual(copied, [code]);
       assert.equal(p.$('.copy-btn-label').text(), '已复制');
+      assert.equal(p.$('details[open]').length, 0);
     }
   }
 });
@@ -94,21 +112,22 @@ test('copy retains ordinary Hexo and explicit Mermaid text and reports clipboard
   p.utils.registerCodeblock();
   assert.equal(p.$('.code-lang').text(), 'JS');
   assert.equal(p.$('.code .hljs-keyword').length, 1);
-  await p.dom('.copy-btn').listeners.click[0]();
+  await click(p.dom('.copy-btn'));
   assert.deepEqual(copied, ['let x = 1;\nnext();']);
   p.utils.registerCopyButton(p.dom('.mermaid-box'), p.dom('.mermaid-box'), 'graph TD;\n A --> B\n');
-  await p.dom('.mermaid-box button').listeners.click[0]();
+  await click(p.dom('.mermaid-box button'));
   assert.equal(copied.at(-1), 'graph TD;\n A --> B\n');
 
   const empty = page('<div></div>', { writeText: async text => copied.push(text) });
   empty.utils.registerCopyButton(empty.dom('div'), empty.dom('div'), '');
-  await empty.dom('button').listeners.click[0]();
+  await click(empty.dom('button'));
   assert.equal(copied.at(-1), '');
   for (const clipboard of [undefined, { writeText: async () => { throw new Error('denied'); } }]) {
     const failed = page('<div></div>', clipboard);
     failed.utils.registerCopyButton(failed.dom('div'), failed.dom('div'), 'code');
-    await assert.doesNotReject(failed.dom('button').listeners.click[0]());
-    assert.equal(failed.$('.copy-btn-label').text(), '复制失败，请手动选择');
+    await assert.doesNotReject(click(failed.dom('button')));
+    assert.equal(failed.$('.copy-btn-label').text(), '复制失败');
+    assert.match(failed.dom('button').title, /手动选择/);
   }
 });
 

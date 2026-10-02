@@ -96,6 +96,18 @@ test('cards become native links with custom titles and no nested anchors', () =>
   assert.equal($('.halo-link-card a').length, 0);
   assert.match($('.halo-inline-card').attr('rel'), /noopener/);
 });
+
+test('known document query links become static mirror URLs without losing fragments', () => {
+  const postLinks = new Map([
+    ['/docs/view/docker%20bug?docSlug=jm%20_image', '/docs/docker%20bug/jm%20_image/'],
+    ['/docs/view/docker%20bug', '/docs/view/docker%20bug/'],
+    ['/docs/zawu/wiki', '/docs/zawu/wiki/']
+  ]);
+  const $ = cheerio.load(renderContent('<a href="/docs/view/docker%20bug?docSlug=jm+_image&amp;from=post#part">query</a><a href="/docs/view/docker%20bug?docSlug=unknown">unknown</a><a href="/docs/zawu/wiki#section">legacy</a>', { ...opts, postLinks }));
+  assert.equal($('a').eq(0).attr('href'), '/docs/docker%20bug/jm%20_image/?from=post#part');
+  assert.equal($('a').eq(1).attr('href'), 'https://blog.example.com/docs/view/docker%20bug?docSlug=unknown');
+  assert.equal($('a').eq(2).attr('href'), '/docs/zawu/wiki/#section');
+});
 test('media, relative links, srcset and lazy images are normalized', () => {
   const $ = render('<img src="/placeholder.gif" srcset="/placeholder.gif 1x" data-src="/upload/a.png" data-srcset="/upload/a.png 1x, //cdn.example.com/b.png 2x"><video src="../v.mp4" poster="/p.png" autoplay></video><audio src="/a.mp3"></audio><a href="#local">local</a><a href="/docs/topic">docs</a>');
   assert.equal($('img').attr('src'), 'https://blog.example.com/upload/a.png');

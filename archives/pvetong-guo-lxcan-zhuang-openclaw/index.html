@@ -110,7 +110,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-文档"><a href="/docs/" rel="section"><i class="fa fa-book fa-fw"></i>文档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -276,7 +276,7 @@
     
     <div class="post-body" itemprop="articleBody">
 <div class="halo-content">
-<p>2026/4/1更新：选择模型是Custom Provider为第三方模型供应商。</p><p>配置文件中 groq/nvidia/nemotron-3-super-120b-a12b:free 多层嵌套的坑修复了。</p><p></p><p>CT模板为debian13</p><p>CT配置没什么好讲的cpu，内存，硬盘按照需要设置就好了</p><h2 id="1.%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AEopenclaw">1.安装设置openclaw</h2><p>通过官网的一键脚本<code>curl -fsSL https://openclaw.ai/install.sh | bash</code> 运行安装即可，npm安装可能会比较慢有需要的可以用<code>curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -- --install-method git</code> 来使用git安装openclaw</p><p>默认设置基本可以全部跳过，后面按照需要酌情开启即可，虽然模型提供商可以跳过但是他还是会要求你填写模型信息，随便填即可不影响后续设置操作</p><p></p><p>安装后会显示面板信息连接地址之类的信息，需要注意的是我们是通过pve来安装的，所以是无法通过简单的ip:端口来使用web ui的</p><p>此时在本机打开cmd执行 <code>ssh -N -L 需要的本机端口:127.0.0.1:18789 root@192.168.0.12</code> 来将openclaw的端口映射到本地即可</p><h2 id="2.%E8%AE%BE%E7%BD%AE%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B">2.设置第三方模型</h2><p>openclaw用起來很费token用官方api贵的很，所以我采用第三方api</p><p>设置第三方模型可以通过配置文件或web ui来完成</p><h3 id="1.%E9%80%9A%E8%BF%87%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE">1.通过配置文件设置</h3><p>配置文件默认在 &#126;/.openclaw/openclaw.json</p><p>在配置文件末尾添加(如果有models则直接改即可)</p><details class="halo-code-details" open><summary><span class="halo-code-language">JSON</span><span class="halo-code-meta">自动 · 27 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight json"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+<p>2026/4/1更新：选择模型是Custom Provider为第三方模型供应商。</p><p>配置文件中 groq/nvidia/nemotron-3-super-120b-a12b:free 多层嵌套的坑修复了。</p><p></p><p>CT模板为debian13</p><p>CT配置没什么好讲的cpu，内存，硬盘按照需要设置就好了</p><h2 id="1.%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AEopenclaw">1.安装设置openclaw</h2><p>通过官网的一键脚本<code>curl -fsSL https://openclaw.ai/install.sh | bash</code> 运行安装即可，npm安装可能会比较慢有需要的可以用<code>curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -- --install-method git</code> 来使用git安装openclaw</p><p>默认设置基本可以全部跳过，后面按照需要酌情开启即可，虽然模型提供商可以跳过但是他还是会要求你填写模型信息，随便填即可不影响后续设置操作</p><p></p><p>安装后会显示面板信息连接地址之类的信息，需要注意的是我们是通过pve来安装的，所以是无法通过简单的ip:端口来使用web ui的</p><p>此时在本机打开cmd执行 <code>ssh -N -L 需要的本机端口:127.0.0.1:18789 root@192.168.0.12</code> 来将openclaw的端口映射到本地即可</p><h2 id="2.%E8%AE%BE%E7%BD%AE%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B">2.设置第三方模型</h2><p>openclaw用起來很费token用官方api贵的很，所以我采用第三方api</p><p>设置第三方模型可以通过配置文件或web ui来完成</p><h3 id="1.%E9%80%9A%E8%BF%87%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE">1.通过配置文件设置</h3><p>配置文件默认在 &#126;/.openclaw/openclaw.json</p><p>在配置文件末尾添加(如果有models则直接改即可)</p><details class="halo-code-details" open><summary><span class="halo-code-language">JSON</span><span class="halo-code-meta">自动 · 27 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight json"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
 2
 3
 4
@@ -328,7 +328,7 @@
       <span class="hljs-punctuation">}</span>
     <span class="hljs-punctuation">}</span>
   <span class="hljs-punctuation">}</span>
-<span class="hljs-punctuation">}</span></code></pre></div></div></figure></details><p>上面的配置文件属于最简单的，还有token数量上下文之类的精细设置在web中好设置一点</p><p>下面修改默认模型和模型列表</p><details class="halo-code-details"><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">自动 · 32 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight bash"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+<span class="hljs-punctuation">}</span></code></pre></div></div></figure></details><p>上面的配置文件属于最简单的，还有token数量上下文之类的精细设置在web中好设置一点</p><p>下面修改默认模型和模型列表</p><details class="halo-code-details"><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">自动 · 32 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight bash"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
 2
 3
 4
@@ -460,5 +460,5 @@
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 
-</body>
+<!-- hexo injector body_end start --><script src="/js/halo-docs.js" defer></script><!-- hexo injector body_end end --></body>
 </html>

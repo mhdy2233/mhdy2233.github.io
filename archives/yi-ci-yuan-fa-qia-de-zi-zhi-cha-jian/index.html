@@ -110,7 +110,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-文档"><a href="/docs/" rel="section"><i class="fa fa-book fa-fw"></i>文档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -285,7 +285,7 @@
     
     <div class="post-body" itemprop="articleBody">
 <div class="halo-content">
-<p>原项目地址 https://github.com/lizhipay/acg-faka</p><p>本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的</p><p>通过修改<code>kernel/Plugin/Hook.php</code> 和<code>app/Controller/Admin/Api/Plugin.php</code> 允许使用本地插件</p><p>注意版本，原项目每次更新都可能会导致修改或插件不可用</p><p>完整插件文档位于 <a href="https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6" target="_blank" rel="noopener noreferrer">https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6</a></p><p>我的小店:</p><a href="https://shop.mhdy.net/" target="_blank" class="halo-link-card" rel="noopener noreferrer">https://shop.mhdy.net</a><h3 id="%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%BB%A5%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6">修改文件以支持本地插件</h3><p>如果你也是3.5.6的版本那么直接覆盖即可，不是的话看下面的修改对比</p><p><code>app/Controller/Admin/Api/Plugin.php</code> :</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">224 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+<p>原项目地址 https://github.com/lizhipay/acg-faka</p><p>本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的</p><p>通过修改<code>kernel/Plugin/Hook.php</code> 和<code>app/Controller/Admin/Api/Plugin.php</code> 允许使用本地插件</p><p>注意版本，原项目每次更新都可能会导致修改或插件不可用</p><p>完整插件文档位于 <a href="/docs/zawu/acg-faka-plugin-wiki-3.5.6/" target="_blank" rel="noopener noreferrer">https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6</a></p><p>我的小店:</p><a href="https://shop.mhdy.net/" target="_blank" class="halo-link-card" rel="noopener noreferrer">https://shop.mhdy.net</a><h3 id="%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%BB%A5%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6">修改文件以支持本地插件</h3><p>如果你也是3.5.6的版本那么直接覆盖即可，不是的话看下面的修改对比</p><p><code>app/Controller/Admin/Api/Plugin.php</code> :</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">224 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
 2
 3
 4
@@ -732,7 +732,7 @@ HTML</span>;
         <span class="hljs-keyword">exit</span>;
     }
 }
-</code></pre></div></div></figure></details><p><code>kernel/Plugin/Hook.php</code> :</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">134 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+</code></pre></div></div></figure></details><p><code>kernel/Plugin/Hook.php</code> :</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">134 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
 2
 3
 4
@@ -999,7 +999,7 @@ HTML</span>;
         <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">_plugin_hook_exist</span>(<span class="hljs-variable">$name</span>, <span class="hljs-variable">$point</span>, <span class="hljs-variable">$namespace</span>, <span class="hljs-variable">$method</span>);
     }
 }
-</code></pre></div></div></figure></details><h4 id="%E8%BF%99%E9%87%8C%E6%98%AF%E4%BF%AE%E6%94%B9%E5%AF%B9%E6%AF%94">这里是修改对比</h4><p><code>app/Controller/Admin/Api/Plugin.php</code> :</p><p>108-124</p><details class="halo-code-details" open><summary><span class="halo-code-language">php</span><span class="halo-code-meta">17 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+</code></pre></div></div></figure></details><h4 id="%E8%BF%99%E9%87%8C%E6%98%AF%E4%BF%AE%E6%94%B9%E5%AF%B9%E6%AF%94">这里是修改对比</h4><p><code>app/Controller/Admin/Api/Plugin.php</code> :</p><p>108-124</p><details class="halo-code-details" open><summary><span class="halo-code-language">php</span><span class="halo-code-meta">17 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
 2
 3
 4
@@ -1031,7 +1031,7 @@ HTML</span>;
                 <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">json</span>(<span class="hljs-number">200</span>, <span class="hljs-variable">$status</span> === <span class="hljs-number">1</span> ? <span class="hljs-string">"插件已启动"</span> : <span class="hljs-string">"插件已停止"</span>);
             }
 
-            <span class="hljs-keyword">if</span> ((<span class="hljs-keyword">int</span>)<span class="hljs-variable">$config</span>[<span class="hljs-string">'STATUS'</span>] == <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable">$map</span>[<span class="hljs-string">'STATUS'</span>] == <span class="hljs-number">1</span>) {</code></pre></div></div></figure></details><p><code>kernel/Plugin/Hook.php</code> :</p><p>原26-61</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">36 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+            <span class="hljs-keyword">if</span> ((<span class="hljs-keyword">int</span>)<span class="hljs-variable">$config</span>[<span class="hljs-string">'STATUS'</span>] == <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable">$map</span>[<span class="hljs-string">'STATUS'</span>] == <span class="hljs-number">1</span>) {</code></pre></div></div></figure></details><p><code>kernel/Plugin/Hook.php</code> :</p><p>原26-61</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">36 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
 2
 3
 4
@@ -1101,7 +1101,7 @@ HTML</span>;
                 <span class="hljs-title class_">Client</span>::<span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">"/"</span>, <span class="hljs-string">"当前插件未启用"</span>);
             }
         }
-    }</code></pre></div></div></figure></details><p>修改后26-100</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">75 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+    }</code></pre></div></div></figure></details><p>修改后26-100</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">75 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
 2
 3
 4
@@ -1319,5 +1319,5 @@ HTML</span>;
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 
-</body>
+<!-- hexo injector body_end start --><script src="/js/halo-docs.js" defer></script><!-- hexo injector body_end end --></body>
 </html>

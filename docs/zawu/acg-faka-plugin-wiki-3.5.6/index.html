@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="oUfgPS8Q5O3eMf28wAV7Lrm2-tIlmTAF1DHbvEIYtHE">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="知识库 &#x2F; 杂物汇总 &#x2F; 异次元发卡插件文档3.5.6本知识库目录垃圾场alist相关问题qq相关的小知识e-hentai使用异次元发卡插件文档3.5.6 异次元发卡 3.5.6 插件开发与部署指南适用版本：异次元发卡 3.5.6（提交 60b26c56f23d02da94715b1fc92899f02c86f35f）。本文只描述仓库中实际存在的插件机制。Demo 只能说明目录和注解写法，不能作">
+<meta property="og:type" content="website">
+<meta property="og:title" content="异次元发卡插件文档3.5.6">
+<meta property="og:url" content="https://mhdy2233.github.io/docs/zawu/acg-faka-plugin-wiki-3.5.6/index.html">
+<meta property="og:site_name" content="魔皇地狱的博客">
+<meta property="og:description" content="知识库 &#x2F; 杂物汇总 &#x2F; 异次元发卡插件文档3.5.6本知识库目录垃圾场alist相关问题qq相关的小知识e-hentai使用异次元发卡插件文档3.5.6 异次元发卡 3.5.6 插件开发与部署指南适用版本：异次元发卡 3.5.6（提交 60b26c56f23d02da94715b1fc92899f02c86f35f）。本文只描述仓库中实际存在的插件机制。Demo 只能说明目录和注解写法，不能作">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-16T01:51:51.579Z">
+<meta property="article:modified_time" content="2026-09-16T02:11:45.871Z">
+<meta property="article:author" content="魔皇地狱">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mhdy2233.github.io/docs/zawu/acg-faka-plugin-wiki-3.5.6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"https://mhdy2233.github.io/docs/zawu/acg-faka-plugin-wiki-3.5.6/index.html","path":"docs/zawu/acg-faka-plugin-wiki-3.5.6/index.html","title":"异次元发卡插件文档3.5.6"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>异次元发卡插件文档3.5.6 | 魔皇地狱的博客
+</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.umd.js" integrity="sha256-QnJV4HT5r8i89ovZGRD86iynZqHerEbT2xt69vDM36I=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start --><link rel="stylesheet" href="/css/halo-content.css"><!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="魔皇地狱的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">魔皇地狱的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我是废物</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-文档"><a href="/docs/" rel="section"><i class="fa fa-book fa-fw"></i>文档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E6%AC%A1%E5%85%83%E5%8F%91%E5%8D%A1-356-%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">异次元发卡 3.5.6 插件开发与部署指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%85%88%E7%9C%8B%E7%BB%93%E8%AE%BA"><span class="nav-number">1.1.</span> <span class="nav-text">1. 先看结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E6%8F%92%E4%BB%B6%E5%A6%82%E4%BD%95%E8%A2%AB%E6%A3%80%E6%B5%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 插件如何被检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8E%9F%E7%89%88%E4%B8%8D%E8%83%BD%E6%AD%A3%E5%B8%B8%E4%BD%BF%E7%94%A8%E8%87%AA%E5%88%B6%E6%8F%92%E4%BB%B6"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 为什么原版不能正常使用自制插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-%E5%BD%93%E5%89%8D%E4%BB%93%E5%BA%93%E7%9A%84%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6%E6%94%B9%E5%8A%A8"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 当前仓库的本地插件改动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8F%92%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.</span> <span class="nav-text">2. 插件目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#21-%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 命名规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%BF%85%E9%9C%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3. 必需配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#31-codefccfc66a5b1e25b1"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Config&#x2F;Info.php</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#32-code2a945d080603dacd"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Config&#x2F;Config.php</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#33-code6a24de0253b97e7e"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 Config&#x2F;Submit.php</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-hook-%E6%9C%BA%E5%88%B6"><span class="nav-number">1.4.</span> <span class="nav-text">4. Hook 机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#41-%E5%9F%BA%E6%9C%AC%E5%86%99%E6%B3%95"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 基本写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#42-hook-%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Hook 返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#43-356-%E6%8C%82%E8%BD%BD%E7%82%B9%E9%80%9F%E6%9F%A5"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 3.5.6 挂载点速查</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.5.</span> <span class="nav-text">5. 生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%8E%A7%E5%88%B6%E5%99%A8%E3%80%81%E8%A7%86%E5%9B%BE%E5%92%8C-url"><span class="nav-number">1.6.</span> <span class="nav-text">6. 控制器、视图和 URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%97%A5%E5%BF%97%E3%80%81%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.7.</span> <span class="nav-text">7. 日志、缓存和数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#71-%E8%BF%90%E8%A1%8C%E6%97%A5%E5%BF%97"><span class="nav-number">1.7.1.</span> <span class="nav-text">7.1 运行日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#72-%E6%8F%92%E4%BB%B6%E7%BC%93%E5%AD%98"><span class="nav-number">1.7.2.</span> <span class="nav-text">7.2 插件缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%AE%89%E8%A3%85%E3%80%81%E5%90%AF%E7%94%A8%E5%92%8C%E6%89%93%E5%8C%85"><span class="nav-number">1.8.</span> <span class="nav-text">8. 安装、启用和打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#81-%E6%89%8B%E5%B7%A5%E5%AE%89%E8%A3%85"><span class="nav-number">1.8.1.</span> <span class="nav-text">8.1 手工安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#82-zip-%E7%BB%93%E6%9E%84"><span class="nav-number">1.8.2.</span> <span class="nav-text">8.2 ZIP 结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#83-1panel-linux-%E6%9D%83%E9%99%90"><span class="nav-number">1.8.3.</span> <span class="nav-text">8.3 1Panel &#x2F; Linux 权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#84-%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E5%90%8E%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">1.8.4.</span> <span class="nav-text">8.4 修改代码后的缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E6%9C%80%E5%B0%8F%E8%87%AA%E5%88%B6%E6%8F%92%E4%BB%B6%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.9.</span> <span class="nav-text">9. 最小自制插件示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-telegram-%E8%AE%A2%E5%8D%95%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6"><span class="nav-number">1.10.</span> <span class="nav-text">10. Telegram 订单通知插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.10.1.</span> <span class="nav-text">配置步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E9%85%8D%E7%BD%AE"><span class="nav-number">1.10.2.</span> <span class="nav-text">重要配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E8%87%AA%E6%A3%80%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><span class="nav-number">1.11.</span> <span class="nav-text">11. 自检与故障排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#111-%E6%8F%92%E4%BB%B6%E4%B8%8D%E6%98%BE%E7%A4%BA"><span class="nav-number">1.11.1.</span> <span class="nav-text">11.1 插件不显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#112-%E8%83%BD%E6%98%BE%E7%A4%BA%E4%BD%86-hook-%E4%B8%8D%E6%89%A7%E8%A1%8C"><span class="nav-number">1.11.2.</span> <span class="nav-text">11.2 能显示但 Hook 不执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#113-%E9%85%8D%E7%BD%AE%E6%88%96%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.11.3.</span> <span class="nav-text">11.3 配置或日志写入失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#114-%E8%AE%A2%E5%8D%95%E6%B5%81%E7%A8%8B%E8%A2%AB%E6%8F%92%E4%BB%B6%E6%8B%96%E6%85%A2%E6%88%96%E6%8A%A5%E9%94%99"><span class="nav-number">1.11.4.</span> <span class="nav-text">11.4 订单流程被插件拖慢或报错</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E5%8F%91%E5%B8%83%E5%89%8D%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><span class="nav-number">1.12.</span> <span class="nav-text">12. 发布前检查清单</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="魔皇地狱"
+      src="/images/halo-avatar.png">
+  <p class="site-author-name" itemprop="name">魔皇地狱</p>
+  <div class="site-description" itemprop="description">这里是halo博客的镜像</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://t.me/lajijichang" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;lajijichang" rel="noopener me" target="_blank"><i class="fa-brands fa-telegram fa-fw"></i>Telegram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://mohuangdiyu.com/" title="Home → https:&#x2F;&#x2F;mohuangdiyu.com" rel="noopener me" target="_blank"><i class="fa-solid fa-house fa-fw"></i>Home</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://shop.mhdy.net/" title="小店 → https:&#x2F;&#x2F;shop.mhdy.net" rel="noopener me" target="_blank"><i class="fa-solid fa-shop fa-fw"></i>小店</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">异次元发卡插件文档3.5.6
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          
+<nav class="halo-docs-breadcrumb" aria-label="当前位置"><a href="/docs/">知识库</a> / <a href="/docs/view/zawu/">杂物汇总</a> / <span>异次元发卡插件文档3.5.6</span></nav><details class="halo-docs-directory"><summary>本知识库目录</summary><nav class="halo-docs-nav" aria-label="知识库目录"><ul><li><a href="/docs/zawu/alist-lajichang/" data-halo-doc-slug="alist-lajichang" data-halo-doc-id="9b5c7c9c-6783-4dac-87d7-ab8628cd5608">垃圾场alist相关问题</a></li><li><a href="/docs/zawu/qq/" data-halo-doc-slug="qq" data-halo-doc-id="4c44e103-491c-464a-ac04-338ba2d2a9da">qq相关的小知识</a></li><li><a href="/docs/zawu/e-hentai/" data-halo-doc-slug="e-hentai" data-halo-doc-id="9778662c-3107-45c3-9fbb-8f564d6fdcd6">e-hentai使用</a></li><li><a href="/docs/zawu/acg-faka-plugin-wiki-3.5.6/" data-halo-doc-slug="acg-faka-plugin-wiki-3.5.6" data-halo-doc-id="5d6c4a9f-36b8-4a42-9dd4-315f3ddc0e97">异次元发卡插件文档3.5.6</a></li></ul></nav></details><div class="halo-content">
+<div><h1 id="%E5%BC%82%E6%AC%A1%E5%85%83%E5%8F%91%E5%8D%A1-356-%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97"><a class="anchor" href="#%E5%BC%82%E6%AC%A1%E5%85%83%E5%8F%91%E5%8D%A1-356-%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97"></a>异次元发卡 3.5.6 插件开发与部署指南</h1><p>适用版本：异次元发卡 3.5.6（提交 <code>60b26c56f23d02da94715b1fc92899f02c86f35f</code>）。</p><p>本文只描述仓库中实际存在的插件机制。<code>Demo</code> 只能说明目录和注解写法，不能作为“自制插件可以直接启用”的完整示例。</p><h2 id="1-%E5%85%88%E7%9C%8B%E7%BB%93%E8%AE%BA"><a class="anchor" href="#1-%E5%85%88%E7%9C%8B%E7%BB%93%E8%AE%BA"></a>1. 先看结论</h2><h3 id="11-%E6%8F%92%E4%BB%B6%E5%A6%82%E4%BD%95%E8%A2%AB%E6%A3%80%E6%B5%8B"><a class="anchor" href="#11-%E6%8F%92%E4%BB%B6%E5%A6%82%E4%BD%95%E8%A2%AB%E6%A3%80%E6%B5%8B"></a>1.1 插件如何被检测</h3><p>程序通过 <code>Kernel\Util\Plugin::getPlugins()</code> 扫描：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">app/Plugin/*/Config/Info.php
+</code></pre></div></div></figure></details>
+      </div><p>只要插件目录下存在可加载的 <code>Config/Info.php</code>，后台接口 <code>/admin/api/plugin/getPlugins</code> 就能读到插件元数据。检测插件不要求它出现在应用商店缓存中。</p><h3 id="12-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8E%9F%E7%89%88%E4%B8%8D%E8%83%BD%E6%AD%A3%E5%B8%B8%E4%BD%BF%E7%94%A8%E8%87%AA%E5%88%B6%E6%8F%92%E4%BB%B6"><a class="anchor" href="#12-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8E%9F%E7%89%88%E4%B8%8D%E8%83%BD%E6%AD%A3%E5%B8%B8%E4%BD%BF%E7%94%A8%E8%87%AA%E5%88%B6%E6%8F%92%E4%BB%B6"></a>1.2 为什么原版不能正常使用自制插件</h3><p>原版 <code>kernel/Plugin/Hook.php</code> 只在应用商店授权组件成功加载时读取：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">runtime/plugin/hook
+</code></pre></div></div></figure></details>
+      </div><p>这个文件由商店插件授权链生成并加密。自制插件虽然能被 <code>getPlugins()</code> 扫描到，但它的 <code>#[Hook]</code> 不会因此自动注册；后台启停也会走商店插件的 <code>_plugin_start()</code> / <code>_plugin_stop()</code>。</p><h3 id="13-%E5%BD%93%E5%89%8D%E4%BB%93%E5%BA%93%E7%9A%84%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6%E6%94%B9%E5%8A%A8"><a class="anchor" href="#13-%E5%BD%93%E5%89%8D%E4%BB%93%E5%BA%93%E7%9A%84%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6%E6%94%B9%E5%8A%A8"></a>1.3 当前仓库的本地插件改动</h3><p>本仓库增加了两个有限、独立的本地插件路径：</p><div class="cherry-table-wrapper">
+        <div class="cherry-table-container"><div class="halo-table-scroll"><table class="cherry-table"><thead><tr><th>文件</th><th>作用</th></tr></thead><tbody><tr><td><code>kernel/Plugin/Hook.php</code></td><td>继续加载商店 Hook；另外扫描不在 <code>runtime/plugin/store.cache</code> 中、且 <code>STATUS=1</code> 的本地插件，并注册其 <code>#[Hook]</code>。</td></tr><tr><td><code>app/Controller/Admin/Api/Plugin.php</code></td><td>对不在商店缓存中的插件直接写入 <code>Config/Config.php</code>，执行启停状态 Hook，并记录管理日志。</td></tr></tbody></table></div></div></div><p>商店插件仍使用原来的加密缓存和授权流程。仓库根目录的 <code>kernel/Plugin.php</code> 是应用商店授权组件，不应修改、解密或伪造；本文不依赖修改它。</p><h2 id="2-%E6%8F%92%E4%BB%B6%E7%9B%AE%E5%BD%95"><a class="anchor" href="#2-%E6%8F%92%E4%BB%B6%E7%9B%AE%E5%BD%95"></a>2. 插件目录</h2><p>最小可用插件：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">13 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">app/Plugin/OrderLog/
+├─ Config/
+│  ├─ Info.php       # 必须：名称、作者、版本、描述
+│  ├─ Config.php     # 必须：运行配置，至少包含 STATUS
+│  └─ Submit.php     # 可选：后台配置表单
+├─ Hook/
+│  └─ Main.php       # 可选：#[Hook] 和生命周期方法
+├─ Controller/       # 可选：插件路由控制器
+├─ View/             # 可选：控制器或 Hook 渲染的模板
+├─ Support/          # 可选：业务辅助类
+├─ Db/               # 可选：插件缓存文件，由 App\Util\Plugin 管理
+├─ Wiki/             # 可选：README.md、Sidebar.md、Terms.md
+└─ runtime.log       # 可选：运行日志，目录必须可写
+</code></pre></div></div></figure></details>
+      </div><h3 id="21-%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><a class="anchor" href="#21-%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"></a>2.1 命名规则</h3><ul class="cherry-list__default"><li class="cherry-list-item"><p>目录名就是插件 ID，例如 <code>OrderLog</code>、<code>TelegramNotification</code>。</p></li><li class="cherry-list-item"><p>目录名只能使用字母、数字和下划线，且必须以字母开头更稳妥。</p></li><li class="cherry-list-item"><p>命名空间必须与目录名大小写一致：<code>App\Plugin\OrderLog\...</code>。</p></li><li class="cherry-list-item"><p>Hook 文件名必须与类名一致，例如 <code>Hook/Main.php</code> 对应 <code>App\Plugin\OrderLog\Hook\Main</code>。</p></li><li class="cherry-list-item"><p>Linux 区分大小写。不要照抄旧 <code>CardAPI</code> 示例中的大小写不一致写法。</p></li><li class="cherry-list-item"><p>插件 ID 不要与 <code>runtime/plugin/store.cache</code> 中的商店插件重名；命中该缓存后会按商店插件处理，不会走本地路径。</p></li></ul><h2 id="3-%E5%BF%85%E9%9C%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><a class="anchor" href="#3-%E5%BF%85%E9%9C%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"></a>3. 必需配置文件</h2><h3 id="31-codefccfc66a5b1e25b1"><a class="anchor" href="#31-codefccfc66a5b1e25b1"></a>3.1 <code>Config/Info.php</code></h3><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">12 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Consts</span>\<span class="hljs-title">Plugin</span>;
+
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">NAME</span> =&gt; <span class="hljs-string">'订单日志'</span>,
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">AUTHOR</span> =&gt; <span class="hljs-string">'你的名称'</span>,
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">WEB_SITE</span> =&gt; <span class="hljs-string">'#'</span>,
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">DESCRIPTION</span> =&gt; <span class="hljs-string">'记录订单付款成功事件。'</span>,
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">VERSION</span> =&gt; <span class="hljs-string">'1.0.0'</span>,
+];
+</code></pre></div></div></figure></details>
+      </div><p><code>Plugin::NAME</code> 是后台显示名称，目录名仍是插件 ID。<code>Info.php</code> 返回值不是对象，必须是数组。</p><h3 id="32-code2a945d080603dacd"><a class="anchor" href="#32-code2a945d080603dacd"></a>3.2 <code>Config/Config.php</code></h3><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">6 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-string">'STATUS'</span> =&gt; <span class="hljs-string">'0'</span>,
+];
+</code></pre></div></div></figure></details>
+      </div><p>配置会被后台 <code>setConfig</code> 重新写成 PHP 数组。不要手工把 Token、数据库密码等秘密提交到 Git。</p><h3 id="33-code6a24de0253b97e7e"><a class="anchor" href="#33-code6a24de0253b97e7e"></a>3.3 <code>Config/Submit.php</code></h3><p>这是后台“配置”弹窗的字段定义。每个字段至少有 <code>title</code>、<code>name</code>、<code>type</code>；<code>name</code> 必须与 <code>Config.php</code> 的键一致。</p><p>常用类型：</p><div class="cherry-table-wrapper">
+        <div class="cherry-table-container"><div class="halo-table-scroll"><table class="cherry-table"><thead><tr><th><code>type</code></th><th>用途</th><th>常用键</th></tr></thead><tbody><tr><td><code>input</code></td><td>单行文本</td><td><code>placeholder</code>、<code>required</code>、<code>default</code></td></tr><tr><td><code>password</code></td><td>密钥输入</td><td>同 <code>input</code></td></tr><tr><td><code>number</code></td><td>数字输入</td><td><code>required</code>、<code>default</code></td></tr><tr><td><code>textarea</code></td><td>多行文本</td><td><code>height</code>、<code>default</code></td></tr><tr><td><code>select</code></td><td>下拉选择</td><td><code>dict: [[id, name], ...]</code></td></tr><tr><td><code>switch</code></td><td>开关，提交通常是 <code>0/1</code></td><td><code>placeholder</code>、<code>default</code></td></tr><tr><td><code>checkbox</code></td><td>多选</td><td><code>dict</code>、<code>default</code></td></tr><tr><td><code>json</code></td><td>JSON 编辑框</td><td><code>default</code></td></tr><tr><td><code>explain</code></td><td>只显示说明，不保存业务值</td><td><code>placeholder</code></td></tr></tbody></table></div></div></div><p><code>dict</code> 可以直接写数组，也可以写数据字典字符串，例如 API 通知插件使用的 <code>commodity,id,name</code>。具体字典由当前版本的后台组件解析，插件不应假设未知字典一定存在。</p><p>示例：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">12 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">return</span> [
+    [
+        <span class="hljs-string">'title'</span> =&gt; <span class="hljs-string">'记录日志'</span>,
+        <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'log'</span>,
+        <span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'switch'</span>,
+        <span class="hljs-string">'default'</span> =&gt; <span class="hljs-string">'1'</span>,
+        <span class="hljs-string">'placeholder'</span> =&gt; <span class="hljs-string">'记录|关闭'</span>,
+    ],
+];
+</code></pre></div></div></figure></details>
+      </div><p><code>Kernel\Util\Plugin::getPlugin()</code> 会把 <code>Config.php</code> 中已有的值填回 <code>PLUGIN_SUBMIT[*].default</code>；不存在的值才使用 <code>Submit.php</code> 给出的默认值。</p><h2 id="4-hook-%E6%9C%BA%E5%88%B6"><a class="anchor" href="#4-hook-%E6%9C%BA%E5%88%B6"></a>4. Hook 机制</h2><h3 id="41-%E5%9F%BA%E6%9C%AC%E5%86%99%E6%B3%95"><a class="anchor" href="#41-%E5%9F%BA%E6%9C%AC%E5%86%99%E6%B3%95"></a>4.1 基本写法</h3><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">20 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Plugin</span>\<span class="hljs-title class_">OrderLog</span>\<span class="hljs-title class_">Hook</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Consts</span>\<span class="hljs-title">Hook</span> <span class="hljs-keyword">as</span> <span class="hljs-title">HookPoint</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">Commodity</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">Order</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">Pay</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">Plugin</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Annotation</span>\<span class="hljs-title">Hook</span>;
+
+<span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span>
+</span>{
+    <span class="hljs-meta">#[Hook</span>(<span class="hljs-attr">point</span>: <span class="hljs-title class_">HookPoint</span>::<span class="hljs-variable constant_">USER_API_ORDER_PAY_AFTER</span>)<span class="hljs-meta">]</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">orderPaid</span>(<span class="hljs-params">Commodity <span class="hljs-variable">$commodity</span>, Order <span class="hljs-variable">$order</span>, ?Pay <span class="hljs-variable">$pay</span></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">log</span>(<span class="hljs-string">'OrderLog'</span>, <span class="hljs-string">"订单 <span class="hljs-subst">{$order-&gt;trade_no}</span> 已付款"</span>);
+    }
+}
+</code></pre></div></div></figure></details>
+      </div><p>要求：</p><ol start="1" class="cherry-list__default"><li class="cherry-list-item"><p>Hook 方法必须是 <code>public</code>。</p></li><li class="cherry-list-item"><p><code>#[Hook]</code> 必须使用命名参数 <code>point:</code>，值来自 <code>App\Consts\Hook</code>。</p></li><li class="cherry-list-item"><p>方法参数顺序必须和挂载点实际传参一致；类型声明错误会让订单流程报错。</p></li><li class="cherry-list-item"><p>Hook 方法应尽快返回。同步网络请求会增加付款请求耗时，失败应捕获异常，不能阻止支付和发货。</p></li><li class="cherry-list-item"><p>本地插件只有 <code>STATUS=1</code> 才注册；停用后下一次请求不会再调用它。</p></li></ol><h3 id="42-hook-%E8%BF%94%E5%9B%9E%E5%80%BC"><a class="anchor" href="#42-hook-%E8%BF%94%E5%9B%9E%E5%80%BC"></a>4.2 Hook 返回值</h3><p>底层 <code>Kernel\Util\Plugin::hook()</code> 的行为：</p><ul class="cherry-list__default"><li class="cherry-list-item"><p><code>string</code>：追加到当前结果，适合输出 HTML/JS。</p></li><li class="cherry-list-item"><p><code>array</code>：追加到结果数组，适合表格列、导航等结构化扩展。</p></li><li class="cherry-list-item"><p><code>Kernel\Plugin\Entity\Stock</code>：立即返回库存对象。</p></li><li class="cherry-list-item"><p><code>null</code>/无返回值：不改变结果。</p></li></ul><p>页面挂载点常见做法是直接 <code>echo</code>，数据型挂载点则应按注释要求修改引用参数或返回数组。</p><h3 id="43-356-%E6%8C%82%E8%BD%BD%E7%82%B9%E9%80%9F%E6%9F%A5"><a class="anchor" href="#43-356-%E6%8C%82%E8%BD%BD%E7%82%B9%E9%80%9F%E6%9F%A5"></a>4.3 3.5.6 挂载点速查</h3><p>完整常量以 <a target="_blank" rel="noopener" href="https://blog.mhdy.net/docs/app/Consts/Hook.php"><code>app/Consts/Hook.php</code></a> 为准。常用挂载点如下：</p><div class="cherry-table-wrapper">
+        <div class="cherry-table-container"><div class="halo-table-scroll"><table class="cherry-table"><thead><tr><th>常量</th><th>触发位置 / 参数</th></tr></thead><tbody><tr><td><code>ADMIN_VIEW_MENU</code></td><td>后台左侧菜单，通常直接输出 HTML</td></tr><tr><td><code>ADMIN_VIEW_HEADER</code> / <code>ADMIN_VIEW_FOOTER</code></td><td>后台 CSS / JS</td></tr><tr><td><code>ADMIN_VIEW_NAV</code></td><td>后台应用商店旁导航</td></tr><tr><td><code>ADMIN_VIEW_USER_TABLE</code> <span style="text-decoration:underline"> <code>ADMIN_VIEW_USER_TOOLBAR</code> </span> <code>ADMIN_VIEW_USER_FOOTER</code></td><td>后台会员页</td></tr><tr><td><code>ADMIN_VIEW_COMMODITY_TABLE</code> <span style="text-decoration:underline"> <code>ADMIN_VIEW_COMMODITY_TOOLBAR</code> </span> <code>ADMIN_VIEW_COMMODITY_FOOTER</code></td><td>后台商品页</td></tr><tr><td><code>ADMIN_VIEW_COMMODITY_POST</code></td><td>商品添加/编辑表单扩展</td></tr><tr><td><code>ADMIN_VIEW_CATEGORY_TOOLBAR</code> <span style="text-decoration:underline"> <code>ADMIN_VIEW_CATEGORY_TABLE</code> </span> <code>ADMIN_VIEW_CATEGORY_POST</code></td><td>后台分类页</td></tr><tr><td><code>ADMIN_VIEW_ORDER_TABLE</code> <span style="text-decoration:underline"> <code>ADMIN_VIEW_ORDER_TOOLBAR</code> </span> <code>ADMIN_VIEW_ORDER_FOOTER</code></td><td>后台订单页</td></tr><tr><td><code>ADMIN_VIEW_CONFIG_TOOLBAR</code></td><td>网站设置页工具栏，返回二维数组</td></tr><tr><td><code>ADMIN_API_PLUGIN_SAVE_CONFIG</code></td><td>保存插件配置，参数为 <code>string $pluginName, array $postMap</code></td></tr><tr><td><code>USER_API_ORDER_TRADE_BEGIN</code></td><td>下单前，参数为 <code>array $_POST</code></td></tr><tr><td><code>USER_API_ORDER_TRADE_AFTER</code></td><td>下单成功，<code>Commodity $commodity, Order $order, Pay $pay</code></td></tr><tr><td><code>USER_API_ORDER_TRADE_PAY_BEGIN</code></td><td>下单后、发起支付前，订单相关对象</td></tr><tr><td><code>USER_API_ORDER_PAY_AFTER</code></td><td>付款成功，<code>Commodity $commodity, Order $order, Pay $pay</code></td></tr><tr><td><code>USER_API_RECHARGE_AFTER</code></td><td>充值付款成功，<code>UserRecharge $recharge, Pay $pay</code></td></tr><tr><td><code>USER_API_AUTH_REGISTER_BEGIN/AFTER</code></td><td>注册前 / 注册后</td></tr><tr><td><code>USER_API_AUTH_LOGIN_BEGIN/AFTER</code></td><td>登录前 / 登录后</td></tr><tr><td><code>KERNEL_INIT</code></td><td>核心初始化完成</td></tr><tr><td><code>CONTROLLER_CALL_BEFORE/AFTER</code></td><td>控制器调用前 / 后</td></tr><tr><td><code>RENDER_VIEW</code></td><td>视图渲染，传入视图原文引用</td></tr><tr><td><code>USER_VIEW_AUTH_LOGIN_BUTTON</code> / <code>USER_VIEW_AUTH_REGISTER_BUTTON</code></td><td>前台登录 / 注册按钮</td></tr><tr><td><code>USER_VIEW_SECURITY_NAV</code> / <code>USER_VIEW_PERSONAL_FORM</code></td><td>用户安全中心 / 个人资料</td></tr><tr><td><code>USER_VIEW_COMMODITY_POST</code></td><td>前台商品表单</td></tr><tr><td><code>HTTP_ROUTE_RESPONSE</code></td><td>HTTP 路由响应返回用户前</td></tr><tr><td><code>USER_VIEW_INDEX_HEADER/BODY/FOOTER</code></td><td>前台首页三个区域</td></tr><tr><td><code>USER_API_INDEX_CATEGORY_LIST</code></td><td>分类列表，数组引用</td></tr><tr><td><code>USER_API_INDEX_COMMODITY_LIST</code></td><td>商品列表，数组引用</td></tr><tr><td><code>USER_API_INDEX_COMMODITY_DETAIL_INFO</code></td><td>商品详情数组引用</td></tr><tr><td><code>USER_API_INDEX_TRADE_CALC_AMOUNT</code></td><td>下单金额计算结果数组引用</td></tr><tr><td><code>USER_API_INDEX_PAY_LIST</code></td><td>支付列表数组引用</td></tr><tr><td><code>USER_API_INDEX_QUERY_LIST</code></td><td>查询订单列表数组引用</td></tr><tr><td><code>USER_API_INDEX_QUERY_SECRET</code></td><td>查询卡密，<code>Order $order</code></td></tr><tr><td><code>USER_API_PURCHASE_RECORD_LIST</code></td><td>购买记录列表数组引用</td></tr><tr><td><code>USER_VIEW_MENU</code> / <code>USER_VIEW_HEADER_NAV</code></td><td>前台菜单 / 顶部导航</td></tr><tr><td><code>USER_VIEW_QUERY_TRADE_NO</code></td><td>订单号后扩展内容</td></tr><tr><td><code>USER_VIEW_HEADER/BODY/FOOTER</code></td><td>前台公共布局区域</td></tr><tr><td><code>USER_GLOBAL_VIEW_HEADER/BODY/FOOTER</code></td><td>前台全局区域</td></tr><tr><td><code>WAF_INTERCEPT</code></td><td>WAF 拦截，参数为 <code>$message</code></td></tr><tr><td><code>SERVICE_SMTP_SEND_BEFORE/SUCCESS/ERROR</code></td><td>邮件发送前 <span style="text-decoration:underline"> 成功 </span> 失败</td></tr><tr><td><code>HACK_ROUTE_TABLE_COLUMNS</code></td><td>订单表格列扩展</td></tr><tr><td><code>HACK_ROUTE_TABLE_SEARCH</code></td><td>订单表格搜索扩展</td></tr><tr><td><code>HACK_SUBMIT_FORM</code> / <code>HACK_SUBMIT_TAB</code></td><td>表单 / 标签页扩展</td></tr><tr><td><code>SERVICE_SHOP_GET_ITEM_STOCK</code></td><td>商品库存扩展，返回 <code>Stock</code></td></tr></tbody></table></div></div></div><p>不要凭常量名称猜参数，开发前应打开 <a target="_blank" rel="noopener" href="https://blog.mhdy.net/docs/app/Consts/Hook.php"><code>app/Consts/Hook.php</code></a> 和触发点调用处搜索 <code>hook(</code>，以当前源码为准。</p><h2 id="5-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><a class="anchor" href="#5-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"></a>5. 生命周期</h2><p>生命周期注解使用 <code>Kernel\Annotation\Plugin</code>，建议始终写命名参数：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">7 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Annotation</span>\<span class="hljs-title">Plugin</span> <span class="hljs-keyword">as</span> <span class="hljs-title">PluginState</span>;
+
+<span class="hljs-meta">#[PluginState</span>(<span class="hljs-attr">state</span>: <span class="hljs-title class_">PluginState</span>::<span class="hljs-variable constant_">START</span>)<span class="hljs-meta">]</span>
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">start</span>(<span class="hljs-params"></span>): <span class="hljs-title">void</span>
+</span>{
+    <span class="hljs-comment">// 启用时执行</span>
+}
+</code></pre></div></div></figure></details>
+      </div><p>可用状态：</p><div class="cherry-table-wrapper">
+        <div class="cherry-table-container"><div class="halo-table-scroll"><table class="cherry-table"><thead><tr><th>状态</th><th>常量</th><th>说明</th></tr></thead><tbody><tr><td>启动</td><td><code>Plugin::START</code></td><td>后台启用插件时执行</td></tr><tr><td>停止</td><td><code>Plugin::STOP</code></td><td>后台停用插件时执行</td></tr><tr><td>卸载</td><td><code>Plugin::UNINSTALL</code></td><td>卸载流程使用</td></tr><tr><td>安装</td><td><code>Plugin::INSTALL</code></td><td>安装流程使用</td></tr><tr><td>升级</td><td><code>Plugin::UPGRADE</code></td><td>升级流程使用</td></tr><tr><td>保存配置</td><td><code>Plugin::SAVE_CONFIG</code></td><td>保存配置时执行，即使插件未启用</td></tr></tbody></table></div></div></div><p>当前本地插件分支在启用/停用时直接调用 <code>runHookState()</code>。手工复制目录不会自动执行“安装”或“升级”迁移；如果插件需要建表，必须在正式安装流程中调用，或提供一次性、可重复执行的管理操作。</p><h2 id="6-%E6%8E%A7%E5%88%B6%E5%99%A8%E3%80%81%E8%A7%86%E5%9B%BE%E5%92%8C-url"><a class="anchor" href="#6-%E6%8E%A7%E5%88%B6%E5%99%A8%E3%80%81%E8%A7%86%E5%9B%BE%E5%92%8C-url"></a>6. 控制器、视图和 URL</h2><p>插件控制器通过 <code>/plugin/{PluginID}/{Controller}/{method}</code> 访问。例如：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">/plugin/OrderLog/api/ping
+</code></pre></div></div></figure></details>
+      </div><p>对应：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">2 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">app/Plugin/OrderLog/Controller/Api.php
+App\Plugin\OrderLog\Controller\Api::ping()
+</code></pre></div></div></figure></details>
+      </div><p>后台控制器继承 <code>App\Controller\Base\API\ManagePlugin</code> 或 <code>App\Controller\Base\View\ManagePlugin</code>；前台控制器使用对应的 <code>UserPlugin</code>。后台接口应加 <code>ManageSession</code>，涉及输入时加 <code>Waf</code>，例如：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">18 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Plugin</span>\<span class="hljs-title class_">OrderLog</span>\<span class="hljs-title class_">Controller</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Controller</span>\<span class="hljs-title">Base</span>\<span class="hljs-title">API</span>\<span class="hljs-title">ManagePlugin</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Interceptor</span>\<span class="hljs-title">ManageSession</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Interceptor</span>\<span class="hljs-title">Waf</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Annotation</span>\<span class="hljs-title">Interceptor</span>;
+
+<span class="hljs-meta">#[Interceptor</span>([<span class="hljs-title class_">Waf</span>::<span class="hljs-variable language_">class</span>, <span class="hljs-title class_">ManageSession</span>::<span class="hljs-variable language_">class</span>], <span class="hljs-title class_">Interceptor</span>::<span class="hljs-variable constant_">TYPE_API</span>)<span class="hljs-meta">]</span>
+<span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Api</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ManagePlugin</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ping</span>(<span class="hljs-params"></span>): <span class="hljs-title">array</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">json</span>(<span class="hljs-number">200</span>, <span class="hljs-string">'ok'</span>);
+    }
+}
+</code></pre></div></div></figure></details>
+      </div><p>视图由基类的 <code>render()</code> 从插件自己的 <code>View/</code> 目录读取。Hook 中常见写法：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-keyword">echo</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">render</span>(<span class="hljs-literal">null</span>, <span class="hljs-string">'Menu.html'</span>);
+</code></pre></div></div></figure></details>
+      </div><p>路由访问插件控制器前必须启用插件；<code>Hook::load()</code> 会对未启用插件重定向到首页。</p><h2 id="7-%E6%97%A5%E5%BF%97%E3%80%81%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93"><a class="anchor" href="#7-%E6%97%A5%E5%BF%97%E3%80%81%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93"></a>7. 日志、缓存和数据库</h2><h3 id="71-%E8%BF%90%E8%A1%8C%E6%97%A5%E5%BF%97"><a class="anchor" href="#71-%E8%BF%90%E8%A1%8C%E6%97%A5%E5%BF%97"></a>7.1 运行日志</h3><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">4 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">Plugin</span>;
+
+<span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">log</span>(<span class="hljs-string">'OrderLog'</span>, <span class="hljs-string">'处理完成'</span>);
+<span class="hljs-variable">$config</span> = <span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">getConfig</span>(<span class="hljs-string">'OrderLog'</span>);
+</code></pre></div></div></figure></details>
+      </div><p>日志文件是：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">app/Plugin/OrderLog/runtime.log
+</code></pre></div></div></figure></details>
+      </div><p>后台插件列表中的“日志”按钮读取该文件。不要写入 Bot Token、密码、卡密或完整用户敏感信息。</p><h3 id="72-%E6%8F%92%E4%BB%B6%E7%BC%93%E5%AD%98"><a class="anchor" href="#72-%E6%8F%92%E4%BB%B6%E7%BC%93%E5%AD%98"></a>7.2 插件缓存</h3><p><code>App\Util\Plugin</code> 已提供 <code>setCache()</code>、<code>getCache()</code>、<code>getCaches()</code>、<code>delCache()</code> 和 <code>clearCache()</code>，数据保存到：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">app/Plugin/{PluginID}/Db/{name}.php
+</code></pre></div></div></figure></details>
+      </div><p>这不是高并发数据库。需要查询、事务或持久业务数据时使用现有 Eloquent 模型和数据库迁移逻辑。</p><h2 id="8-%E5%AE%89%E8%A3%85%E3%80%81%E5%90%AF%E7%94%A8%E5%92%8C%E6%89%93%E5%8C%85"><a class="anchor" href="#8-%E5%AE%89%E8%A3%85%E3%80%81%E5%90%AF%E7%94%A8%E5%92%8C%E6%89%93%E5%8C%85"></a>8. 安装、启用和打包</h2><h3 id="81-%E6%89%8B%E5%B7%A5%E5%AE%89%E8%A3%85"><a class="anchor" href="#81-%E6%89%8B%E5%B7%A5%E5%AE%89%E8%A3%85"></a>8.1 手工安装</h3><p>把插件目录放到：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">app/Plugin/{PluginID}
+</code></pre></div></div></figure></details>
+      </div><p>然后：</p><ol start="1" class="cherry-list__default"><li class="cherry-list-item"><p>检查 <code>Config/Info.php</code>、<code>Config/Config.php</code> 和命名空间。</p></li><li class="cherry-list-item"><p>确认目录名不是 <code>store.cache</code> 中已有插件 ID。</p></li><li class="cherry-list-item"><p>后台进入“通用插件”。</p></li><li class="cherry-list-item"><p>清空状态筛选，找到插件并打开配置。</p></li><li class="cherry-list-item"><p>保存配置后点击“启用”。不要只手工把 <code>STATUS</code> 改成 <code>1</code>，因为启用动作还负责注册 Hook。</p></li></ol><h3 id="82-zip-%E7%BB%93%E6%9E%84"><a class="anchor" href="#82-zip-%E7%BB%93%E6%9E%84"></a>8.2 ZIP 结构</h3><p>压缩包根目录必须直接包含：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">4 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">Config/
+Hook/
+Support/
+Wiki/
+</code></pre></div></div></figure></details>
+      </div><p>错误结构：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">TelegramNotification/Config/Info.php
+</code></pre></div></div></figure></details>
+      </div><p>如果安装器把这个 ZIP 解压到 <code>app/Plugin/</code>，最终会多一层目录，插件就不会被检测到。</p><h3 id="83-1panel-linux-%E6%9D%83%E9%99%90"><a class="anchor" href="#83-1panel-linux-%E6%9D%83%E9%99%90"></a>8.3 1Panel / Linux 权限</h3><p>PHP-FPM 用户必须能遍历插件目录并读写配置、日志。推荐：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">2 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight bash"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-bash">find app/Plugin/{PluginID} -<span class="hljs-built_in">type</span> d -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">chmod</span> 755 {} \;
+find app/Plugin/{PluginID} -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">exec</span> <span class="hljs-built_in">chmod</span> 644 {} \;
+</code></pre></div></div></figure></details>
+      </div><p>如果后台能看到插件但保存配置失败、日志为空，优先检查权限。Windows 生成的 ZIP 可能没有 Unix 目录模式，上传后目录会变成 <code>644</code>，PHP-FPM 无法进入 <code>Config/</code>、<code>Hook/</code> 或 <code>Support/</code>。</p><h3 id="84-%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E5%90%8E%E7%9A%84%E7%BC%93%E5%AD%98"><a class="anchor" href="#84-%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E5%90%8E%E7%9A%84%E7%BC%93%E5%AD%98"></a>8.4 修改代码后的缓存</h3><p>本地 Hook 当前按请求扫描，通常刷新页面即可看到新代码；但 PHP OPcache 可能继续使用旧字节码。修改 <code>Hook</code>、控制器或模板后，按顺序处理：</p><ol start="1" class="cherry-list__default"><li class="cherry-list-item"><p>后台停用再启用插件。</p></li><li class="cherry-list-item"><p>清理 PHP OPcache，或重启对应 PHP-FPM 容器。</p></li><li class="cherry-list-item"><p>浏览器强制刷新后台页面。</p></li></ol><h2 id="9-%E6%9C%80%E5%B0%8F%E8%87%AA%E5%88%B6%E6%8F%92%E4%BB%B6%E7%A4%BA%E4%BE%8B"><a class="anchor" href="#9-%E6%9C%80%E5%B0%8F%E8%87%AA%E5%88%B6%E6%8F%92%E4%BB%B6%E7%A4%BA%E4%BE%8B"></a>9. 最小自制插件示例</h2><p>目录：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">4 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">app/Plugin/OrderLog/
+├─ Config/Info.php
+├─ Config/Config.php
+└─ Hook/Main.php
+</code></pre></div></div></figure></details>
+      </div><p><code>Config/Info.php</code>：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">12 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Consts</span>\<span class="hljs-title">Plugin</span>;
+
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">NAME</span> =&gt; <span class="hljs-string">'订单日志'</span>,
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">AUTHOR</span> =&gt; <span class="hljs-string">'本地'</span>,
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">WEB_SITE</span> =&gt; <span class="hljs-string">'#'</span>,
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">DESCRIPTION</span> =&gt; <span class="hljs-string">'付款成功后写入插件日志。'</span>,
+    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable constant_">VERSION</span> =&gt; <span class="hljs-string">'1.0.0'</span>,
+];
+</code></pre></div></div></figure></details>
+      </div><p><code>Config/Config.php</code>：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">4 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">return</span> [<span class="hljs-string">'STATUS'</span> =&gt; <span class="hljs-string">'0'</span>];
+</code></pre></div></div></figure></details>
+      </div><p><code>Hook/Main.php</code>：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">php</span><span class="halo-code-meta">20 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight php"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Plugin</span>\<span class="hljs-title class_">OrderLog</span>\<span class="hljs-title class_">Hook</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Consts</span>\<span class="hljs-title">Hook</span> <span class="hljs-keyword">as</span> <span class="hljs-title">HookPoint</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">Commodity</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">Order</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">Pay</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">Plugin</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Annotation</span>\<span class="hljs-title">Hook</span>;
+
+<span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span>
+</span>{
+    <span class="hljs-meta">#[Hook</span>(<span class="hljs-attr">point</span>: <span class="hljs-title class_">HookPoint</span>::<span class="hljs-variable constant_">USER_API_ORDER_PAY_AFTER</span>)<span class="hljs-meta">]</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">orderPaid</span>(<span class="hljs-params">Commodity <span class="hljs-variable">$commodity</span>, Order <span class="hljs-variable">$order</span>, ?Pay <span class="hljs-variable">$pay</span></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">log</span>(<span class="hljs-string">'OrderLog'</span>, <span class="hljs-string">"<span class="hljs-subst">{$commodity-&gt;name}</span> / <span class="hljs-subst">{$order-&gt;trade_no}</span>"</span>);
+    }
+}
+</code></pre></div></div></figure></details>
+      </div><p>自检：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">2 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight bash"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-bash">php -l app/Plugin/OrderLog/Config/Info.php
+php -l app/Plugin/OrderLog/Hook/Main.php
+</code></pre></div></div></figure></details>
+      </div><p>启用后创建测试订单，再在插件“日志”中确认是否出现订单号。</p><h2 id="10-telegram-%E8%AE%A2%E5%8D%95%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6"><a class="anchor" href="#10-telegram-%E8%AE%A2%E5%8D%95%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6"></a>10. Telegram 订单通知插件</h2><p>仓库中的 <code>app/Plugin/TelegramNotification</code> 是完整的付款成功通知实现，适合直接使用或作为网络通知插件参考。  
+位于 <a href="/archives/yi-ci-yuan-fa-qia-de-zi-zhi-cha-jian/" title="https://blog.mhdy.net/archives/yi-ci-yuan-fa-qia-de-zi-zhi-cha-jian">https://blog.mhdy.net/archives/yi-ci-yuan-fa-qia-de-zi-zhi-cha-jian</a></p><h3 id="%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><a class="anchor" href="#%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"></a>配置步骤</h3><ol start="1" class="cherry-list__default"><li class="cherry-list-item"><p>在 <code>@BotFather</code> 使用 <code>/newbot</code> 创建 Bot，保存 Token。</p></li><li class="cherry-list-item"><p>让 Bot 在目标私聊、群组或频道中收到一条消息。</p></li><li class="cherry-list-item"><p>调用 <code>https://api.telegram.org/bot&lt;TOKEN&gt;/getUpdates</code> 获取 <code>message.chat.id</code>。</p></li><li class="cherry-list-item"><p>论坛群需要额外填写 <code>message_thread_id</code>；普通群留空。</p></li><li class="cherry-list-item"><p>后台填写 Token、Chat ID，保存后点击启用。</p></li></ol><h3 id="%E9%87%8D%E8%A6%81%E9%85%8D%E7%BD%AE"><a class="anchor" href="#%E9%87%8D%E8%A6%81%E9%85%8D%E7%BD%AE"></a>重要配置</h3><ul class="cherry-list__default"><li class="cherry-list-item"><p>默认只发送纯文本，不发送卡密。</p></li><li class="cherry-list-item"><p><code>commodity_mode=1</code> 时只通知选中的商品。</p></li><li class="cherry-list-item"><p><code>notify_free=0</code> 可忽略零元/赠送订单。</p></li><li class="cherry-list-item"><p>联系方式默认脱敏；完整显示前确认隐私和群权限。</p></li><li class="cherry-list-item"><p><code>timeout</code> 建议 3 秒以内；网络失败只记录日志，不阻塞支付和发货。</p></li><li class="cherry-list-item"><p>自定义 API 只允许填写自己控制的 HTTPS 代理；Token 和订单内容会发送到该地址。</p></li></ul><p>完整变量和故障排查见 <a target="_blank" rel="noopener" href="https://blog.mhdy.net/docs/app/Plugin/TelegramNotification/Wiki/README.md"><code>app/Plugin/TelegramNotification/Wiki/README.md</code></a>。</p><h2 id="11-%E8%87%AA%E6%A3%80%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><a class="anchor" href="#11-%E8%87%AA%E6%A3%80%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"></a>11. 自检与故障排查</h2><h3 id="111-%E6%8F%92%E4%BB%B6%E4%B8%8D%E6%98%BE%E7%A4%BA"><a class="anchor" href="#111-%E6%8F%92%E4%BB%B6%E4%B8%8D%E6%98%BE%E7%A4%BA"></a>11.1 插件不显示</h3><p>依次检查：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">TEXT</span><span class="halo-code-meta">4 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight text"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-text">app/Plugin/{PluginID}/Config/Info.php        存在且返回数组
+app/Plugin/{PluginID}/Config/Info.php        PHP 语法正确
+插件目录名与命名空间                         大小写一致
+后台状态筛选                                 已清空或选择“未运行”
+</code></pre></div></div></figure></details>
+      </div><p>查看后台接口 <code>/admin/api/plugin/getPlugins</code> 的响应，确认列表中有对应 <code>id</code>。</p><h3 id="112-%E8%83%BD%E6%98%BE%E7%A4%BA%E4%BD%86-hook-%E4%B8%8D%E6%89%A7%E8%A1%8C"><a class="anchor" href="#112-%E8%83%BD%E6%98%BE%E7%A4%BA%E4%BD%86-hook-%E4%B8%8D%E6%89%A7%E8%A1%8C"></a>11.2 能显示但 Hook 不执行</h3><ul class="cherry-list__default"><li class="cherry-list-item"><p><code>Config/Config.php</code> 的 <code>STATUS</code> 是否为 <code>1</code>。</p></li><li class="cherry-list-item"><p>是否点击了后台“启用”，而不是只改文件。</p></li><li class="cherry-list-item"><p>Hook 类名、文件名、命名空间是否一致。</p></li><li class="cherry-list-item"><p>方法是否 <code>public</code>，是否使用 <code>#[Hook(point: ...)]</code>。</p></li><li class="cherry-list-item"><p>插件 ID 是否误出现在 <code>runtime/plugin/store.cache</code>。</p></li><li class="cherry-list-item"><p>PHP-FPM 用户是否能读取 <code>Hook/</code> 目录。</p></li><li class="cherry-list-item"><p>是否需要清理 OPcache。</p></li></ul><p>可在测试环境运行已有检查脚本：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">1 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight bash"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-bash">php tests/local_plugin_hook.php
+</code></pre></div></div></figure></details>
+      </div><p>该脚本会临时启用 Telegram 插件，确认 <code>USER_API_ORDER_PAY_AFTER</code> 已注册，然后恢复原配置。</p><h3 id="113-%E9%85%8D%E7%BD%AE%E6%88%96%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5%E5%A4%B1%E8%B4%A5"><a class="anchor" href="#113-%E9%85%8D%E7%BD%AE%E6%88%96%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5%E5%A4%B1%E8%B4%A5"></a>11.3 配置或日志写入失败</h3><p>检查：</p><div class="cherry-code-expand">
+      <details class="halo-code-details" open=""><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">3 行</span><span class="halo-code-actions"><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span><span class="halo-code-toolbar"></span></span></summary><figure class="highlight bash"><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-bash"><span class="hljs-built_in">ls</span> -ld app/Plugin/{PluginID} app/Plugin/{PluginID}/Config
+<span class="hljs-built_in">ls</span> -l app/Plugin/{PluginID}/Config/Config.php
+<span class="hljs-built_in">ls</span> -l app/Plugin/{PluginID}/runtime.log
+</code></pre></div></div></figure></details>
+      </div><p>目录建议 <code>755</code>，文件建议 <code>644</code>；运行用户需要对配置文件和日志文件具有写权限。不要为了省事把整个站点改成 <code>777</code>。</p><h3 id="114-%E8%AE%A2%E5%8D%95%E6%B5%81%E7%A8%8B%E8%A2%AB%E6%8F%92%E4%BB%B6%E6%8B%96%E6%85%A2%E6%88%96%E6%8A%A5%E9%94%99"><a class="anchor" href="#114-%E8%AE%A2%E5%8D%95%E6%B5%81%E7%A8%8B%E8%A2%AB%E6%8F%92%E4%BB%B6%E6%8B%96%E6%85%A2%E6%88%96%E6%8A%A5%E9%94%99"></a>11.4 订单流程被插件拖慢或报错</h3><ul class="cherry-list__default"><li class="cherry-list-item"><p>网络请求设置短超时，并捕获 <code>Throwable</code>。</p></li><li class="cherry-list-item"><p>不要在付款 Hook 中修改订单状态，除非插件明确负责发货且已处理幂等。</p></li><li class="cherry-list-item"><p>不要把卡密放进外部通知。</p></li><li class="cherry-list-item"><p>日志只记录订单号、结果和脱敏错误。</p></li><li class="cherry-list-item"><p>先停用插件验证问题是否消失，再查看 <code>runtime.log</code>。</p></li></ul><h2 id="12-%E5%8F%91%E5%B8%83%E5%89%8D%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><a class="anchor" href="#12-%E5%8F%91%E5%B8%83%E5%89%8D%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"></a>12. 发布前检查清单</h2><ul class="cherry-list__default"><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> 插件 ID 唯一，目录和命名空间大小写一致。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> <code>Config/Info.php</code> 返回完整元数据。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> <code>Config/Config.php</code> 至少有 <code>STATUS</code>。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> 所有外部输入经过验证，后台接口有会话和 WAF 保护。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> Hook 参数与触发点实际调用一致。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> 网络调用有超时、异常处理和日志脱敏。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> 不发送卡密、Token、密码和不必要的个人信息。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> ZIP 根目录没有多余的插件名外层目录。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> Linux 目录 <code>755</code>、文件 <code>644</code>，PHP-FPM 可读写必要文件。</p></li><li class="cherry-list-item check-list-item"><p><span class="ch-icon ch-icon-square"></span> 在测试订单上验证启用、停用、重复触发和网络失败场景。</p></li></ul></div>
+</div><nav class="halo-docs-adjacent" aria-label="前后文档"><a href="/docs/zawu/e-hentai/">上一篇：e-hentai使用</a></nav>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">魔皇地狱</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+<!-- hexo injector body_end start --><script src="/js/halo-docs.js" defer></script><!-- hexo injector body_end end --></body>
+</html>

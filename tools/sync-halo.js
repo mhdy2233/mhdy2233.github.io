@@ -32,7 +32,7 @@ const https = require('https');
 const http = require('http');
 const { URL } = require('url');
 const cheerio = require('cheerio');
-const { selectContent, renderContent, postPath } = require('./halo-content');
+const { selectContent, renderContent, postPath, stripCodeTools } = require('./halo-content');
 
 const BASE = (process.env.HALO_BASE_URL || '').replace(/\/+$/, '');
 const PAT = process.env.HALO_PAT || '';
@@ -144,7 +144,7 @@ function buildExcerpt(post, raw) {
   if (post.spec.excerpt && post.spec.excerpt.raw && !post.spec.excerpt.autoGenerate) {
     return post.spec.excerpt.raw;
   }
-  const text = cheerio.load(String(raw || ''), {}, false).text().replace(/\s+/g, ' ').trim();
+  const text = cheerio.load(stripCodeTools(raw), {}, false).text().replace(/\s+/g, ' ').trim();
   const excerpt = text.length > 120 ? text.slice(0, 120) + '…' : text;
   // NexT inserts descriptions as HTML; decoded code examples must remain text.
   return cheerio.load('<p></p>', {}, false)('p').text(excerpt).html();

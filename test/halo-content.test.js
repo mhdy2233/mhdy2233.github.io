@@ -4,7 +4,8 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const http = require('node:http');
 const cheerio = require('cheerio');
-const { selectContent, renderContent, postPath } = require('../tools/halo-content');
+const { selectContent, renderContent, postPath, stripCodeTools } = require('../tools/halo-content');
+const { escapeHTML } = require('hexo-util');
 const { resolveContent, fetchAll, frontMatter, httpGet } = require('../tools/sync-halo');
 const opts = {
   baseUrl: 'https://blog.example.com',
@@ -108,12 +109,70 @@ test('media, relative links, srcset and lazy images are normalized', () => {
 });
 test('code, table, formatting, checklist and collapsed code survive', () => {
   const $ = render('<pre collapsed="true"><code>{{ literal }} &lt;b&gt;</code></pre><table><tr><td colspan="2">cell</td></tr></table><p style="color: #60a5fa; text-align: center; position: fixed"><strong>bold</strong><del>old</del></p><input type="checkbox" checked>');
-  assert.equal($('details summary').text(), '展开代码');
+  assert.equal($('details summary .halo-code-expand').text(), '展开代码');
+  assert.equal($('details').attr('open'), undefined);
   assert.equal($('details code').text(), '{{ literal }} <b>');
   assert.equal($('td').attr('colspan'), '2');
   assert.match($('p').attr('style'), /color:#60a5fa/);
   assert.doesNotMatch($('p').attr('style'), /position/);
   assert.equal($('input').attr('disabled'), 'disabled');
+});
+
+test('code languages support explicit aliases, auto detection and safe plaintext fallback', () => {
+  const $ = render('<pre data-language="js"><code>const answer = 42;</code></pre>' +
+    '<pre><code>{"answer": 42, "enabled": true}</code></pre>' +
+    '<pre language="not-a-language"><code>const answer = 42;</code></pre>');
+  const blocks = $('.halo-code-details');
+  assert.equal(blocks.eq(0).find('.halo-code-language').text(), 'JavaScript');
+  assert.doesNotMatch(blocks.eq(0).find('summary').text(), /自动/);
+  assert.ok(blocks.eq(0).find('.hljs-keyword').length);
+  assert.match(blocks.eq(1).find('summary').text(), /自动/);
+  assert.equal(blocks.eq(2).find('.halo-code-language').text(), 'TEXT');
+  assert.equal(blocks.eq(2).find('code span').length, 0);
+});
+
+test('code keeps exact whitespace, IDs and literal HTML despite Hexo highlighter state', () => {
+  const text = '    const x = 1;\n\t// <img src=x onerror=alert(1)> & {{ literal }}\n\n```html\n<tag>\n```\n~~~\n\n';
+  const shared = require('highlight.js');
+  shared.configure({ classPrefix: '' });
+  try {
+    const $ = render(`<pre id="example"><code id="source" class="language-js">${escapeHTML(text)}</code></pre>`);
+    assert.equal($('.code code').text(), text);
+    assert.equal($('details').attr('id'), 'example');
+    assert.equal($('code').attr('id'), 'source');
+    assert.ok($('.hljs-keyword').length);
+    assert.equal($('img, script, [onerror]').length, 0);
+    assert.equal($('.gutter').attr('aria-hidden'), 'true');
+    assert.equal($('.code pre').attr('tabindex'), '0');
+    assert.equal($('.halo-code-toolbar').text(), '');
+  } finally {
+    shared.configure({ classPrefix: 'hljs-' });
+  }
+});
+
+test('code folds above 30 display lines, honors explicit folding and renders only once', () => {
+  const thirty = Array.from({ length: 30 }, (_, i) => `line ${i}`).join('\n') + '\n';
+  const thirtyOne = thirty + 'line 30\n';
+  const html = renderContent(`<pre><code>${thirty}</code></pre><pre><code>${thirtyOne}</code></pre>` +
+    `<pre collapsed="true"><code>short</code></pre><pre collapsed="false"><code>${thirtyOne}</code></pre><pre><code></code></pre>`, opts);
+  const $ = cheerio.load(html);
+  const blocks = $('.halo-code-details');
+  assert.deepEqual(blocks.map((_, el) => $(el).attr('open') !== undefined).get(), [true, false, false, true, true]);
+  assert.equal(blocks.eq(0).find('.gutter pre').text().split('\n').length, 30);
+  assert.equal(blocks.eq(1).find('.gutter pre').text().split('\n').length, 31);
+  assert.equal(blocks.eq(4).find('code').text(), '');
+  assert.equal(renderContent(html, opts), html);
+});
+
+test('code display controls never enter automatic excerpts or searchable code', () => {
+  const text = '    const answer = 42;\n\n';
+  const html = renderContent(`<pre data-language="js"><code>${text}</code></pre>`, opts);
+  const clean = cheerio.load(stripCodeTools(html));
+  assert.equal(clean('pre code').text(), text);
+  assert.equal(clean('summary, .gutter, .halo-code-toolbar').length, 0);
+  const post = { metadata: { name: 'code' }, spec: { title: 'Code', slug: 'code' } };
+  const fm = frontMatter(post, {}, {}, html);
+  assert.ok(fm.includes('description: "const answer = 42;"'));
 });
 test('scripts, events, unsafe URLs and embedded documents are stripped', () => {
   const $ = render('<script>alert(1)</script><img src="x" onerror="alert(1)"><a href="javascript:alert(1)">bad</a><iframe src="https://example.com/embed" srcdoc="<script>alert(1)</script>" onload="alert(1)"></iframe>');

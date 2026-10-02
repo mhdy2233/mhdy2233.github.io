@@ -67,6 +67,13 @@ deploy:
 # NexT 主题关键配置（与现有产物一致）
 theme_config:
   scheme: Gemini
+  codeblock:
+    copy_button:
+      enable: true
+      style: flat
+    language: true
+    fold:
+      enable: false
   # 背景图样式由 tools/sync-halo.js 从 Halo 同步后生成
   custom_file_path:
     style: source/_data/styles.styl

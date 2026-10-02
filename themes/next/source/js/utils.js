@@ -46,25 +46,26 @@ NexT.utils = {
     });
   },
 
-  registerCopyButton(target, element, code = '') {
+  registerCopyButton(target, element, code) {
+    if (!target || target.querySelector('.copy-btn')) return;
     // One-click copy code support.
-    target.insertAdjacentHTML('beforeend', '<div class="copy-btn"><i class="fa fa-copy fa-fw"></i></div>');
+    target.insertAdjacentHTML('beforeend', '<button type="button" class="copy-btn"><i class="fa fa-copy fa-fw" aria-hidden="true"></i> <span class="copy-btn-label" role="status" aria-live="polite">复制</span></button>');
     const button = target.querySelector('.copy-btn');
+    const label = button.querySelector('.copy-btn-label');
     button.addEventListener('click', async () => {
-      if (!code) {
-        const lines = element.querySelector('.code') || element.querySelector('code');
-        code = lines.innerText;
-      }
-      if (navigator.clipboard) {
-        // https://caniuse.com/mdn-api_clipboard_writetext
-        try {
-          await navigator.clipboard.writeText(code);
-          button.querySelector('i').className = 'fa fa-check-circle fa-fw';
-        } catch {
-          button.querySelector('i').className = 'fa fa-times-circle fa-fw';
+      label.textContent = '复制中…';
+      try {
+        let content = code;
+        if (content === undefined) {
+          const lines = element.querySelector('.code code') || element.querySelector('.code') || element.querySelector('code');
+          content = element.closest('.halo-code-details') ? lines.textContent : lines.innerText;
         }
-      } else {
+        await navigator.clipboard.writeText(content);
+        button.querySelector('i').className = 'fa fa-check-circle fa-fw';
+        label.textContent = '已复制';
+      } catch {
         button.querySelector('i').className = 'fa fa-times-circle fa-fw';
+        label.textContent = '复制失败，请手动选择';
       }
     });
     // If copycode.style is not mac, element is larger than target
@@ -72,6 +73,7 @@ NexT.utils = {
     element.addEventListener('mouseleave', () => {
       setTimeout(() => {
         button.querySelector('i').className = 'fa fa-copy fa-fw';
+        label.textContent = '复制';
       }, 300);
     });
   },
@@ -82,9 +84,16 @@ NexT.utils = {
     if (CONFIG.hljswrap) {
       figure = (inited ? element : document).querySelectorAll('figure.highlight');
     } else {
-      figure = document.querySelectorAll('pre');
+      figure = (inited ? element : document).querySelectorAll('pre');
     }
     figure.forEach(element => {
+      if (element.closest('.halo-code-details')) {
+        const figure = element.closest('figure.highlight');
+        if (figure && CONFIG.codeblock.copy_button.enable) {
+          this.registerCopyButton(figure.querySelector('.halo-code-toolbar'), figure);
+        }
+        return;
+      }
       // Skip pre > .mermaid for folding and copy button
       if (element.querySelector('.mermaid')) return;
       const languageName = [...element.classList].find(cls => cls !== 'highlight');
@@ -143,6 +152,7 @@ NexT.utils = {
 
   wrapTableWithBox() {
     document.querySelectorAll('table').forEach(element => {
+      if (element.closest('figure.highlight, pre, .table-container')) return;
       const box = document.createElement('div');
       box.className = 'table-container';
       element.wrap(box);

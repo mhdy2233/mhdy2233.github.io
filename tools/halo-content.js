@@ -4,6 +4,13 @@ const cheerio = require('cheerio');
 const sanitizeHtml = require('sanitize-html');
 const MarkdownIt = require('markdown-it');
 const parseSrcset = require('parse-srcset');
+const highlightJs = require('highlight.js');
+// Hexo mutates the shared highlighter's class prefix; keep our HTML rendering isolated.
+const highlighter = highlightJs.newInstance();
+for (const name of highlightJs.listLanguages()) {
+  highlighter.registerLanguage(name, require(`highlight.js/lib/languages/${name}`));
+}
+const autoLanguages = ['javascript', 'typescript', 'json', 'bash', 'shell', 'powershell', 'python', 'yaml', 'ini', 'xml', 'css', 'sql', 'diff'];
 const markdown = new MarkdownIt({ html: true, linkify: true }).use(
   require('hexo-renderer-markdown-it/lib/anchors'),
   { level: 1, collisionSuffix: '', case: 0, separator: '-' }
@@ -35,6 +42,7 @@ function postPath(post) {
 
 function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
   const $ = cheerio.load(html, { xmlMode: false }, false);
+  $('.halo-content').each((_, el) => $(el).replaceWith($(el).contents()));
   const source = new URL(baseUrl);
   const articleUrl = new URL(permalink, source);
   function url(value, isLink = false) {
@@ -62,13 +70,51 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
     anchor.text(card.attr('custom-title') || card.attr('title') || card.text().trim() || anchor.attr('href'));
     card.replaceWith(anchor);
   });
-  $('pre[collapsed="true"]').each((_, el) => {
+  $('pre').each((_, el) => {
     const pre = $(el);
-    pre.removeAttr('collapsed');
-    pre.wrap('<details class="halo-code-details"></details>');
-    pre.before('<summary>展开代码</summary>');
+    if (pre.closest('figure.highlight').length) return;
+    const code = pre.children('code').first();
+    const text = (code.length ? code : pre).text();
+    const declared = [code, pre].map(node => node.attr('data-language') || node.attr('data-lang') ||
+      node.attr('language') || node.attr('lang') ||
+      (node.attr('class') || '').match(/(?:^|\s)(?:language|lang)-(\S+)/)?.[1] ||
+      (node.hasClass('nohighlight') ? 'plaintext' : '')).find(Boolean)?.trim().toLowerCase();
+    let result;
+    try {
+      if (declared) {
+        if (highlighter.getLanguage(declared)) result = highlighter.highlight(text, { language: declared, ignoreIllegals: true });
+      } else {
+        const detected = highlighter.highlightAuto(text, autoLanguages);
+        if (detected.language && detected.relevance > 0) result = detected;
+      }
+    } catch {
+      // An unsupported grammar must not discard the original code or stop the mirror.
+    }
+    const language = result?.language || 'plaintext';
+    const grammar = highlighter.getLanguage(language);
+    const label = grammar === highlighter.getLanguage('plaintext') ? 'TEXT' : grammar?.name || 'TEXT';
+    const lines = Math.max(1, text.replace(/\n$/, '').split('\n').length);
+    const details = $('<details class="halo-code-details"></details>');
+    if (pre.attr('id')) details.attr('id', pre.attr('id'));
+    if (pre.attr('collapsed') === 'false' || (pre.attr('collapsed') !== 'true' && lines <= 30)) details.attr('open', '');
+    const summary = $('<summary></summary>')
+      .append($('<span class="halo-code-language"></span>').text(label))
+      .append($('<span class="halo-code-meta"></span>').text(`${result && !declared ? '自动 · ' : ''}${lines} 行`))
+      .append('<span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span>');
+    const figure = $('<figure class="highlight"></figure>').addClass(language);
+    const highlighted = $('<code class="hljs"></code>').addClass(`language-${language}`);
+    if (code.attr('id')) highlighted.attr('id', code.attr('id'));
+    if (result) highlighted.html(result.value);
+    else highlighted.text(text);
+    const body = $('<div class="halo-code-body"></div>')
+      .append($('<div class="gutter" aria-hidden="true"></div>').append($('<pre></pre>').text(Array.from({ length: lines }, (_, i) => i + 1).join('\n'))))
+      .append($('<div class="code"></div>').append($('<pre tabindex="0" aria-label="代码，可横向滚动"></pre>').append(highlighted)));
+    figure.append('<div class="halo-code-toolbar"></div>').append(body);
+    details.append(summary, figure);
+    pre.replaceWith(details);
   });
-  $('table').wrap('<div class="halo-table-scroll"></div>');
+  $('table').filter((_, el) => !$(el).closest('figure.highlight, .halo-table-scroll').length)
+    .wrap('<div class="halo-table-scroll"></div>');
   $('*').each((_, el) => {
     const node = $(el);
     for (const attr of ['href', 'src', 'poster']) {
@@ -104,6 +150,8 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
     ]),
     allowedAttributes: {
       '*': ['id', 'class', 'style', 'title', 'lang', 'dir'],
+      div: ['aria-hidden'],
+      pre: ['tabindex', 'aria-label'],
       a: ['href', 'target', 'rel', 'download'],
       img: ['src', 'srcset', 'sizes', 'alt', 'width', 'height', 'loading', 'decoding'],
       video: ['src', 'poster', 'controls', 'preload', 'width', 'height', 'loop', 'muted'],
@@ -137,7 +185,17 @@ function renderContent(html, { baseUrl, permalink, postLinks = new Map() }) {
     }
   });
   // Hexo runs its Markdown fence filter even on HTML; entities keep the text literal.
-  return `<div class="halo-content">\n${clean.replaceAll('`', '&#96;').replaceAll('~', '&#126;')}\n</div>`;
+  return `<div class="halo-content">\n${clean.trim().replaceAll('`', '&#96;').replaceAll('~', '&#126;')}\n</div>`;
+}
+
+// Summaries and search should contain the code, not its display controls or line numbers.
+function stripCodeTools(html) {
+  const $ = cheerio.load(String(html || ''), {}, false);
+  $('.halo-code-details').each((_, el) => {
+    const code = $(el).find('.code code').first();
+    if (code.length) $(el).replaceWith($('<pre></pre>').append(code));
+  });
+  return $.html();
 }
 
 // Hexo 6 adds "/" to explicit permalinks, but generators concatenate root+path.
@@ -145,4 +203,4 @@ function normalizePostPath(value) {
   return typeof value === 'string' && value.startsWith('/archives/') ? value.slice(1) : value;
 }
 
-module.exports = { selectContent, renderContent, postPath, normalizePostPath };
+module.exports = { selectContent, renderContent, postPath, normalizePostPath, stripCodeTools };

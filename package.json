@@ -27,6 +27,7 @@
     "hexo-renderer-markdown-it": "^7.0.0",
     "hexo-renderer-stylus": "^2.1.0",
     "hexo-server": "^3.0.0",
-    "hexo-theme-next": "^8.19.2"
+    "hexo-theme-next": "^8.19.2",
+    "highlight.js": "11.12.0"
   }
 }

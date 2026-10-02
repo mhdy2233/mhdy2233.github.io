@@ -307,7 +307,18 @@ NexT.utils = {
 
   registerSidebarTOC() {
     this.sections = [...document.querySelectorAll('.post-toc:not(.placeholder-toc) li a.nav-link')].map(element => {
-      const target = document.getElementById(decodeURI(element.getAttribute('href')).replace('#', ''));
+      const id = (element.getAttribute('href') || '').replace(/^#/, '');
+      if (!id) return null;
+      let target = document.getElementById(id);
+      if (!target) {
+        try {
+          const decodedId = decodeURIComponent(id);
+          target = document.getElementById(decodedId) || document.getElementById(encodeURIComponent(decodedId));
+        } catch {
+          return null;
+        }
+      }
+      if (!target) return null;
       // TOC item animation navigate.
       element.addEventListener('click', event => {
         event.preventDefault();

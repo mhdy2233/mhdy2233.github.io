@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="Piclist图床使用为什么选PiclistPiclist相比Picgo自带Webdav可以配合Alist进行使用，虽然插件内有rclone但实际体验不佳Piclist+Alist+onedrive可以实现免费大容量图床Piclist简单介…">
 <meta property="og:type" content="article">
@@ -292,21 +292,35 @@
     
     <div class="post-body" itemprop="articleBody">
 <div class="halo-content">
-<h1 id="piclist%E5%9B%BE%E5%BA%8A%E4%BD%BF%E7%94%A8">Piclist图床使用</h1><h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89piclist">为什么选Piclist</h2><p>Piclist相比Picgo自带Webdav可以配合Alist进行使用，虽然插件内有rclone但实际体验不佳</p><p>Piclist+Alist+onedrive可以实现免费大容量图床</p><h2 id="piclist%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D">Piclist简单介绍</h2><p><a rel="noopener noreferrer" href="https://piclist.cn/" target="_blank">Piclist</a><span style="color:rgb(60, 60, 67)">是一款高效的云存储和图床平台管理工具，在PicGo的基础上经过深度的二次开发，不仅完整保留了PicGo的所有功能，还增添了许多新的feature。例如相册支持同步云端删除文件，内置图床额外添加了WebDav、本地图床和SFTP等。PicList同时增加了完整的云存储管理功能，包括云端目录查看、文件搜索、批量上传下载和删除文件，复制多种格式文件链接和图片/markdown/文本/视频预览等，另外还有更加强大的相册和多项功能新增或优化。</span></p><h2 id="piclist%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8">Piclist基础使用</h2><p>没什么难度做自己摸索也能会用，不会去看文档去</p><p><a rel="noopener noreferrer" href="https://piclist.cn/" target="_blank">https://piclist.cn</a></p><h2 id="piclist%2Balist%E4%BD%BF%E7%94%A8">Piclist+Alist使用</h2><p>虽然有Alist的插件但是目前没有自定义域名功能，本地部署的Alist是无法使用的</p><p><a rel="noopener noreferrer" href="https://github.com/jinzhi0123/picgo-plugin-alist" target="_blank">picgo-plugin-alist</a></p><pre><code>图床配置名	#显示名称
-设定接口网址	#Alist链接或者ip（记得加dav） 示例：https://pan.mhdyapp.buzz/dav
-启用SSL	#看情况是否开启
-设定用户名	#Alist用户名
-设定密码	#Alist密码
-设定存储路径	#字面意思
-设定网址路径	#接口网址或自定义域名后的路径
-设定自定义域名	#直接引用Alist则设置Alist的域名（不带dav）如果想要引用onedrive则输入onedrive主页_layouts/15/onedrive.aspx?view=1前的链接部分然后加上/Documents	#示例https://XXX/personal/XXX/Documents
-设定认证方式	#设置为basic</code></pre><p>本地部署Alist并引用alist链接示例：</p><p><img src="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-28-12-2024-01-13-14-28-12.png?sign=U9ueCQb_13Tguo52L51xzalyWQEmNZHb5vsvXvRlaMw=:0" width="248px" height="Infinitypx" loading="lazy" decoding="async" /></p><p>自定义域名后可加<code>/d /p /q </code>有一个字母无法在相册内查看自己试下</p><h2 id="piclist%2Balist%2Bom%E4%BD%BF%E7%94%A8">Piclist+Alist+OM使用</h2><p>虽然有插件但是om部署在Vercel的目前无法使用</p><p><a rel="noopener noreferrer" href="https://github.com/laoxinH/picgo-plugin-onemanager" target="_blank">picgo-plugin-onemanager-uploader</a></p><p>本地部署Alist并引用om链接示例：</p><p><img src="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-33-49-2024-01-13-14-33-49.png?sign=lIb4M4Hn34WJN_pSMyXs86O_G_OIkjoPxFE8u9ee-c8=:0" width="249px" height="Infinitypx" loading="lazy" decoding="async" /></p><p>om无法再相册内查看需在链接最后添加?preview</p><p style="text-align:center"><span style="color:rgb(243, 244, 246)"><mark style="background-color:#111827;color:inherit">！需注意一个缺点在相册内虽然可以看到缩略图但是没法点击放大</mark></span></p><h2 id="piclist%2Bgithub">Piclist+Github</h2><p>官方文档很清楚了直接照着做就行，示例：</p><p><img src="https://raw.githubusercontent.com/mhdy2233/tuchuang/img/yb/2024-01-13-14-37-03-2024-01-13-14-37-03.png" width="100%" height="100%" loading="lazy" decoding="async" /></p><h2 id="piclist%2Brclone">Piclist+Rclone</h2><p>不好用所以不推荐使用尤其是本地部署Alist</p><pre><code>图床配置名	#显示名称
-远端存储名	#Rclone配置名称
-桶名	#盘内文件夹名称
-桶下前缀Prefix	#桶内文件夹名称
-域名前缀	#网盘的前缀如果是onedrive则需要在最后添加/Documents/桶名
-上传路径	#桶内新建文件夹，为空则是文件名，如果开启了高级重命名则为高级重命名的名称。如果填写则不受影响高级重命名影响
-备份没什么讲究填进去就行</code></pre><p><span style="color:rgb(243, 244, 246)"><mark style="background-color:#111827;color:inherit">！需注意Rclone上传后文件会被重命名为哈希值，并且相册只能检测文件名称或者高级重命名后的名称因此在相册无法预览Rclone上传的图片，如果Alist部署在本地的话速度要比Rclone快。</mark></span></p>
+<h1 id="piclist%E5%9B%BE%E5%BA%8A%E4%BD%BF%E7%94%A8">Piclist图床使用</h1><h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89piclist">为什么选Piclist</h2><p>Piclist相比Picgo自带Webdav可以配合Alist进行使用，虽然插件内有rclone但实际体验不佳</p><p>Piclist+Alist+onedrive可以实现免费大容量图床</p><h2 id="piclist%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D">Piclist简单介绍</h2><p><a rel="noopener noreferrer" href="https://piclist.cn/" target="_blank">Piclist</a><span style="color:rgb(60, 60, 67)">是一款高效的云存储和图床平台管理工具，在PicGo的基础上经过深度的二次开发，不仅完整保留了PicGo的所有功能，还增添了许多新的feature。例如相册支持同步云端删除文件，内置图床额外添加了WebDav、本地图床和SFTP等。PicList同时增加了完整的云存储管理功能，包括云端目录查看、文件搜索、批量上传下载和删除文件，复制多种格式文件链接和图片/markdown/文本/视频预览等，另外还有更加强大的相册和多项功能新增或优化。</span></p><h2 id="piclist%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8">Piclist基础使用</h2><p>没什么难度做自己摸索也能会用，不会去看文档去</p><p><a rel="noopener noreferrer" href="https://piclist.cn/" target="_blank">https://piclist.cn</a></p><h2 id="piclist%2Balist%E4%BD%BF%E7%94%A8">Piclist+Alist使用</h2><p>虽然有Alist的插件但是目前没有自定义域名功能，本地部署的Alist是无法使用的</p><p><a rel="noopener noreferrer" href="https://github.com/jinzhi0123/picgo-plugin-alist" target="_blank">picgo-plugin-alist</a></p><details class="halo-code-details" open><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">自动 · 9 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight bash"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-bash">图床配置名	<span class="hljs-comment">#显示名称</span>
+设定接口网址	<span class="hljs-comment">#Alist链接或者ip（记得加dav） 示例：https://pan.mhdyapp.buzz/dav</span>
+启用SSL	<span class="hljs-comment">#看情况是否开启</span>
+设定用户名	<span class="hljs-comment">#Alist用户名</span>
+设定密码	<span class="hljs-comment">#Alist密码</span>
+设定存储路径	<span class="hljs-comment">#字面意思</span>
+设定网址路径	<span class="hljs-comment">#接口网址或自定义域名后的路径</span>
+设定自定义域名	<span class="hljs-comment">#直接引用Alist则设置Alist的域名（不带dav）如果想要引用onedrive则输入onedrive主页_layouts/15/onedrive.aspx?view=1前的链接部分然后加上/Documents	#示例https://XXX/personal/XXX/Documents</span>
+设定认证方式	<span class="hljs-comment">#设置为basic</span></code></pre></div></div></figure></details><p>本地部署Alist并引用alist链接示例：</p><p><img src="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-28-12-2024-01-13-14-28-12.png?sign=U9ueCQb_13Tguo52L51xzalyWQEmNZHb5vsvXvRlaMw=:0" width="248px" height="Infinitypx" loading="lazy" decoding="async" /></p><p>自定义域名后可加<code>/d /p /q </code>有一个字母无法在相册内查看自己试下</p><h2 id="piclist%2Balist%2Bom%E4%BD%BF%E7%94%A8">Piclist+Alist+OM使用</h2><p>虽然有插件但是om部署在Vercel的目前无法使用</p><p><a rel="noopener noreferrer" href="https://github.com/laoxinH/picgo-plugin-onemanager" target="_blank">picgo-plugin-onemanager-uploader</a></p><p>本地部署Alist并引用om链接示例：</p><p><img src="https://pan1.mhdy.shop/d/%E5%9B%BE%E5%BA%8A/picgo/2024-01-13-14-33-49-2024-01-13-14-33-49.png?sign=lIb4M4Hn34WJN_pSMyXs86O_G_OIkjoPxFE8u9ee-c8=:0" width="249px" height="Infinitypx" loading="lazy" decoding="async" /></p><p>om无法再相册内查看需在链接最后添加?preview</p><p style="text-align:center"><span style="color:rgb(243, 244, 246)"><mark style="background-color:#111827;color:inherit">！需注意一个缺点在相册内虽然可以看到缩略图但是没法点击放大</mark></span></p><h2 id="piclist%2Bgithub">Piclist+Github</h2><p>官方文档很清楚了直接照着做就行，示例：</p><p><img src="https://raw.githubusercontent.com/mhdy2233/tuchuang/img/yb/2024-01-13-14-37-03-2024-01-13-14-37-03.png" width="100%" height="100%" loading="lazy" decoding="async" /></p><h2 id="piclist%2Brclone">Piclist+Rclone</h2><p>不好用所以不推荐使用尤其是本地部署Alist</p><details class="halo-code-details" open><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">自动 · 7 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight bash"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-bash">图床配置名	<span class="hljs-comment">#显示名称</span>
+远端存储名	<span class="hljs-comment">#Rclone配置名称</span>
+桶名	<span class="hljs-comment">#盘内文件夹名称</span>
+桶下前缀Prefix	<span class="hljs-comment">#桶内文件夹名称</span>
+域名前缀	<span class="hljs-comment">#网盘的前缀如果是onedrive则需要在最后添加/Documents/桶名</span>
+上传路径	<span class="hljs-comment">#桶内新建文件夹，为空则是文件名，如果开启了高级重命名则为高级重命名的名称。如果填写则不受影响高级重命名影响</span>
+备份没什么讲究填进去就行</code></pre></div></div></figure></details><p><span style="color:rgb(243, 244, 246)"><mark style="background-color:#111827;color:inherit">！需注意Rclone上传后文件会被重命名为哈希值，并且相册只能检测文件名称或者高级重命名后的名称因此在相册无法预览Rclone上传的图片，如果Alist部署在本地的话速度要比Rclone快。</mark></span></p>
 </div>
 
     </div>

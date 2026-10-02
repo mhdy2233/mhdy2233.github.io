@@ -22,9 +22,9 @@
   max-width: 100%;
   overflow-x: auto;
 }
-.halo-content table { min-width: 36rem; width: 100%; }
-.halo-content th, .halo-content td { min-width: 6em; overflow-wrap: normal; }
-.halo-content pre {
+.halo-content .halo-table-scroll table { min-width: 36rem; width: 100%; }
+.halo-content .halo-table-scroll th, .halo-content .halo-table-scroll td { min-width: 6em; overflow-wrap: normal; }
+.halo-content pre:not(figure.highlight pre) {
   overflow-x: auto;
   padding: 1em;
   background: #8881;
@@ -35,3 +35,61 @@
 .halo-content details { border: 1px solid #9996; padding: .7em 1em; margin: 1em 0; }
 .halo-content summary { cursor: pointer; }
 .halo-content input[type="checkbox"] { margin-right: .5em; }
+
+.halo-content details.halo-code-details {
+  padding: 0;
+  border-radius: 6px;
+  border-color: #9995;
+  overflow: hidden;
+}
+.halo-code-details > summary {
+  padding: .65em .9em;
+  background: var(--highlight-gutter-background, #8881);
+  color: var(--highlight-foreground, inherit);
+  font: 13px/1.6 system-ui, sans-serif;
+}
+.halo-code-language { font-weight: 600; }
+.halo-code-meta { margin-left: .8em; opacity: .75; }
+.halo-code-expand, .halo-code-collapse { float: right; margin-left: .5em; }
+.halo-code-collapse, .halo-code-details[open] > summary .halo-code-expand { display: none; }
+.halo-code-details[open] > summary .halo-code-collapse { display: inline; }
+.halo-content .halo-code-details > figure.highlight { margin: 0; overflow: hidden; }
+.halo-code-toolbar { padding: .35em .65em; text-align: right; background: var(--highlight-background); }
+.halo-code-toolbar:empty { display: none; }
+.halo-code-body { display: grid; grid-template-columns: auto minmax(0, 1fr); }
+.halo-code-body > .code { min-width: 0; }
+.halo-content .halo-code-body pre {
+  margin: 0;
+  padding: 12px;
+  border: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  white-space: pre;
+  overflow-wrap: normal;
+  font-size: 14px;
+  line-height: 1.6;
+  tab-size: 4;
+}
+.halo-code-body .gutter { user-select: none; }
+.halo-content .halo-code-body .gutter pre { height: 100%; overflow: hidden; }
+.halo-content .halo-code-body .code pre { overflow-x: auto; }
+.halo-content .halo-code-body pre code.hljs {
+  display: block;
+  padding: 0;
+  overflow: visible;
+  font: inherit;
+  white-space: inherit;
+  overflow-wrap: normal;
+}
+.halo-content .halo-code-toolbar .copy-btn {
+  position: static;
+  opacity: 1;
+  border: 1px solid #9996;
+  border-radius: 4px;
+  padding: .3em .7em;
+  background: var(--highlight-background);
+  color: var(--highlight-foreground);
+  font: 13px/1.6 system-ui, sans-serif;
+}
+.copy-btn:focus-visible { opacity: 1; outline: 2px solid currentColor; outline-offset: 2px; }
+.halo-code-body pre:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }

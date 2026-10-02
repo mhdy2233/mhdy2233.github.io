@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="原项目地址 https:&#x2F;&#x2F;github.com&#x2F;lizhipay&#x2F;acg-faka本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的通过修改kernel&#x2F;Plugin&#x2F;Hook.php 和app&#x2F;Controller&#x2F;Ad…">
 <meta property="og:type" content="article">
@@ -285,26 +285,249 @@
     
     <div class="post-body" itemprop="articleBody">
 <div class="halo-content">
-<p>原项目地址 https://github.com/lizhipay/acg-faka</p><p>本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的</p><p>通过修改<code>kernel/Plugin/Hook.php</code> 和<code>app/Controller/Admin/Api/Plugin.php</code> 允许使用本地插件</p><p>注意版本，原项目每次更新都可能会导致修改或插件不可用</p><p>完整插件文档位于 <a href="https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6" target="_blank" rel="noopener noreferrer">https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6</a></p><p>我的小店:</p><a href="https://shop.mhdy.net/" target="_blank" class="halo-link-card" rel="noopener noreferrer">https://shop.mhdy.net</a><h3 id="%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%BB%A5%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6">修改文件以支持本地插件</h3><p>如果你也是3.5.6的版本那么直接覆盖即可，不是的话看下面的修改对比</p><p><code>app/Controller/Admin/Api/Plugin.php</code> :</p><pre><code class="language-php">&lt;?php
-declare(strict_types=1);
+<p>原项目地址 https://github.com/lizhipay/acg-faka</p><p>本地使用版本为3.5.6，原项目对于插件完全就是shi，卖插件卖的</p><p>通过修改<code>kernel/Plugin/Hook.php</code> 和<code>app/Controller/Admin/Api/Plugin.php</code> 允许使用本地插件</p><p>注意版本，原项目每次更新都可能会导致修改或插件不可用</p><p>完整插件文档位于 <a href="https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6" target="_blank" rel="noopener noreferrer">https://blog.mhdy.net/docs/zawu/acg-faka-plugin-wiki-3.5.6</a></p><p>我的小店:</p><a href="https://shop.mhdy.net/" target="_blank" class="halo-link-card" rel="noopener noreferrer">https://shop.mhdy.net</a><h3 id="%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E4%BB%A5%E6%94%AF%E6%8C%81%E6%9C%AC%E5%9C%B0%E6%8F%92%E4%BB%B6">修改文件以支持本地插件</h3><p>如果你也是3.5.6的版本那么直接覆盖即可，不是的话看下面的修改对比</p><p><code>app/Controller/Admin/Api/Plugin.php</code> :</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">224 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
 
-namespace App\Controller\Admin;
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Controller</span>\<span class="hljs-title class_">Admin</span>;
 
 
-use App\Controller\Base\View\Manage;
-use App\Interceptor\ManageSession;
-use App\Service\App;
-use App\Util\File;
-use Kernel\Annotation\Interceptor;
-use Kernel\Exception\JSONException;
-use Kernel\Exception\NotFoundException;
-use Kernel\Exception\ViewException;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Controller</span>\<span class="hljs-title">Base</span>\<span class="hljs-title">View</span>\<span class="hljs-title">Manage</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Interceptor</span>\<span class="hljs-title">ManageSession</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Service</span>\<span class="hljs-title">App</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">File</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Annotation</span>\<span class="hljs-title">Interceptor</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Exception</span>\<span class="hljs-title">JSONException</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Exception</span>\<span class="hljs-title">NotFoundException</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Exception</span>\<span class="hljs-title">ViewException</span>;
 
-#[Interceptor(ManageSession::class)]
-class Plugin extends Manage
-{
+<span class="hljs-meta">#[Interceptor</span>(<span class="hljs-title class_">ManageSession</span>::<span class="hljs-variable language_">class</span>)<span class="hljs-meta">]</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Plugin</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Manage</span>
+</span>{
 
-    protected string $terms = &lt;&lt;&lt;HTML
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> <span class="hljs-variable">$terms</span> = <span class="hljs-string">&lt;&lt;&lt;HTML
 **重要声明：**
 
 在使用本插件（以下简称“插件”）之前，请仔细阅读本免责声明。安装、使用或继续使用本插件即表示您（以下简称“用户”）已经阅读、理解并同意遵守本免责声明的所有条款。若不同意，请勿安装或使用本插件。
@@ -348,261 +571,394 @@ class Plugin extends Manage
 **10. 其他**
 
 本免责声明的解释权归开发者所有。本免责声明适用&#96;中国大陆&#96;法律。
-HTML;
+HTML</span>;
 
 
-    /**
-     * @return string
-     * @throws JSONException
-     * @throws ViewException
-     */
-    public function index(): string
-    {
-        return $this-&gt;render("通用插件", "Config/Plugin.html");
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@return</span> string
+     * <span class="hljs-doctag">@throws</span> JSONException
+     * <span class="hljs-doctag">@throws</span> ViewException
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>): <span class="hljs-title">string</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">render</span>(<span class="hljs-string">"通用插件"</span>, <span class="hljs-string">"Config/Plugin.html"</span>);
     }
 
 
-    /**
-     * @param string $plugin
-     * @return string
-     * @throws JSONException
-     * @throws NotFoundException
-     * @throws ViewException
-     */
-    public function wiki(string $plugin): string
-    {
-        if (!preg_match('/^[A-Za-z0-9_]+$/', $plugin)) {
-            throw new NotFoundException("错误的插件");
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@param</span> string $plugin
+     * <span class="hljs-doctag">@return</span> string
+     * <span class="hljs-doctag">@throws</span> JSONException
+     * <span class="hljs-doctag">@throws</span> NotFoundException
+     * <span class="hljs-doctag">@throws</span> ViewException
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wiki</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$plugin</span></span>): <span class="hljs-title">string</span>
+    </span>{
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">'/^[A-Za-z0-9_]+$/'</span>, <span class="hljs-variable">$plugin</span>)) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NotFoundException</span>(<span class="hljs-string">"错误的插件"</span>);
         }
 
-        $appStore = (array)json_decode((string)file_get_contents(BASE_PATH . "/runtime/plugin/store.cache"), true);
-        $plg = \Kernel\Util\Plugin::getPlugin($plugin);
+        <span class="hljs-variable">$appStore</span> = (<span class="hljs-keyword">array</span>)<span class="hljs-title function_ invoke__">json_decode</span>((<span class="hljs-keyword">string</span>)<span class="hljs-title function_ invoke__">file_get_contents</span>(BASE_PATH . <span class="hljs-string">"/runtime/plugin/store.cache"</span>), <span class="hljs-literal">true</span>);
+        <span class="hljs-variable">$plg</span> = <span class="hljs-title class_">\Kernel\Util\Plugin</span>::<span class="hljs-title function_ invoke__">getPlugin</span>(<span class="hljs-variable">$plugin</span>);
 
-        if (!$plg) {
-            throw new NotFoundException("未找到该插件");
+        <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$plg</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NotFoundException</span>(<span class="hljs-string">"未找到该插件"</span>);
         }
 
-        $wiki = realpath(BASE_PATH . "/app/Plugin/{$plugin}/Wiki/");
+        <span class="hljs-variable">$wiki</span> = <span class="hljs-title function_ invoke__">realpath</span>(BASE_PATH . <span class="hljs-string">"/app/Plugin/<span class="hljs-subst">{$plugin}</span>/Wiki/"</span>);
 
-        $staticBasePath = "/app/Plugin/{$plugin}/Wiki/";
+        <span class="hljs-variable">$staticBasePath</span> = <span class="hljs-string">"/app/Plugin/<span class="hljs-subst">{$plugin}</span>/Wiki/"</span>;
 
-        if (!is_dir($wiki)) {
-            throw new NotFoundException("此插件没有文档");
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_dir</span>(<span class="hljs-variable">$wiki</span>)) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NotFoundException</span>(<span class="hljs-string">"此插件没有文档"</span>);
         }
 
-        $readme = ['README.md', 'Readme.md']; //主页
-        $sidebar = ['SIDEBAR.md', 'Sidebar.md']; //菜单
-        $terms = ['TERMS.md', 'Terms.md']; //免责声明
+        <span class="hljs-variable">$readme</span> = [<span class="hljs-string">'README.md'</span>, <span class="hljs-string">'Readme.md'</span>]; <span class="hljs-comment">//主页</span>
+        <span class="hljs-variable">$sidebar</span> = [<span class="hljs-string">'SIDEBAR.md'</span>, <span class="hljs-string">'Sidebar.md'</span>]; <span class="hljs-comment">//菜单</span>
+        <span class="hljs-variable">$terms</span> = [<span class="hljs-string">'TERMS.md'</span>, <span class="hljs-string">'Terms.md'</span>]; <span class="hljs-comment">//免责声明</span>
 
-        $readmePath = '';
-        $sidebarPath = '';
-        $termsPath = '';
+        <span class="hljs-variable">$readmePath</span> = <span class="hljs-string">''</span>;
+        <span class="hljs-variable">$sidebarPath</span> = <span class="hljs-string">''</span>;
+        <span class="hljs-variable">$termsPath</span> = <span class="hljs-string">''</span>;
 
-        foreach ($readme as $r) {
-            if (File::exists($wiki . "/" . $r)) {
-                $readmePath = $r;
-                break;
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$readme</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$r</span>) {
+            <span class="hljs-keyword">if</span> (<span class="hljs-title class_">File</span>::<span class="hljs-title function_ invoke__">exists</span>(<span class="hljs-variable">$wiki</span> . <span class="hljs-string">"/"</span> . <span class="hljs-variable">$r</span>)) {
+                <span class="hljs-variable">$readmePath</span> = <span class="hljs-variable">$r</span>;
+                <span class="hljs-keyword">break</span>;
             }
         }
 
-        foreach ($sidebar as $r) {
-            if (File::exists($wiki . "/" . $r)) {
-                $sidebarPath = $r;
-                break;
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$sidebar</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$r</span>) {
+            <span class="hljs-keyword">if</span> (<span class="hljs-title class_">File</span>::<span class="hljs-title function_ invoke__">exists</span>(<span class="hljs-variable">$wiki</span> . <span class="hljs-string">"/"</span> . <span class="hljs-variable">$r</span>)) {
+                <span class="hljs-variable">$sidebarPath</span> = <span class="hljs-variable">$r</span>;
+                <span class="hljs-keyword">break</span>;
             }
         }
 
-        foreach ($terms as $r) {
-            if (File::exists($wiki . "/" . $r)) {
-                $termsPath = $r;
-                break;
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$terms</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$r</span>) {
+            <span class="hljs-keyword">if</span> (<span class="hljs-title class_">File</span>::<span class="hljs-title function_ invoke__">exists</span>(<span class="hljs-variable">$wiki</span> . <span class="hljs-string">"/"</span> . <span class="hljs-variable">$r</span>)) {
+                <span class="hljs-variable">$termsPath</span> = <span class="hljs-variable">$r</span>;
+                <span class="hljs-keyword">break</span>;
             }
         }
 
-        if ($termsPath === '') {
-            $termsPath = "Terms.md";
-            file_put_contents($wiki . "/{$termsPath}", $this-&gt;terms);
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$termsPath</span> === <span class="hljs-string">''</span>) {
+            <span class="hljs-variable">$termsPath</span> = <span class="hljs-string">"Terms.md"</span>;
+            <span class="hljs-title function_ invoke__">file_put_contents</span>(<span class="hljs-variable">$wiki</span> . <span class="hljs-string">"/<span class="hljs-subst">{$termsPath}</span>"</span>, <span class="hljs-variable">$this</span>-&gt;terms);
         }
 
-        if ($sidebarPath === '') {
-            $sidebarPath = "Sidebar.md";
-            file_put_contents($wiki . "/{$sidebarPath}", "* [使用说明]({$readmePath})\n* [免责声明]({$termsPath})");
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$sidebarPath</span> === <span class="hljs-string">''</span>) {
+            <span class="hljs-variable">$sidebarPath</span> = <span class="hljs-string">"Sidebar.md"</span>;
+            <span class="hljs-title function_ invoke__">file_put_contents</span>(<span class="hljs-variable">$wiki</span> . <span class="hljs-string">"/<span class="hljs-subst">{$sidebarPath}</span>"</span>, <span class="hljs-string">"* [使用说明](<span class="hljs-subst">{$readmePath}</span>)\n* [免责声明](<span class="hljs-subst">{$termsPath}</span>)"</span>);
         }
 
 
-        $iconPath = $appStore[$plugin]['icon'] ?? null;
-        if (!is_string($iconPath) || !preg_match('#^/[A-Za-z0-9._&#126;%/-]+$#D', $iconPath)) {
-            $icon = "/favicon.ico";
-        } else {
-            $icon = App::APP_URL . $iconPath;
+        <span class="hljs-variable">$iconPath</span> = <span class="hljs-variable">$appStore</span>[<span class="hljs-variable">$plugin</span>][<span class="hljs-string">'icon'</span>] ?? <span class="hljs-literal">null</span>;
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_string</span>(<span class="hljs-variable">$iconPath</span>) || !<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">'#^/[A-Za-z0-9._&#126;%/-]+$#D'</span>, <span class="hljs-variable">$iconPath</span>)) {
+            <span class="hljs-variable">$icon</span> = <span class="hljs-string">"/favicon.ico"</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-variable">$icon</span> = <span class="hljs-title class_">App</span>::<span class="hljs-variable constant_">APP_URL</span> . <span class="hljs-variable">$iconPath</span>;
         }
 
-        $pluginName = strip_tags((string)$plg['NAME']);
-        $pluginNameHtml = htmlspecialchars($pluginName, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-        $jsonFlags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP
+        <span class="hljs-variable">$pluginName</span> = <span class="hljs-title function_ invoke__">strip_tags</span>((<span class="hljs-keyword">string</span>)<span class="hljs-variable">$plg</span>[<span class="hljs-string">'NAME'</span>]);
+        <span class="hljs-variable">$pluginNameHtml</span> = <span class="hljs-title function_ invoke__">htmlspecialchars</span>(<span class="hljs-variable">$pluginName</span>, ENT_QUOTES | ENT_SUBSTITUTE, <span class="hljs-string">'UTF-8'</span>);
+        <span class="hljs-variable">$jsonFlags</span> = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP
             | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE;
 
-        return $this-&gt;render("通用插件", "Config/Wiki.html", [
-            'pluginName' =&gt; $pluginNameHtml,
-            'pluginKeyJson' =&gt; json_encode($plugin, $jsonFlags),
-            // docsify 会把 name 拼进 HTML；这里传入实体编码后的文本，避免插件元数据形成标签或属性。
-            'pluginNameHtmlJson' =&gt; json_encode($pluginNameHtml, $jsonFlags),
-            'basePathJson' =&gt; json_encode($staticBasePath, $jsonFlags),
-            'iconJson' =&gt; json_encode($icon, $jsonFlags),
-            'homepageJson' =&gt; json_encode($readmePath, $jsonFlags),
-            'sidebarJson' =&gt; json_encode($sidebarPath, $jsonFlags),
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">render</span>(<span class="hljs-string">"通用插件"</span>, <span class="hljs-string">"Config/Wiki.html"</span>, [
+            <span class="hljs-string">'pluginName'</span> =&gt; <span class="hljs-variable">$pluginNameHtml</span>,
+            <span class="hljs-string">'pluginKeyJson'</span> =&gt; <span class="hljs-title function_ invoke__">json_encode</span>(<span class="hljs-variable">$plugin</span>, <span class="hljs-variable">$jsonFlags</span>),
+            <span class="hljs-comment">// docsify 会把 name 拼进 HTML；这里传入实体编码后的文本，避免插件元数据形成标签或属性。</span>
+            <span class="hljs-string">'pluginNameHtmlJson'</span> =&gt; <span class="hljs-title function_ invoke__">json_encode</span>(<span class="hljs-variable">$pluginNameHtml</span>, <span class="hljs-variable">$jsonFlags</span>),
+            <span class="hljs-string">'basePathJson'</span> =&gt; <span class="hljs-title function_ invoke__">json_encode</span>(<span class="hljs-variable">$staticBasePath</span>, <span class="hljs-variable">$jsonFlags</span>),
+            <span class="hljs-string">'iconJson'</span> =&gt; <span class="hljs-title function_ invoke__">json_encode</span>(<span class="hljs-variable">$icon</span>, <span class="hljs-variable">$jsonFlags</span>),
+            <span class="hljs-string">'homepageJson'</span> =&gt; <span class="hljs-title function_ invoke__">json_encode</span>(<span class="hljs-variable">$readmePath</span>, <span class="hljs-variable">$jsonFlags</span>),
+            <span class="hljs-string">'sidebarJson'</span> =&gt; <span class="hljs-title function_ invoke__">json_encode</span>(<span class="hljs-variable">$sidebarPath</span>, <span class="hljs-variable">$jsonFlags</span>),
         ]);
     }
 
-    /**
+    <span class="hljs-comment">/**
      * 提供 Wiki 目录下的 .md 文档内容 —— 走 PHP 路由(index.php),不依赖 nginx 对
      * /app/Plugin/**\/Wiki/*.md 的静态文件读取。宝塔等安全规则会把 README.md / CHANGELOG.md
      * 之类的文件名直接 &#96;return 404&#96;,导致 docsify 拉不到首页而整体报 404;本路由 URL 形如
      * /admin/plugin/wikiRes?plugin=X&amp;file=README.md,路径部分不以 README.md 结尾,不被该规则命中,
      * 任意服务器都能正常加载文档。
-     * @param string $plugin
-     * @param string $file
-     * @throws NotFoundException
-     */
-    public function wikiRes(string $plugin, string $file): void
-    {
-        if (!preg_match('/^[A-Za-z0-9_]+$/', $plugin)) {
-            throw new NotFoundException("错误的插件");
+     * <span class="hljs-doctag">@param</span> string $plugin
+     * <span class="hljs-doctag">@param</span> string $file
+     * <span class="hljs-doctag">@throws</span> NotFoundException
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wikiRes</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$plugin</span>, <span class="hljs-keyword">string</span> <span class="hljs-variable">$file</span></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">'/^[A-Za-z0-9_]+$/'</span>, <span class="hljs-variable">$plugin</span>)) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NotFoundException</span>(<span class="hljs-string">"错误的插件"</span>);
         }
 
-        $wiki = realpath(BASE_PATH . "/app/Plugin/{$plugin}/Wiki");
-        if ($wiki === false || !is_dir($wiki)) {
-            throw new NotFoundException("此插件没有文档");
+        <span class="hljs-variable">$wiki</span> = <span class="hljs-title function_ invoke__">realpath</span>(BASE_PATH . <span class="hljs-string">"/app/Plugin/<span class="hljs-subst">{$plugin}</span>/Wiki"</span>);
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$wiki</span> === <span class="hljs-literal">false</span> || !<span class="hljs-title function_ invoke__">is_dir</span>(<span class="hljs-variable">$wiki</span>)) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NotFoundException</span>(<span class="hljs-string">"此插件没有文档"</span>);
         }
 
-        //规范化相对路径:去查询/井号、统一分隔符、禁止目录穿越
-        $file = (string)preg_replace('/[?#].*$/', '', str_replace('\\', '/', $file));
-        $file = ltrim($file, '/');
-        if ($file === '' || strpos($file, '..') !== false) {
-            throw new NotFoundException("非法文件");
+        <span class="hljs-comment">//规范化相对路径:去查询/井号、统一分隔符、禁止目录穿越</span>
+        <span class="hljs-variable">$file</span> = (<span class="hljs-keyword">string</span>)<span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-string">'/[?#].*$/'</span>, <span class="hljs-string">''</span>, <span class="hljs-title function_ invoke__">str_replace</span>(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>, <span class="hljs-variable">$file</span>));
+        <span class="hljs-variable">$file</span> = <span class="hljs-title function_ invoke__">ltrim</span>(<span class="hljs-variable">$file</span>, <span class="hljs-string">'/'</span>);
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$file</span> === <span class="hljs-string">''</span> || <span class="hljs-title function_ invoke__">strpos</span>(<span class="hljs-variable">$file</span>, <span class="hljs-string">'..'</span>) !== <span class="hljs-literal">false</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NotFoundException</span>(<span class="hljs-string">"非法文件"</span>);
         }
 
-        //定位:先精确,再同目录大小写不敏感兜底(兼容 Linux 大小写敏感 + 插件用 readme.md 等命名)
-        $target = realpath($wiki . '/' . $file);
-        if ($target === false) {
-            $dir = realpath($wiki . '/' . dirname($file));
-            if ($dir !== false &amp;&amp; is_dir($dir) &amp;&amp; str_starts_with($dir . '/', $wiki . '/')) {
-                $base = basename($file);
-                foreach ((array)scandir($dir) as $entry) {
-                    if (strcasecmp($entry, $base) === 0) {
-                        $target = realpath($dir . '/' . $entry);
-                        break;
+        <span class="hljs-comment">//定位:先精确,再同目录大小写不敏感兜底(兼容 Linux 大小写敏感 + 插件用 readme.md 等命名)</span>
+        <span class="hljs-variable">$target</span> = <span class="hljs-title function_ invoke__">realpath</span>(<span class="hljs-variable">$wiki</span> . <span class="hljs-string">'/'</span> . <span class="hljs-variable">$file</span>);
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$target</span> === <span class="hljs-literal">false</span>) {
+            <span class="hljs-variable">$dir</span> = <span class="hljs-title function_ invoke__">realpath</span>(<span class="hljs-variable">$wiki</span> . <span class="hljs-string">'/'</span> . <span class="hljs-title function_ invoke__">dirname</span>(<span class="hljs-variable">$file</span>));
+            <span class="hljs-keyword">if</span> (<span class="hljs-variable">$dir</span> !== <span class="hljs-literal">false</span> &amp;&amp; <span class="hljs-title function_ invoke__">is_dir</span>(<span class="hljs-variable">$dir</span>) &amp;&amp; <span class="hljs-title function_ invoke__">str_starts_with</span>(<span class="hljs-variable">$dir</span> . <span class="hljs-string">'/'</span>, <span class="hljs-variable">$wiki</span> . <span class="hljs-string">'/'</span>)) {
+                <span class="hljs-variable">$base</span> = <span class="hljs-title function_ invoke__">basename</span>(<span class="hljs-variable">$file</span>);
+                <span class="hljs-keyword">foreach</span> ((<span class="hljs-keyword">array</span>)<span class="hljs-title function_ invoke__">scandir</span>(<span class="hljs-variable">$dir</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">$entry</span>) {
+                    <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">strcasecmp</span>(<span class="hljs-variable">$entry</span>, <span class="hljs-variable">$base</span>) === <span class="hljs-number">0</span>) {
+                        <span class="hljs-variable">$target</span> = <span class="hljs-title function_ invoke__">realpath</span>(<span class="hljs-variable">$dir</span> . <span class="hljs-string">'/'</span> . <span class="hljs-variable">$entry</span>);
+                        <span class="hljs-keyword">break</span>;
                     }
                 }
             }
         }
 
-        //必须落在 Wiki 目录内、是真实文件、且是 .md(只放行文档,杜绝读取源码/配置)
-        if ($target === false || !is_file($target)
-            || !str_starts_with($target, $wiki . DIRECTORY_SEPARATOR)
-            || strtolower((string)pathinfo($target, PATHINFO_EXTENSION)) !== 'md') {
-            throw new NotFoundException("文档不存在");
+        <span class="hljs-comment">//必须落在 Wiki 目录内、是真实文件、且是 .md(只放行文档,杜绝读取源码/配置)</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$target</span> === <span class="hljs-literal">false</span> || !<span class="hljs-title function_ invoke__">is_file</span>(<span class="hljs-variable">$target</span>)
+            || !<span class="hljs-title function_ invoke__">str_starts_with</span>(<span class="hljs-variable">$target</span>, <span class="hljs-variable">$wiki</span> . DIRECTORY_SEPARATOR)
+            || <span class="hljs-title function_ invoke__">strtolower</span>((<span class="hljs-keyword">string</span>)<span class="hljs-title function_ invoke__">pathinfo</span>(<span class="hljs-variable">$target</span>, PATHINFO_EXTENSION)) !== <span class="hljs-string">'md'</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NotFoundException</span>(<span class="hljs-string">"文档不存在"</span>);
         }
 
-        header('Content-Type: text/plain; charset=utf-8');
-        echo (string)file_get_contents($target);
-        exit;
+        <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">'Content-Type: text/plain; charset=utf-8'</span>);
+        <span class="hljs-keyword">echo</span> (<span class="hljs-keyword">string</span>)<span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$target</span>);
+        <span class="hljs-keyword">exit</span>;
     }
 }
-</code></pre><p><code>kernel/Plugin/Hook.php</code> :</p><pre><code class="language-php">&lt;?php
-declare (strict_types=1);
+</code></pre></div></div></figure></details><p><code>kernel/Plugin/Hook.php</code> :</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">134 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span> (strict_types=<span class="hljs-number">1</span>);
 
-namespace Kernel\Plugin;
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">Kernel</span>\<span class="hljs-title class_">Plugin</span>;
 
-use App\Util\Client;
-use Kernel\Component\Singleton;
-use Kernel\Consts\Base;
-use Kernel\Util\Binary;
-use Kernel\Util\Context;
-use Kernel\Util\File;
-use Kernel\Util\Plugin;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">Client</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Component</span>\<span class="hljs-title">Singleton</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Consts</span>\<span class="hljs-title">Base</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">Binary</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">Context</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">File</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Kernel</span>\<span class="hljs-title">Util</span>\<span class="hljs-title">Plugin</span>;
 
-class Hook
-{
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hook</span>
+</span>{
 
-    use Singleton;
+    <span class="hljs-keyword">use</span> <span class="hljs-title">Singleton</span>;
 
-    public const CACHE_FILE = BASE_PATH . "/runtime/plugin/hook";
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">CACHE_FILE</span> = BASE_PATH . <span class="hljs-string">"/runtime/plugin/hook"</span>;
 
 
-    /**
-     * @return void
-     * @throws \SmartyException
-     */
-    public function load(): void
-    {
-        $path = BASE_PATH . "/runtime/plugin/";
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@return</span> void
+     * <span class="hljs-doctag">@throws</span> \SmartyException
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">load</span>(<span class="hljs-params"></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-variable">$path</span> = BASE_PATH . <span class="hljs-string">"/runtime/plugin/"</span>;
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_dir</span>(<span class="hljs-variable">$path</span>)) {
+            <span class="hljs-title function_ invoke__">mkdir</span>(<span class="hljs-variable">$path</span>, <span class="hljs-number">0777</span>, <span class="hljs-literal">true</span>);
         }
 
-        if (defined('_APP_STORE_LOAD_STATE') &amp;&amp; \_APP_STORE_LOAD_STATE === true &amp;&amp; is_writable(Hook::CACHE_FILE)) {
-            $hooks = File::read(Hook::CACHE_FILE, function (string $contents) {
-                return Binary::inst()-&gt;unpack($contents, _plugin_get_hwid());
+        <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">defined</span>(<span class="hljs-string">'_APP_STORE_LOAD_STATE'</span>) &amp;&amp; \_APP_STORE_LOAD_STATE === <span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-title function_ invoke__">is_writable</span>(<span class="hljs-title class_">Hook</span>::<span class="hljs-variable constant_">CACHE_FILE</span>)) {
+            <span class="hljs-variable">$hooks</span> = <span class="hljs-title class_">File</span>::<span class="hljs-title function_ invoke__">read</span>(<span class="hljs-title class_">Hook</span>::<span class="hljs-variable constant_">CACHE_FILE</span>, function (<span class="hljs-keyword">string</span> <span class="hljs-variable">$contents</span>) {
+                <span class="hljs-keyword">return</span> <span class="hljs-title class_">Binary</span>::<span class="hljs-title function_ invoke__">inst</span>()-&gt;<span class="hljs-title function_ invoke__">unpack</span>(<span class="hljs-variable">$contents</span>, <span class="hljs-title function_ invoke__">_plugin_get_hwid</span>());
             }) ?: [];
 
-            foreach ($hooks as $points) {
-                foreach ($points as $a =&gt; $point) {
-                    foreach ($point as $plugin) {
-                        Plugin::$container['hook'][$a][] = ["namespace" =&gt; $plugin['namespace'], "method" =&gt; $plugin['method'], "pluginName" =&gt; $plugin['pluginName']];
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$hooks</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$points</span>) {
+                <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$points</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$a</span> =&gt; <span class="hljs-variable">$point</span>) {
+                    <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$point</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$plugin</span>) {
+                        <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable">$container</span>[<span class="hljs-string">'hook'</span>][<span class="hljs-variable">$a</span>][] = [<span class="hljs-string">"namespace"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'namespace'</span>], <span class="hljs-string">"method"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'method'</span>], <span class="hljs-string">"pluginName"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'pluginName'</span>]];
                     }
                 }
             }
         }
 
-        $this-&gt;loadLocalPlugins();
+        <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">loadLocalPlugins</span>();
 
-        $route = explode("/", trim(Context::get(Base::ROUTE), "/"));
-        if (strtolower($route[0] ?? '') == "plugin") {
-            $pluginName = ucfirst($route[1] ?? '');
-            $pluginCfg = Plugin::getPlugin($pluginName);
-            if (($pluginCfg['PLUGIN_CONFIG']['STATUS'] ?? 0) != 1) {
-                Client::redirect("/", "当前插件未启用");
+        <span class="hljs-variable">$route</span> = <span class="hljs-title function_ invoke__">explode</span>(<span class="hljs-string">"/"</span>, <span class="hljs-title function_ invoke__">trim</span>(<span class="hljs-title class_">Context</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-title class_">Base</span>::<span class="hljs-variable constant_">ROUTE</span>), <span class="hljs-string">"/"</span>));
+        <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">strtolower</span>(<span class="hljs-variable">$route</span>[<span class="hljs-number">0</span>] ?? <span class="hljs-string">''</span>) == <span class="hljs-string">"plugin"</span>) {
+            <span class="hljs-variable">$pluginName</span> = <span class="hljs-title function_ invoke__">ucfirst</span>(<span class="hljs-variable">$route</span>[<span class="hljs-number">1</span>] ?? <span class="hljs-string">''</span>);
+            <span class="hljs-variable">$pluginCfg</span> = <span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">getPlugin</span>(<span class="hljs-variable">$pluginName</span>);
+            <span class="hljs-keyword">if</span> ((<span class="hljs-variable">$pluginCfg</span>[<span class="hljs-string">'PLUGIN_CONFIG'</span>][<span class="hljs-string">'STATUS'</span>] ?? <span class="hljs-number">0</span>) != <span class="hljs-number">1</span>) {
+                <span class="hljs-title class_">Client</span>::<span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">"/"</span>, <span class="hljs-string">"当前插件未启用"</span>);
             }
         }
     }
 
-    private function loadLocalPlugins(): void
-    {
-        // ponytail: scan local hooks per request; add a cache only if profiling shows this matters.
-        $storeFile = BASE_PATH . "/runtime/plugin/store.cache";
-        $store = is_file($storeFile) ? (array)json_decode((string)file_get_contents($storeFile), true) : [];
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadLocalPlugins</span>(<span class="hljs-params"></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-comment">// ponytail: scan local hooks per request; add a cache only if profiling shows this matters.</span>
+        <span class="hljs-variable">$storeFile</span> = BASE_PATH . <span class="hljs-string">"/runtime/plugin/store.cache"</span>;
+        <span class="hljs-variable">$store</span> = <span class="hljs-title function_ invoke__">is_file</span>(<span class="hljs-variable">$storeFile</span>) ? (<span class="hljs-keyword">array</span>)<span class="hljs-title function_ invoke__">json_decode</span>((<span class="hljs-keyword">string</span>)<span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$storeFile</span>), <span class="hljs-literal">true</span>) : [];
 
-        foreach (Plugin::getPlugins() as $plugin) {
-            $name = (string)$plugin[\App\Consts\Plugin::PLUGIN_NAME];
-            if (isset($store[$name]) || (int)($plugin[\App\Consts\Plugin::PLUGIN_CONFIG]['STATUS'] ?? 0) !== 1) {
-                continue;
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">getPlugins</span>() <span class="hljs-keyword">as</span> <span class="hljs-variable">$plugin</span>) {
+            <span class="hljs-variable">$name</span> = (<span class="hljs-keyword">string</span>)<span class="hljs-variable">$plugin</span>[<span class="hljs-title class_">\App\Consts\Plugin</span>::<span class="hljs-variable constant_">PLUGIN_NAME</span>];
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$store</span>[<span class="hljs-variable">$name</span>]) || (<span class="hljs-keyword">int</span>)(<span class="hljs-variable">$plugin</span>[<span class="hljs-title class_">\App\Consts\Plugin</span>::<span class="hljs-variable constant_">PLUGIN_CONFIG</span>][<span class="hljs-string">'STATUS'</span>] ?? <span class="hljs-number">0</span>) !== <span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">continue</span>;
             }
 
-            $hookPath = BASE_PATH . "/app/Plugin/{$name}/Hook/";
-            if (!is_dir($hookPath)) {
-                continue;
+            <span class="hljs-variable">$hookPath</span> = BASE_PATH . <span class="hljs-string">"/app/Plugin/<span class="hljs-subst">{$name}</span>/Hook/"</span>;
+            <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_dir</span>(<span class="hljs-variable">$hookPath</span>)) {
+                <span class="hljs-keyword">continue</span>;
             }
 
-            foreach (File::scan($hookPath, true) as $file) {
-                if (pathinfo($file, PATHINFO_EXTENSION) !== 'php') {
-                    continue;
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-title class_">File</span>::<span class="hljs-title function_ invoke__">scan</span>(<span class="hljs-variable">$hookPath</span>, <span class="hljs-literal">true</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">$file</span>) {
+                <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">pathinfo</span>(<span class="hljs-variable">$file</span>, PATHINFO_EXTENSION) !== <span class="hljs-string">'php'</span>) {
+                    <span class="hljs-keyword">continue</span>;
                 }
 
-                $class = "\\App\\Plugin\\{$name}\\Hook\\" . pathinfo($file, PATHINFO_FILENAME);
-                if (!class_exists($class)) {
-                    continue;
+                <span class="hljs-variable">$class</span> = <span class="hljs-string">"\\App\\Plugin\\<span class="hljs-subst">{$name}</span>\\Hook\\"</span> . <span class="hljs-title function_ invoke__">pathinfo</span>(<span class="hljs-variable">$file</span>, PATHINFO_FILENAME);
+                <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">class_exists</span>(<span class="hljs-variable">$class</span>)) {
+                    <span class="hljs-keyword">continue</span>;
                 }
 
-                foreach ((new \ReflectionClass($class))-&gt;getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                    foreach ($method-&gt;getAttributes(\Kernel\Annotation\Hook::class) as $attribute) {
-                        $arguments = $attribute-&gt;getArguments();
-                        $point = (int)($arguments['point'] ?? $arguments[0] ?? 0);
-                        if ($point &gt; 0) {
-                            Plugin::$container['hook'][$point][] = [
-                                'namespace' =&gt; $class,
-                                'method' =&gt; $method-&gt;getName(),
-                                'pluginName' =&gt; $name,
+                <span class="hljs-keyword">foreach</span> ((<span class="hljs-keyword">new</span> <span class="hljs-title class_">\ReflectionClass</span>(<span class="hljs-variable">$class</span>))-&gt;<span class="hljs-title function_ invoke__">getMethods</span>(<span class="hljs-title class_">\ReflectionMethod</span>::<span class="hljs-variable constant_">IS_PUBLIC</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">$method</span>) {
+                    <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$method</span>-&gt;<span class="hljs-title function_ invoke__">getAttributes</span>(<span class="hljs-title class_">\Kernel\Annotation\Hook</span>::<span class="hljs-variable language_">class</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">$attribute</span>) {
+                        <span class="hljs-variable">$arguments</span> = <span class="hljs-variable">$attribute</span>-&gt;<span class="hljs-title function_ invoke__">getArguments</span>();
+                        <span class="hljs-variable">$point</span> = (<span class="hljs-keyword">int</span>)(<span class="hljs-variable">$arguments</span>[<span class="hljs-string">'point'</span>] ?? <span class="hljs-variable">$arguments</span>[<span class="hljs-number">0</span>] ?? <span class="hljs-number">0</span>);
+                        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$point</span> &gt; <span class="hljs-number">0</span>) {
+                            <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable">$container</span>[<span class="hljs-string">'hook'</span>][<span class="hljs-variable">$point</span>][] = [
+                                <span class="hljs-string">'namespace'</span> =&gt; <span class="hljs-variable">$class</span>,
+                                <span class="hljs-string">'method'</span> =&gt; <span class="hljs-variable">$method</span>-&gt;<span class="hljs-title function_ invoke__">getName</span>(),
+                                <span class="hljs-string">'pluginName'</span> =&gt; <span class="hljs-variable">$name</span>,
                             ];
                         }
                     }
@@ -611,164 +967,289 @@ class Hook
         }
     }
 
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function del(string $name): void
-    {
-        _plugin_hook_del($name);
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@param</span> string $name
+     * <span class="hljs-doctag">@return</span> void
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">del</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$name</span></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-title function_ invoke__">_plugin_hook_del</span>(<span class="hljs-variable">$name</span>);
     }
 
 
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function add(string $name): void
-    {
-        _plugin_hook_add($name);
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@param</span> string $name
+     * <span class="hljs-doctag">@return</span> void
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$name</span></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-title function_ invoke__">_plugin_hook_add</span>(<span class="hljs-variable">$name</span>);
     }
 
 
-    /**
-     * @param string $name
-     * @param int $point
-     * @param string $namespace
-     * @param string $method
-     * @return bool
-     */
-    public function exist(string $name, int $point, string $namespace, string $method): bool
-    {
-        return _plugin_hook_exist($name, $point, $namespace, $method);
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@param</span> string $name
+     * <span class="hljs-doctag">@param</span> int $point
+     * <span class="hljs-doctag">@param</span> string $namespace
+     * <span class="hljs-doctag">@param</span> string $method
+     * <span class="hljs-doctag">@return</span> bool
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">exist</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$name</span>, <span class="hljs-keyword">int</span> <span class="hljs-variable">$point</span>, <span class="hljs-keyword">string</span> <span class="hljs-variable">$namespace</span>, <span class="hljs-keyword">string</span> <span class="hljs-variable">$method</span></span>): <span class="hljs-title">bool</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">_plugin_hook_exist</span>(<span class="hljs-variable">$name</span>, <span class="hljs-variable">$point</span>, <span class="hljs-variable">$namespace</span>, <span class="hljs-variable">$method</span>);
     }
 }
-</code></pre><h4 id="%E8%BF%99%E9%87%8C%E6%98%AF%E4%BF%AE%E6%94%B9%E5%AF%B9%E6%AF%94">这里是修改对比</h4><p><code>app/Controller/Admin/Api/Plugin.php</code> :</p><p>108-124</p><pre><code class="language-php">        if (isset($map['STATUS'])) {
-            $storeFile = BASE_PATH . "/runtime/plugin/store.cache";
-            $appStore = is_file($storeFile) ? (array)json_decode((string)file_get_contents($storeFile), true) : [];
-            $status = (int)$map['STATUS'];
+</code></pre></div></div></figure></details><h4 id="%E8%BF%99%E9%87%8C%E6%98%AF%E4%BF%AE%E6%94%B9%E5%AF%B9%E6%AF%94">这里是修改对比</h4><p><code>app/Controller/Admin/Api/Plugin.php</code> :</p><p>108-124</p><details class="halo-code-details" open><summary><span class="halo-code-language">php</span><span class="halo-code-meta">17 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$map</span>[<span class="hljs-string">'STATUS'</span>])) {
+            <span class="hljs-variable">$storeFile</span> = BASE_PATH . <span class="hljs-string">"/runtime/plugin/store.cache"</span>;
+            <span class="hljs-variable">$appStore</span> = <span class="hljs-title function_ invoke__">is_file</span>(<span class="hljs-variable">$storeFile</span>) ? (<span class="hljs-keyword">array</span>)<span class="hljs-title function_ invoke__">json_decode</span>((<span class="hljs-keyword">string</span>)<span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$storeFile</span>), <span class="hljs-literal">true</span>) : [];
+            <span class="hljs-variable">$status</span> = (<span class="hljs-keyword">int</span>)<span class="hljs-variable">$map</span>[<span class="hljs-string">'STATUS'</span>];
 
-            if (!isset($appStore[$id]) &amp;&amp; in_array($status, [0, 1], true)) {
-                $config['STATUS'] = (string)$status;
-                setConfig($config, BASE_PATH . '/app/Plugin/' . $id . '/Config/Config.php');
-                \Kernel\Util\Plugin::runHookState(
-                    $id,
-                    $status === 1 ? \Kernel\Annotation\Plugin::START : \Kernel\Annotation\Plugin::STOP
+            <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$appStore</span>[<span class="hljs-variable">$id</span>]) &amp;&amp; <span class="hljs-title function_ invoke__">in_array</span>(<span class="hljs-variable">$status</span>, [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], <span class="hljs-literal">true</span>)) {
+                <span class="hljs-variable">$config</span>[<span class="hljs-string">'STATUS'</span>] = (<span class="hljs-keyword">string</span>)<span class="hljs-variable">$status</span>;
+                <span class="hljs-title function_ invoke__">setConfig</span>(<span class="hljs-variable">$config</span>, BASE_PATH . <span class="hljs-string">'/app/Plugin/'</span> . <span class="hljs-variable">$id</span> . <span class="hljs-string">'/Config/Config.php'</span>);
+                <span class="hljs-title class_">\Kernel\Util\Plugin</span>::<span class="hljs-title function_ invoke__">runHookState</span>(
+                    <span class="hljs-variable">$id</span>,
+                    <span class="hljs-variable">$status</span> === <span class="hljs-number">1</span> ? <span class="hljs-title class_">\Kernel\Annotation\Plugin</span>::<span class="hljs-variable constant_">START</span> : <span class="hljs-title class_">\Kernel\Annotation\Plugin</span>::<span class="hljs-variable constant_">STOP</span>
                 );
-                ManageLog::log($this-&gt;getManage(), ($status === 1 ? "启动了" : "停止了") . "本地插件({$id})");
-                return $this-&gt;json(200, $status === 1 ? "插件已启动" : "插件已停止");
+                <span class="hljs-title class_">ManageLog</span>::<span class="hljs-title function_ invoke__">log</span>(<span class="hljs-variable">$this</span>-&gt;<span class="hljs-title function_ invoke__">getManage</span>(), (<span class="hljs-variable">$status</span> === <span class="hljs-number">1</span> ? <span class="hljs-string">"启动了"</span> : <span class="hljs-string">"停止了"</span>) . <span class="hljs-string">"本地插件(<span class="hljs-subst">{$id}</span>)"</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">json</span>(<span class="hljs-number">200</span>, <span class="hljs-variable">$status</span> === <span class="hljs-number">1</span> ? <span class="hljs-string">"插件已启动"</span> : <span class="hljs-string">"插件已停止"</span>);
             }
 
-            if ((int)$config['STATUS'] == 0 &amp;&amp; $map['STATUS'] == 1) {</code></pre><p><code>kernel/Plugin/Hook.php</code> :</p><p>原26-61</p><pre><code class="language-php">    public function load(): void
-    {
-        if (!defined('_APP_STORE_LOAD_STATE') || \_APP_STORE_LOAD_STATE !== true) {
-            return;
+            <span class="hljs-keyword">if</span> ((<span class="hljs-keyword">int</span>)<span class="hljs-variable">$config</span>[<span class="hljs-string">'STATUS'</span>] == <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable">$map</span>[<span class="hljs-string">'STATUS'</span>] == <span class="hljs-number">1</span>) {</code></pre></div></div></figure></details><p><code>kernel/Plugin/Hook.php</code> :</p><p>原26-61</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">36 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">load</span>(<span class="hljs-params"></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">defined</span>(<span class="hljs-string">'_APP_STORE_LOAD_STATE'</span>) || \_APP_STORE_LOAD_STATE !== <span class="hljs-literal">true</span>) {
+            <span class="hljs-keyword">return</span>;
         }
 
-        $path = BASE_PATH . "/runtime/plugin/";
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+        <span class="hljs-variable">$path</span> = BASE_PATH . <span class="hljs-string">"/runtime/plugin/"</span>;
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_dir</span>(<span class="hljs-variable">$path</span>)) {
+            <span class="hljs-title function_ invoke__">mkdir</span>(<span class="hljs-variable">$path</span>, <span class="hljs-number">0777</span>, <span class="hljs-literal">true</span>);
         }
 
-        if (!is_writable(Hook::CACHE_FILE)) {
-            return;
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_writable</span>(<span class="hljs-title class_">Hook</span>::<span class="hljs-variable constant_">CACHE_FILE</span>)) {
+            <span class="hljs-keyword">return</span>;
         }
 
-        $hooks = File::read(Hook::CACHE_FILE, function (string $contents) {
-            return Binary::inst()-&gt;unpack($contents, _plugin_get_hwid());
+        <span class="hljs-variable">$hooks</span> = <span class="hljs-title class_">File</span>::<span class="hljs-title function_ invoke__">read</span>(<span class="hljs-title class_">Hook</span>::<span class="hljs-variable constant_">CACHE_FILE</span>, function (<span class="hljs-keyword">string</span> <span class="hljs-variable">$contents</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-title class_">Binary</span>::<span class="hljs-title function_ invoke__">inst</span>()-&gt;<span class="hljs-title function_ invoke__">unpack</span>(<span class="hljs-variable">$contents</span>, <span class="hljs-title function_ invoke__">_plugin_get_hwid</span>());
         }) ?: [];
 
-        foreach ($hooks as $points) {
-            foreach ($points as $a =&gt; $point) {
-                foreach ($point as $plugin) {
-                    Plugin::$container['hook'][$a][] = ["namespace" =&gt; $plugin['namespace'], "method" =&gt; $plugin['method'], "pluginName" =&gt; $plugin['pluginName']];
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$hooks</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$points</span>) {
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$points</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$a</span> =&gt; <span class="hljs-variable">$point</span>) {
+                <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$point</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$plugin</span>) {
+                    <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable">$container</span>[<span class="hljs-string">'hook'</span>][<span class="hljs-variable">$a</span>][] = [<span class="hljs-string">"namespace"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'namespace'</span>], <span class="hljs-string">"method"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'method'</span>], <span class="hljs-string">"pluginName"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'pluginName'</span>]];
                 }
             }
         }
 
-        $route = explode("/", trim(Context::get(Base::ROUTE), "/"));
-        if (strtolower($route[0]) == "plugin") {
-            $pluginName = ucfirst($route[1]);
-            $pluginCfg = Plugin::getPlugin($pluginName);
-            if ($pluginCfg['PLUGIN_CONFIG']['STATUS'] != 1) {
-                Client::redirect("/", "当前插件未启用");
+        <span class="hljs-variable">$route</span> = <span class="hljs-title function_ invoke__">explode</span>(<span class="hljs-string">"/"</span>, <span class="hljs-title function_ invoke__">trim</span>(<span class="hljs-title class_">Context</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-title class_">Base</span>::<span class="hljs-variable constant_">ROUTE</span>), <span class="hljs-string">"/"</span>));
+        <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">strtolower</span>(<span class="hljs-variable">$route</span>[<span class="hljs-number">0</span>]) == <span class="hljs-string">"plugin"</span>) {
+            <span class="hljs-variable">$pluginName</span> = <span class="hljs-title function_ invoke__">ucfirst</span>(<span class="hljs-variable">$route</span>[<span class="hljs-number">1</span>]);
+            <span class="hljs-variable">$pluginCfg</span> = <span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">getPlugin</span>(<span class="hljs-variable">$pluginName</span>);
+            <span class="hljs-keyword">if</span> (<span class="hljs-variable">$pluginCfg</span>[<span class="hljs-string">'PLUGIN_CONFIG'</span>][<span class="hljs-string">'STATUS'</span>] != <span class="hljs-number">1</span>) {
+                <span class="hljs-title class_">Client</span>::<span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">"/"</span>, <span class="hljs-string">"当前插件未启用"</span>);
             }
         }
-    }</code></pre><p>修改后26-100</p><pre><code class="language-php">    public function load(): void
-    {
-        $path = BASE_PATH . "/runtime/plugin/";
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+    }</code></pre></div></div></figure></details><p>修改后26-100</p><details class="halo-code-details"><summary><span class="halo-code-language">php</span><span class="halo-code-meta">75 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight php"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-php">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">load</span>(<span class="hljs-params"></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-variable">$path</span> = BASE_PATH . <span class="hljs-string">"/runtime/plugin/"</span>;
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_dir</span>(<span class="hljs-variable">$path</span>)) {
+            <span class="hljs-title function_ invoke__">mkdir</span>(<span class="hljs-variable">$path</span>, <span class="hljs-number">0777</span>, <span class="hljs-literal">true</span>);
         }
 
-        if (defined('_APP_STORE_LOAD_STATE') &amp;&amp; \_APP_STORE_LOAD_STATE === true &amp;&amp; is_writable(Hook::CACHE_FILE)) {
-            $hooks = File::read(Hook::CACHE_FILE, function (string $contents) {
-                return Binary::inst()-&gt;unpack($contents, _plugin_get_hwid());
+        <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">defined</span>(<span class="hljs-string">'_APP_STORE_LOAD_STATE'</span>) &amp;&amp; \_APP_STORE_LOAD_STATE === <span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-title function_ invoke__">is_writable</span>(<span class="hljs-title class_">Hook</span>::<span class="hljs-variable constant_">CACHE_FILE</span>)) {
+            <span class="hljs-variable">$hooks</span> = <span class="hljs-title class_">File</span>::<span class="hljs-title function_ invoke__">read</span>(<span class="hljs-title class_">Hook</span>::<span class="hljs-variable constant_">CACHE_FILE</span>, function (<span class="hljs-keyword">string</span> <span class="hljs-variable">$contents</span>) {
+                <span class="hljs-keyword">return</span> <span class="hljs-title class_">Binary</span>::<span class="hljs-title function_ invoke__">inst</span>()-&gt;<span class="hljs-title function_ invoke__">unpack</span>(<span class="hljs-variable">$contents</span>, <span class="hljs-title function_ invoke__">_plugin_get_hwid</span>());
             }) ?: [];
 
-            foreach ($hooks as $points) {
-                foreach ($points as $a =&gt; $point) {
-                    foreach ($point as $plugin) {
-                        Plugin::$container['hook'][$a][] = ["namespace" =&gt; $plugin['namespace'], "method" =&gt; $plugin['method'], "pluginName" =&gt; $plugin['pluginName']];
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$hooks</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$points</span>) {
+                <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$points</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$a</span> =&gt; <span class="hljs-variable">$point</span>) {
+                    <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$point</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$plugin</span>) {
+                        <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable">$container</span>[<span class="hljs-string">'hook'</span>][<span class="hljs-variable">$a</span>][] = [<span class="hljs-string">"namespace"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'namespace'</span>], <span class="hljs-string">"method"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'method'</span>], <span class="hljs-string">"pluginName"</span> =&gt; <span class="hljs-variable">$plugin</span>[<span class="hljs-string">'pluginName'</span>]];
                     }
                 }
             }
         }
 
-        $this-&gt;loadLocalPlugins();
+        <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">loadLocalPlugins</span>();
 
-        $route = explode("/", trim(Context::get(Base::ROUTE), "/"));
-        if (strtolower($route[0] ?? '') == "plugin") {
-            $pluginName = ucfirst($route[1] ?? '');
-            $pluginCfg = Plugin::getPlugin($pluginName);
-            if (($pluginCfg['PLUGIN_CONFIG']['STATUS'] ?? 0) != 1) {
-                Client::redirect("/", "当前插件未启用");
+        <span class="hljs-variable">$route</span> = <span class="hljs-title function_ invoke__">explode</span>(<span class="hljs-string">"/"</span>, <span class="hljs-title function_ invoke__">trim</span>(<span class="hljs-title class_">Context</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-title class_">Base</span>::<span class="hljs-variable constant_">ROUTE</span>), <span class="hljs-string">"/"</span>));
+        <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">strtolower</span>(<span class="hljs-variable">$route</span>[<span class="hljs-number">0</span>] ?? <span class="hljs-string">''</span>) == <span class="hljs-string">"plugin"</span>) {
+            <span class="hljs-variable">$pluginName</span> = <span class="hljs-title function_ invoke__">ucfirst</span>(<span class="hljs-variable">$route</span>[<span class="hljs-number">1</span>] ?? <span class="hljs-string">''</span>);
+            <span class="hljs-variable">$pluginCfg</span> = <span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">getPlugin</span>(<span class="hljs-variable">$pluginName</span>);
+            <span class="hljs-keyword">if</span> ((<span class="hljs-variable">$pluginCfg</span>[<span class="hljs-string">'PLUGIN_CONFIG'</span>][<span class="hljs-string">'STATUS'</span>] ?? <span class="hljs-number">0</span>) != <span class="hljs-number">1</span>) {
+                <span class="hljs-title class_">Client</span>::<span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">"/"</span>, <span class="hljs-string">"当前插件未启用"</span>);
             }
         }
     }
 
-    private function loadLocalPlugins(): void
-    {
-        $storeFile = BASE_PATH . "/runtime/plugin/store.cache";
-        $store = is_file($storeFile) ? (array)json_decode((string)file_get_contents($storeFile), true) : [];
+    <span class="hljs-keyword">private</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadLocalPlugins</span>(<span class="hljs-params"></span>): <span class="hljs-title">void</span>
+    </span>{
+        <span class="hljs-variable">$storeFile</span> = BASE_PATH . <span class="hljs-string">"/runtime/plugin/store.cache"</span>;
+        <span class="hljs-variable">$store</span> = <span class="hljs-title function_ invoke__">is_file</span>(<span class="hljs-variable">$storeFile</span>) ? (<span class="hljs-keyword">array</span>)<span class="hljs-title function_ invoke__">json_decode</span>((<span class="hljs-keyword">string</span>)<span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$storeFile</span>), <span class="hljs-literal">true</span>) : [];
 
-        foreach (Plugin::getPlugins() as $plugin) {
-            $name = (string)$plugin[\App\Consts\Plugin::PLUGIN_NAME];
-            if (isset($store[$name]) || (int)($plugin[\App\Consts\Plugin::PLUGIN_CONFIG]['STATUS'] ?? 0) !== 1) {
-                continue;
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-title class_">Plugin</span>::<span class="hljs-title function_ invoke__">getPlugins</span>() <span class="hljs-keyword">as</span> <span class="hljs-variable">$plugin</span>) {
+            <span class="hljs-variable">$name</span> = (<span class="hljs-keyword">string</span>)<span class="hljs-variable">$plugin</span>[<span class="hljs-title class_">\App\Consts\Plugin</span>::<span class="hljs-variable constant_">PLUGIN_NAME</span>];
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$store</span>[<span class="hljs-variable">$name</span>]) || (<span class="hljs-keyword">int</span>)(<span class="hljs-variable">$plugin</span>[<span class="hljs-title class_">\App\Consts\Plugin</span>::<span class="hljs-variable constant_">PLUGIN_CONFIG</span>][<span class="hljs-string">'STATUS'</span>] ?? <span class="hljs-number">0</span>) !== <span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">continue</span>;
             }
 
-            $hookPath = BASE_PATH . "/app/Plugin/{$name}/Hook/";
-            if (!is_dir($hookPath)) {
-                continue;
+            <span class="hljs-variable">$hookPath</span> = BASE_PATH . <span class="hljs-string">"/app/Plugin/<span class="hljs-subst">{$name}</span>/Hook/"</span>;
+            <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_dir</span>(<span class="hljs-variable">$hookPath</span>)) {
+                <span class="hljs-keyword">continue</span>;
             }
 
-            foreach (File::scan($hookPath, true) as $file) {
-                if (pathinfo($file, PATHINFO_EXTENSION) !== 'php') {
-                    continue;
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-title class_">File</span>::<span class="hljs-title function_ invoke__">scan</span>(<span class="hljs-variable">$hookPath</span>, <span class="hljs-literal">true</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">$file</span>) {
+                <span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">pathinfo</span>(<span class="hljs-variable">$file</span>, PATHINFO_EXTENSION) !== <span class="hljs-string">'php'</span>) {
+                    <span class="hljs-keyword">continue</span>;
                 }
 
-                $class = "\\App\\Plugin\\{$name}\\Hook\\" . pathinfo($file, PATHINFO_FILENAME);
-                if (!class_exists($class)) {
-                    continue;
+                <span class="hljs-variable">$class</span> = <span class="hljs-string">"\\App\\Plugin\\<span class="hljs-subst">{$name}</span>\\Hook\\"</span> . <span class="hljs-title function_ invoke__">pathinfo</span>(<span class="hljs-variable">$file</span>, PATHINFO_FILENAME);
+                <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">class_exists</span>(<span class="hljs-variable">$class</span>)) {
+                    <span class="hljs-keyword">continue</span>;
                 }
 
-                foreach ((new \ReflectionClass($class))-&gt;getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                    foreach ($method-&gt;getAttributes(\Kernel\Annotation\Hook::class) as $attribute) {
-                        $arguments = $attribute-&gt;getArguments();
-                        $point = (int)($arguments['point'] ?? $arguments[0] ?? 0);
-                        if ($point &gt; 0) {
-                            Plugin::$container['hook'][$point][] = [
-                                'namespace' =&gt; $class,
-                                'method' =&gt; $method-&gt;getName(),
-                                'pluginName' =&gt; $name,
+                <span class="hljs-keyword">foreach</span> ((<span class="hljs-keyword">new</span> <span class="hljs-title class_">\ReflectionClass</span>(<span class="hljs-variable">$class</span>))-&gt;<span class="hljs-title function_ invoke__">getMethods</span>(<span class="hljs-title class_">\ReflectionMethod</span>::<span class="hljs-variable constant_">IS_PUBLIC</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">$method</span>) {
+                    <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$method</span>-&gt;<span class="hljs-title function_ invoke__">getAttributes</span>(<span class="hljs-title class_">\Kernel\Annotation\Hook</span>::<span class="hljs-variable language_">class</span>) <span class="hljs-keyword">as</span> <span class="hljs-variable">$attribute</span>) {
+                        <span class="hljs-variable">$arguments</span> = <span class="hljs-variable">$attribute</span>-&gt;<span class="hljs-title function_ invoke__">getArguments</span>();
+                        <span class="hljs-variable">$point</span> = (<span class="hljs-keyword">int</span>)(<span class="hljs-variable">$arguments</span>[<span class="hljs-string">'point'</span>] ?? <span class="hljs-variable">$arguments</span>[<span class="hljs-number">0</span>] ?? <span class="hljs-number">0</span>);
+                        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$point</span> &gt; <span class="hljs-number">0</span>) {
+                            <span class="hljs-title class_">Plugin</span>::<span class="hljs-variable">$container</span>[<span class="hljs-string">'hook'</span>][<span class="hljs-variable">$point</span>][] = [
+                                <span class="hljs-string">'namespace'</span> =&gt; <span class="hljs-variable">$class</span>,
+                                <span class="hljs-string">'method'</span> =&gt; <span class="hljs-variable">$method</span>-&gt;<span class="hljs-title function_ invoke__">getName</span>(),
+                                <span class="hljs-string">'pluginName'</span> =&gt; <span class="hljs-variable">$name</span>,
                             ];
                         }
                     }
                 }
             }
         }
-    }</code></pre><p></p><h3 id="%E6%88%91%E5%88%B6%E4%BD%9C%E7%9A%84%E6%8F%92%E4%BB%B6">我制作的插件</h3><h4 id="telegram-bot-%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6">telegram bot 通知插件</h4><p><a target="_blank" rel="noopener" href="https://image.mhdy.net/fujian/bk/TelegramNotification-jexr.zip">TelegramNotification-jexr.zip</a></p><p>购买后通过tg bot来进行通知，一个简单的插件</p>
+    }</code></pre></div></div></figure></details><p></p><h3 id="%E6%88%91%E5%88%B6%E4%BD%9C%E7%9A%84%E6%8F%92%E4%BB%B6">我制作的插件</h3><h4 id="telegram-bot-%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6">telegram bot 通知插件</h4><p><a target="_blank" rel="noopener" href="https://image.mhdy.net/fujian/bk/TelegramNotification-jexr.zip">TelegramNotification-jexr.zip</a></p><p>购买后通过tg bot来进行通知，一个简单的插件</p>
 </div>
 
     </div>

@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/6.1.14/fancybox/fancybox.css" integrity="sha256-mdaMxrItEW6hMIVJJNPKuX0B7KCSJQVEv3mVY4N2we4=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mhdy2233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12,"onmobile":false},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="2026&#x2F;4&#x2F;1更新：选择模型是Custom Provider为第三方模型供应商。配置文件中 groq&#x2F;nvidia&#x2F;nemotron-3-super-120b-a12b:free 多层嵌套的坑修复了。CT模板为debian13CT配置没什…">
 <meta property="og:type" content="article">
@@ -276,64 +276,121 @@
     
     <div class="post-body" itemprop="articleBody">
 <div class="halo-content">
-<p>2026/4/1更新：选择模型是Custom Provider为第三方模型供应商。</p><p>配置文件中 groq/nvidia/nemotron-3-super-120b-a12b:free 多层嵌套的坑修复了。</p><p></p><p>CT模板为debian13</p><p>CT配置没什么好讲的cpu，内存，硬盘按照需要设置就好了</p><h2 id="1.%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AEopenclaw">1.安装设置openclaw</h2><p>通过官网的一键脚本<code>curl -fsSL https://openclaw.ai/install.sh | bash</code> 运行安装即可，npm安装可能会比较慢有需要的可以用<code>curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -- --install-method git</code> 来使用git安装openclaw</p><p>默认设置基本可以全部跳过，后面按照需要酌情开启即可，虽然模型提供商可以跳过但是他还是会要求你填写模型信息，随便填即可不影响后续设置操作</p><p></p><p>安装后会显示面板信息连接地址之类的信息，需要注意的是我们是通过pve来安装的，所以是无法通过简单的ip:端口来使用web ui的</p><p>此时在本机打开cmd执行 <code>ssh -N -L 需要的本机端口:127.0.0.1:18789 root@192.168.0.12</code> 来将openclaw的端口映射到本地即可</p><h2 id="2.%E8%AE%BE%E7%BD%AE%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B">2.设置第三方模型</h2><p>openclaw用起來很费token用官方api贵的很，所以我采用第三方api</p><p>设置第三方模型可以通过配置文件或web ui来完成</p><h3 id="1.%E9%80%9A%E8%BF%87%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE">1.通过配置文件设置</h3><p>配置文件默认在 &#126;/.openclaw/openclaw.json</p><p>在配置文件末尾添加(如果有models则直接改即可)</p><pre><code>{
-  "models": {
-    "providers": {
-      "&lt;provider-name&gt;": {                      // 模型提供商
-        "baseUrl": "https://api.example.com",  // API基础URL
-        "apiKey": "sk-xxx",                    // API密钥
-        "api": "openai-completions",          // API类型
-        "models": [                           // 可用模型列表
-          {
-            "id": "model-name",               // 模型ID
-            "name": "显示名称",               // 模型显示名称
-            "reasoning": true,                // 是否支持推理
-            "input": ["text", "image"],       // 支持的输入类型
-            "cost": {                         // 成本配置
-              "input": 0.1,                   // 输入token成本
-              "output": 0.3,                  // 输出token成本
-              "cacheRead": 0.01,              // 缓存读取成本
-              "cacheWrite": 0.05              // 缓存写入成本
-            },
-            "contextWindow": 128000,          // 上下文窗口大小
-            "maxTokens": 4096                 // 最大输出token数
-          }
-        ]
-      }
-    }
-  }
-}</code></pre><p>上面的配置文件属于最简单的，还有token数量上下文之类的精细设置在web中好设置一点</p><p>下面修改默认模型和模型列表</p><pre><code>{
-  "agents": {
-    "defaults": {
-      "model": {
-        "primary": "openai/gpt-4o",       // 主要模型
-        "fallbacks": [                    // 回退模型列表
-          "anthropic/claude-3-5-sonnet",
-          "deepseek/deepseek-chat"
+<p>2026/4/1更新：选择模型是Custom Provider为第三方模型供应商。</p><p>配置文件中 groq/nvidia/nemotron-3-super-120b-a12b:free 多层嵌套的坑修复了。</p><p></p><p>CT模板为debian13</p><p>CT配置没什么好讲的cpu，内存，硬盘按照需要设置就好了</p><h2 id="1.%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AEopenclaw">1.安装设置openclaw</h2><p>通过官网的一键脚本<code>curl -fsSL https://openclaw.ai/install.sh | bash</code> 运行安装即可，npm安装可能会比较慢有需要的可以用<code>curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install.sh | bash -s -- --install-method git</code> 来使用git安装openclaw</p><p>默认设置基本可以全部跳过，后面按照需要酌情开启即可，虽然模型提供商可以跳过但是他还是会要求你填写模型信息，随便填即可不影响后续设置操作</p><p></p><p>安装后会显示面板信息连接地址之类的信息，需要注意的是我们是通过pve来安装的，所以是无法通过简单的ip:端口来使用web ui的</p><p>此时在本机打开cmd执行 <code>ssh -N -L 需要的本机端口:127.0.0.1:18789 root@192.168.0.12</code> 来将openclaw的端口映射到本地即可</p><h2 id="2.%E8%AE%BE%E7%BD%AE%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9E%8B">2.设置第三方模型</h2><p>openclaw用起來很费token用官方api贵的很，所以我采用第三方api</p><p>设置第三方模型可以通过配置文件或web ui来完成</p><h3 id="1.%E9%80%9A%E8%BF%87%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE">1.通过配置文件设置</h3><p>配置文件默认在 &#126;/.openclaw/openclaw.json</p><p>在配置文件末尾添加(如果有models则直接改即可)</p><details class="halo-code-details" open><summary><span class="halo-code-language">JSON</span><span class="halo-code-meta">自动 · 27 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight json"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"models"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"providers"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"&lt;provider-name&gt;"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>                      <span class="hljs-comment">// 模型提供商</span>
+        <span class="hljs-attr">"baseUrl"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"https://api.example.com"</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// API基础URL</span>
+        <span class="hljs-attr">"apiKey"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"sk-xxx"</span><span class="hljs-punctuation">,</span>                    <span class="hljs-comment">// API密钥</span>
+        <span class="hljs-attr">"api"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"openai-completions"</span><span class="hljs-punctuation">,</span>          <span class="hljs-comment">// API类型</span>
+        <span class="hljs-attr">"models"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>                           <span class="hljs-comment">// 可用模型列表</span>
+          <span class="hljs-punctuation">{</span>
+            <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"model-name"</span><span class="hljs-punctuation">,</span>               <span class="hljs-comment">// 模型ID</span>
+            <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"显示名称"</span><span class="hljs-punctuation">,</span>               <span class="hljs-comment">// 模型显示名称</span>
+            <span class="hljs-attr">"reasoning"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>                <span class="hljs-comment">// 是否支持推理</span>
+            <span class="hljs-attr">"input"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"text"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"image"</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>       <span class="hljs-comment">// 支持的输入类型</span>
+            <span class="hljs-attr">"cost"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>                         <span class="hljs-comment">// 成本配置</span>
+              <span class="hljs-attr">"input"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.1</span><span class="hljs-punctuation">,</span>                   <span class="hljs-comment">// 输入token成本</span>
+              <span class="hljs-attr">"output"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.3</span><span class="hljs-punctuation">,</span>                  <span class="hljs-comment">// 输出token成本</span>
+              <span class="hljs-attr">"cacheRead"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.01</span><span class="hljs-punctuation">,</span>              <span class="hljs-comment">// 缓存读取成本</span>
+              <span class="hljs-attr">"cacheWrite"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.05</span>              <span class="hljs-comment">// 缓存写入成本</span>
+            <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+            <span class="hljs-attr">"contextWindow"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">128000</span><span class="hljs-punctuation">,</span>          <span class="hljs-comment">// 上下文窗口大小</span>
+            <span class="hljs-attr">"maxTokens"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4096</span>                 <span class="hljs-comment">// 最大输出token数</span>
+          <span class="hljs-punctuation">}</span>
+        <span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span></code></pre></div></div></figure></details><p>上面的配置文件属于最简单的，还有token数量上下文之类的精细设置在web中好设置一点</p><p>下面修改默认模型和模型列表</p><details class="halo-code-details"><summary><span class="halo-code-language">Bash</span><span class="halo-code-meta">自动 · 32 行</span><span class="halo-code-expand">展开代码</span><span class="halo-code-collapse">收起代码</span></summary><figure class="highlight bash"><div class="halo-code-toolbar"></div><div class="halo-code-body"><div class="gutter" aria-hidden="true"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div><div class="code"><pre tabindex="0" aria-label="代码，可横向滚动"><code class="hljs language-bash">{
+  <span class="hljs-string">"agents"</span>: {
+    <span class="hljs-string">"defaults"</span>: {
+      <span class="hljs-string">"model"</span>: {
+        <span class="hljs-string">"primary"</span>: <span class="hljs-string">"openai/gpt-4o"</span>,       // 主要模型
+        <span class="hljs-string">"fallbacks"</span>: [                    // 回退模型列表
+          <span class="hljs-string">"anthropic/claude-3-5-sonnet"</span>,
+          <span class="hljs-string">"deepseek/deepseek-chat"</span>
         ]
       },
-      "models": {                         // 模型别名和参数
-        "openai/gpt-4o": {
-          "alias": "GPT-4o",              // 别名
-          "params": {
-            "temperature": 0.7,           // 温度
-            "max_tokens": 4096,           // 最大token
+      <span class="hljs-string">"models"</span>: {                         // 模型别名和参数
+        <span class="hljs-string">"openai/gpt-4o"</span>: {
+          <span class="hljs-string">"alias"</span>: <span class="hljs-string">"GPT-4o"</span>,              // 别名
+          <span class="hljs-string">"params"</span>: {
+            <span class="hljs-string">"temperature"</span>: 0.7,           // 温度
+            <span class="hljs-string">"max_tokens"</span>: 4096,           // 最大token
           },
-          "streaming": true  # 是否开启流式传输
+          <span class="hljs-string">"streaming"</span>: <span class="hljs-literal">true</span>  <span class="hljs-comment"># 是否开启流式传输</span>
         }
       },
-      "workspace": "&#126;/.openclaw/workspace",  // 工作区路径
-      "compaction": {                        // 压缩配置
-        "mode": "safeguard"                  // 模式：safeguard/aggressive/off
+      <span class="hljs-string">"workspace"</span>: <span class="hljs-string">"&#126;/.openclaw/workspace"</span>,  // 工作区路径
+      <span class="hljs-string">"compaction"</span>: {                        // 压缩配置
+        <span class="hljs-string">"mode"</span>: <span class="hljs-string">"safeguard"</span>                  // 模式：safeguard/aggressive/off
       },
-      "maxConcurrent": 4,                    // 最大并发数
-      "subagents": {                         // 子代理配置
-        "maxConcurrent": 8,                  // 子代理最大并发数
-        "allowAgents": []                    // 允许的子代理列表
+      <span class="hljs-string">"maxConcurrent"</span>: 4,                    // 最大并发数
+      <span class="hljs-string">"subagents"</span>: {                         // 子代理配置
+        <span class="hljs-string">"maxConcurrent"</span>: 8,                  // 子代理最大并发数
+        <span class="hljs-string">"allowAgents"</span>: []                    // 允许的子代理列表
       }
     }
   }
-}</code></pre><p>此处有一个大坑，由于一些模型提供商的模型是多层结构如：groq/nvidia/nemotron-3-super-120b-a12b:free，那么此时如果你将id和name都设置为nvidia/nemotron-3-super-120b-a12b:free，就会报错因为openclash不允许多层，但是如果name只设置为nvidia那么就会找不多模型</p><p>解法就是设置为groq/nemotron-3-super-120b-a12b:free</p><p>或者通过别名来解决</p><p>这个坑即使是openclaw自带的模型提供商也有并且用上面说的解法也没用</p><p>这个时候就作为第三方模型提供商加入即可，名字稍微有点区别即可</p><p>Cloudflare现在支持作为模型网关，可以直接使用cf来作为第三方中继，效果还不错并且可以解决部分网络问题</p>
+}</code></pre></div></div></figure></details><p>此处有一个大坑，由于一些模型提供商的模型是多层结构如：groq/nvidia/nemotron-3-super-120b-a12b:free，那么此时如果你将id和name都设置为nvidia/nemotron-3-super-120b-a12b:free，就会报错因为openclash不允许多层，但是如果name只设置为nvidia那么就会找不多模型</p><p>解法就是设置为groq/nemotron-3-super-120b-a12b:free</p><p>或者通过别名来解决</p><p>这个坑即使是openclaw自带的模型提供商也有并且用上面说的解法也没用</p><p>这个时候就作为第三方模型提供商加入即可，名字稍微有点区别即可</p><p>Cloudflare现在支持作为模型网关，可以直接使用cf来作为第三方中继，效果还不错并且可以解决部分网络问题</p>
 </div>
 
     </div>

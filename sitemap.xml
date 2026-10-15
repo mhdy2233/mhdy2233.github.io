@@ -29,6 +29,15 @@
   </url>
   
   <url>
+    <loc>https://mhdy2233.github.io/archives/shi-yong-adguardzuo-wei-doh-dotlai-dui-kang-dnswu-ran-yi-ji-tong-guo-echtu-po-snifeng-suo/</loc>
+    
+    <lastmod>2026-10-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://mhdy2233.github.io/archives/mo-shi-ocr-cheng-jing-shi-fan-yi-man-hua-zhi-ji/</loc>
     
     <lastmod>2026-09-20</lastmod>
@@ -499,6 +508,13 @@
   </url>
   
   <url>
+    <loc>https://mhdy2233.github.io/tags/AdGuard/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://mhdy2233.github.io/tags/OpenWrt/</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -521,6 +537,27 @@
   
   <url>
     <loc>https://mhdy2233.github.io/tags/VPN/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://mhdy2233.github.io/tags/dns/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://mhdy2233.github.io/tags/doh/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://mhdy2233.github.io/tags/dot/</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
